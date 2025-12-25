@@ -7,7 +7,7 @@ LIBS   = -ly -lfl
 TARGET = cmm
 OBJS    = main.o show.o ast.o y.tab.o
 
-TEST_PROG = fact.cmm
+TEST_PROG = sample/fact.cmm
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)

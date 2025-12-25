@@ -1,0 +1,386 @@
+FUNC DEF: test (a, b, c)
+  BLOCK
+    RETURN
+      BINARY OPER: +
+        LEFT:
+          ID: a
+        RIGHT:
+          BINARY OPER: *
+            LEFT:
+              ID: b
+            RIGHT:
+              ID: c
+
+
+FUNC DEF: fact (n)
+  BLOCK
+    IF
+      COND
+        BINARY OPER: <=
+          LEFT:
+            ID: n
+          RIGHT:
+            INT: 1
+
+      BLOCK
+        RETURN
+          INT: 1
+
+    ELSE
+      BLOCK
+        RETURN
+          BINARY OPER: *
+            LEFT:
+              ID: n
+            RIGHT:
+              CALL: fact
+                PARAMS:
+                  BINARY OPER: -
+                    LEFT:
+                      ID: n
+                    RIGHT:
+                      INT: 1
+
+
+FUNC DEF: fizzbuzz (n)
+  BLOCK
+    VAR:
+      ID: i
+
+    BINARY OPER: :=
+      LEFT:
+        ID: i
+      RIGHT:
+        INT: 1
+    WHILE
+      COND
+        BINARY OPER: <=
+          LEFT:
+            ID: i
+          RIGHT:
+            ID: n
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: i
+                  RIGHT:
+                    INT: 15
+              RIGHT:
+                INT: 0
+
+          BLOCK
+            UNARY OPER: WRITE
+              RIGHT:
+                INT: 0
+        ELSE
+          IF
+            COND
+              BINARY OPER: ==
+                LEFT:
+                  BINARY OPER: %
+                    LEFT:
+                      ID: i
+                    RIGHT:
+                      INT: 3
+                RIGHT:
+                  INT: 0
+
+            BLOCK
+              UNARY OPER: WRITE
+                RIGHT:
+                  INT: 1
+          ELSE
+            IF
+              COND
+                BINARY OPER: ==
+                  LEFT:
+                    BINARY OPER: %
+                      LEFT:
+                        ID: i
+                      RIGHT:
+                        INT: 5
+                  RIGHT:
+                    INT: 0
+
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 2
+            ELSE
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 3
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+    BINARY OPER: :=
+      LEFT:
+        ID: i
+      RIGHT:
+        INT: 1
+    WHILE
+      COND
+        BINARY OPER: <=
+          LEFT:
+            ID: i
+          RIGHT:
+            ID: n
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: i
+                  RIGHT:
+                    INT: 15
+              RIGHT:
+                INT: 0
+
+          BLOCK
+            UNARY OPER: WRITE
+              RIGHT:
+                INT: 0
+        ELSE
+          IF
+            COND
+              BINARY OPER: ==
+                LEFT:
+                  BINARY OPER: %
+                    LEFT:
+                      ID: i
+                    RIGHT:
+                      INT: 3
+                RIGHT:
+                  INT: 0
+
+            BLOCK
+              UNARY OPER: WRITE
+                RIGHT:
+                  INT: 1
+          ELSE
+            IF
+              COND
+                BINARY OPER: ==
+                  LEFT:
+                    BINARY OPER: %
+                      LEFT:
+                        ID: i
+                      RIGHT:
+                        INT: 5
+                  RIGHT:
+                    INT: 0
+
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 2
+            ELSE
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 3
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+    WHILE
+      COND
+        BINARY OPER: <=
+          LEFT:
+            ID: i
+          RIGHT:
+            ID: n
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: i
+                  RIGHT:
+                    INT: 15
+              RIGHT:
+                INT: 0
+
+          BLOCK
+            UNARY OPER: WRITE
+              RIGHT:
+                INT: 0
+        ELSE
+          IF
+            COND
+              BINARY OPER: ==
+                LEFT:
+                  BINARY OPER: %
+                    LEFT:
+                      ID: i
+                    RIGHT:
+                      INT: 3
+                RIGHT:
+                  INT: 0
+
+            BLOCK
+              UNARY OPER: WRITE
+                RIGHT:
+                  INT: 1
+          ELSE
+            IF
+              COND
+                BINARY OPER: ==
+                  LEFT:
+                    BINARY OPER: %
+                      LEFT:
+                        ID: i
+                      RIGHT:
+                        INT: 5
+                  RIGHT:
+                    INT: 0
+
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 2
+            ELSE
+              BLOCK
+                UNARY OPER: WRITE
+                  RIGHT:
+                    INT: 3
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+        BINARY OPER: :=
+          LEFT:
+            ID: i
+          RIGHT:
+            BINARY OPER: +
+              LEFT:
+                ID: i
+              RIGHT:
+                INT: 1
+
+FUNC DEF: main ()
+  BLOCK
+    VAR:
+      ID: n
+
+    UNARY OPER: READ
+      RIGHT:
+        ID: n
+    UNARY OPER: WRITE
+      RIGHT:
+        CALL: fact
+          PARAMS:
+            ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    CALL: fizzbuzz
+      PARAMS:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+    UNARY OPER: READ
+      RIGHT:
+        ID: n
+    UNARY OPER: WRITE
+      RIGHT:
+        CALL: fact
+          PARAMS:
+            ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    CALL: fizzbuzz
+      PARAMS:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+    UNARY OPER: WRITE
+      RIGHT:
+        CALL: fact
+          PARAMS:
+            ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    CALL: fizzbuzz
+      PARAMS:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+    UNARY OPER: WRITELN
+      RIGHT:
+    CALL: fizzbuzz
+      PARAMS:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+    CALL: fizzbuzz
+      PARAMS:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+    UNARY OPER: WRITE
+      RIGHT:
+        UNARY OPER: MINUS
+          RIGHT:
+            INT: 1
+

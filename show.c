@@ -3,38 +3,38 @@
 #include "show.h"
 #include "node.h"
 
-void print_spaces(int depth) {
-  for (int i=0; i<depth; i++) { printf("  "); }
+void print_spaces(int depth, FILE *fp) {
+  for (int i=0; i<depth; i++) { fprintf(fp, "  "); }
 }
 
-void show_node(Node *node, int depth) {
+void show_node(Node *node, int depth, FILE *fp) {
   if (node == NULL) { return; }
 
   NodeKind kind = node->kind;
 
-  print_spaces(depth);
+  print_spaces(depth, fp);
   switch (kind) {
     case NK_INT:
-      printf("INT: %d\n", node->ival);
+      fprintf(fp, "INT: %d\n", node->ival);
       break;
     case NK_ID:
-      printf("ID: %s\n", node->cval);
+      fprintf(fp, "ID: %s\n", node->cval);
       break;
 
     case NK_MINUS:
     case NK_WRITE:
     case NK_WRITELN:
     case NK_READ:
-      printf("UNARY OPER: ");
-      if (kind == NK_MINUS) { printf("MINUS"); }
-      else if (kind == NK_WRITE) { printf("WRITE"); }
-      else if (kind == NK_WRITELN) { printf("WRITELN"); }
-      else if (kind == NK_READ) { printf("READ"); }
-      printf("\n");
+      fprintf(fp, "UNARY OPER: ");
+      if (kind == NK_MINUS) { fprintf(fp, "MINUS"); }
+      else if (kind == NK_WRITE) { fprintf(fp, "WRITE"); }
+      else if (kind == NK_WRITELN) { fprintf(fp, "WRITELN"); }
+      else if (kind == NK_READ) { fprintf(fp, "READ"); }
+      fprintf(fp, "\n");
 
-      print_spaces(depth+1);
-      printf("RIGHT:\n");
-      show_node(node->right, depth+2);
+      print_spaces(depth+1, fp);
+      fprintf(fp, "RIGHT:\n");
+      show_node(node->right, depth+2, fp);
       break;
 
     case NK_ADD:
@@ -44,97 +44,97 @@ void show_node(Node *node, int depth) {
     case NK_EQ:
     case NK_LE:
     case NK_ASSIGN:
-      printf("BINARY OPER: ");
-      if (kind == NK_ADD) { printf("+"); }
-      else if (kind == NK_SUB) { printf("-"); }
-      else if (kind == NK_MUL) { printf("*"); }
-      else if (kind == NK_MOD) { printf("%%"); }
-      else if (kind == NK_EQ) { printf("=="); }
-      else if (kind == NK_LE) { printf("<="); }
-      else if (kind == NK_ASSIGN) { printf(":="); }
-      printf("\n");
+      fprintf(fp, "BINARY OPER: ");
+      if (kind == NK_ADD) { fprintf(fp, "+"); }
+      else if (kind == NK_SUB) { fprintf(fp, "-"); }
+      else if (kind == NK_MUL) { fprintf(fp, "*"); }
+      else if (kind == NK_MOD) { fprintf(fp, "%%"); }
+      else if (kind == NK_EQ) { fprintf(fp, "=="); }
+      else if (kind == NK_LE) { fprintf(fp, "<="); }
+      else if (kind == NK_ASSIGN) { fprintf(fp, ":="); }
+      fprintf(fp, "\n");
 
-      print_spaces(depth+1);
-      printf("LEFT:\n");
-      show_node(node->left, depth+2);
-      print_spaces(depth+1);
-      printf("RIGHT:\n");
-      show_node(node->right, depth+2);
+      print_spaces(depth+1, fp);
+      fprintf(fp, "LEFT:\n");
+      show_node(node->left, depth+2, fp);
+      print_spaces(depth+1, fp);
+      fprintf(fp, "RIGHT:\n");
+      show_node(node->right, depth+2, fp);
       break;
 
     case NK_CALL:
-      printf("CALL: %s\n", node->cval);
+      fprintf(fp, "CALL: %s\n", node->cval);
 
-      print_spaces(depth+1);
-      printf("PARAMS:\n");
+      print_spaces(depth+1, fp);
+      fprintf(fp, "PARAMS:\n");
       for (Node *p=node->params; p!=NULL; p=p->next) {
-        show_node(p, depth+2);
+        show_node(p, depth+2, fp);
       }
       break;
 
     case NK_BLOCK:
-      printf("BLOCK\n");
+      fprintf(fp, "BLOCK\n");
       for (Node *s=node->stmts; s!=NULL; s=s->next) {
-        show_node(s, depth+1);
+        show_node(s, depth+1, fp);
       }
       break;
     case NK_IF:
-      printf("IF\n");
-      print_spaces(depth+1);
-      printf("COND\n");
-      show_node(node->cond, depth+2);
-      printf("\n");
-      show_node(node->if_block, depth+1);
+      fprintf(fp, "IF\n");
+      print_spaces(depth+1, fp);
+      fprintf(fp, "COND\n");
+      show_node(node->cond, depth+2, fp);
+      fprintf(fp, "\n");
+      show_node(node->if_block, depth+1, fp);
 
       if (node->else_block != NULL) {
-        print_spaces(depth);
-        printf("ELSE\n");
-        show_node(node->else_block, depth+1);
+        print_spaces(depth, fp);
+        fprintf(fp, "ELSE\n");
+        show_node(node->else_block, depth+1, fp);
       }
       break;
 
     case NK_WHILE:
-      printf("WHILE\n");
-      print_spaces(depth+1);
-      printf("COND\n");
-      show_node(node->cond, depth+2);
-      printf("\n");
-      show_node(node->body, depth+1);
+      fprintf(fp, "WHILE\n");
+      print_spaces(depth+1, fp);
+      fprintf(fp, "COND\n");
+      show_node(node->cond, depth+2, fp);
+      fprintf(fp, "\n");
+      show_node(node->body, depth+1, fp);
       break;
 
     case NK_VAR:
-      printf("VAR:\n");
+      fprintf(fp, "VAR:\n");
       for (Node *id=node->ids; id!=NULL; id=id->next) {
-        show_node(id, depth+1);
+        show_node(id, depth+1, fp);
       }
-      printf("\n");
+      fprintf(fp, "\n");
       break;
 
     case NK_FUNC:
-      printf("FUNC DEF: %s (", node->cval);
+      fprintf(fp, "FUNC DEF: %s (", node->cval);
       for (Node *p=node->params; p!=NULL; p=p->next) {
-        printf("%s", p->cval);
-        if (p->next!=NULL) { printf(", "); }
+        fprintf(fp, "%s", p->cval);
+        if (p->next!=NULL) { fprintf(fp, ", "); }
       }
-      printf(")\n");
-      show_node(node->body, depth+1);
-      printf("\n");
+      fprintf(fp, ")\n");
+      show_node(node->body, depth+1, fp);
+      fprintf(fp, "\n");
       break;
     case NK_RETURN:
-      printf("RETURN\n");
-      show_node(node->right, depth+1);
-      printf("\n");
+      fprintf(fp, "RETURN\n");
+      show_node(node->right, depth+1, fp);
+      fprintf(fp, "\n");
       break;
     default:
-      printf("-*-UNSUPPORTED NODE KIND(%d)-*-\n", kind);
+      fprintf(fp, "-*-UNSUPPORTED NODE KIND(%d)-*-\n", kind);
       break;
   }
 
   if (node->next != NULL) {
-    show_node(node->next, depth);
+    show_node(node->next, depth, fp);
   }
 }
 
-void show_ast(Node *ast_root) {
-  show_node(ast_root, 0);
+void show_ast(Node *ast_root, FILE *fp) {
+  show_node(ast_root, 0, fp);
 }
