@@ -39,7 +39,7 @@ Node *ast_root;
 %token SEMI
 %token PLUS MINUS
 %token PLUS2 MINUS2
-%token MULT DIV
+%token MULT DIV MOD
 %token NUMBER FLOAT
 %token IF THEN ELSE ENDIF
 %token WHILE DO
@@ -124,7 +124,7 @@ stmts
 
 vardecl : VAR ids SEMI {
 	$$.node = new_node(NK_VAR);
-	$$.node->ids = $2.node->ids;
+	$$.node->ids = $2.node;
 };
 
 ids
@@ -147,6 +147,9 @@ st
 	Node *id = new_id_node($2.name);
 	$$.node = new_unary_node(NK_READ, id);
 }
+	| FUNC_CALL SEMI {
+	$$.node = $1.node;
+}
 	| ID COLEQ E SEMI {
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
@@ -168,7 +171,10 @@ ifstmt
 	: IF cond body {
 	$$.node = new_if_node($2.node, $3.node, NULL);
 }
-	| IF cond body ELSE body{
+	| IF cond body ELSE body {
+	$$.node = new_if_node($2.node, $3.node, $5.node);
+}
+	| IF cond body ELSE ifstmt {
 	$$.node = new_if_node($2.node, $3.node, $5.node);
 };
 
@@ -214,6 +220,9 @@ T
 	| T DIV F {
 	$$.node = new_binary_node(NK_DIV, $1.node, $3.node);
 }
+	 | T MOD F {
+	 $$.node = new_binary_node(NK_MOD, $1.node, $3.node);
+}
 	| MINUS F {
 	$$.node = new_unary_node(NK_MINUS, $2.node);
 }
@@ -232,16 +241,20 @@ F
 	Node *add = new_binary_node(NK_ADD, id_, one);
 	$$.node = new_binary_node(NK_ASSIGN, id, add);
 }
-	| ID LPAR fparams RPAR {
-	$$.node = new_node(NK_CALL);
-	$$.node->cval = $1.name;
-	$$.node->params = $3.node;
+	| FUNC_CALL {
+	$$.node = $1.node;
 }
 	| NUMBER {
 	$$.node = new_int_node(yylval.val);
 }
 	| LPAR E RPAR {
 	$$.node = $2.node;
+};
+
+FUNC_CALL : ID LPAR fparams RPAR {
+	$$.node = new_node(NK_CALL);
+	$$.node->cval = $1.name;
+	$$.node->params = $3.node;
 };
 
 fparams
