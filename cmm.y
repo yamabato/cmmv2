@@ -74,7 +74,7 @@ fdecls
 
 fdecl : fhead body {
 	$$.node = $1.node;
-	$$.node->body = $2.node->body;
+	$$.node->body = $2.node;
 };
 
 fhead : fid LPAR params RPAR {
@@ -102,7 +102,7 @@ params
 body
 	: LBRA stmts RBRA {
 	$$.node = new_node(NK_BLOCK);
-	$$.node->stmts = $2.node->stmts;
+	$$.node->stmts = $2.node;
 }
 	| LBRA RBRA {
 	$$.node = new_node(NK_BLOCK);

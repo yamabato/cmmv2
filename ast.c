@@ -9,6 +9,7 @@ Node *new_node(NodeKind kind) {
   node->left = NULL;
   node->right = NULL;
   node->body = NULL;
+  node->stmts = NULL;
   node->cond = NULL;
   node->ids = NULL;
   node->next = NULL;

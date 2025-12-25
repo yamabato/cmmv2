@@ -1318,7 +1318,7 @@ yyreduce:
 #line 75 "cmm.y"
                    {
 	yyval.node = yyvsp[-1].node;
-	yyval.node->body = yyvsp[0].node->body;
+	yyval.node->body = yyvsp[0].node;
 }
 #line 1324 "y.tab.c"
     break;
@@ -1370,7 +1370,7 @@ yyreduce:
 #line 103 "cmm.y"
                           {
 	yyval.node = new_node(NK_BLOCK);
-	yyval.node->stmts = yyvsp[-1].node->stmts;
+	yyval.node->stmts = yyvsp[-1].node;
 }
 #line 1376 "y.tab.c"
     break;
