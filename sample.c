@@ -1,0 +1,7 @@
+main{
+  var n;
+
+  n := -10;
+  write n;
+  writeln;
+}

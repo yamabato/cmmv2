@@ -1,0 +1,21 @@
+test(a, b, c) {
+  return a+b*c;
+}
+
+fact(n){
+  if n<=1 {
+    return 1;
+  } else {
+    return n*fact(n-1);
+  }
+}
+
+main {
+  var n;
+
+  read n;
+  write fact(n);
+  writeln;
+
+  write -1;
+}
