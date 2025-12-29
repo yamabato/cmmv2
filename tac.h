@@ -1,24 +1,29 @@
 #pragma once
 
+#include <stdint.h>
+
 // TACの命令種
 typedef enum {
   TO_ADD,
 } TACCode;
 
-// TACでの値の型
 typedef enum {
-  TVK_INT,
-  TVK_FLOAT,
-  TVK_CHAR,
-  TVK_STR,
+  VT_INT,
+  VT_FLOAT,
+  VT_CHAR,
+  VT_STR,
+} ValueType;
 
+// TACでの引数の型
+typedef enum {
+  TVK_IMM,  // 即値
   TVK_NAME, // 変数名
   TVK_TMP,  // 一時変数
-} TACValKind;
+} TACArgKind;
 
 // TACで値を格納するUnion
 typedef union {
-  long long int ival;
+  int64_t ival;
   double dval;
   char cval;
 
@@ -38,14 +43,15 @@ typedef union {
 } TACVal;
 
 // TACでの値
-typedef struct TACValue {
-  TACValKind kind;
+typedef struct {
+  TACArgKind kind; // 引数の種類(即値 or 変数)
+  ValueType  type; // 引数の型(int, float, str, char, ...)
   TACVal     val;
 } TACValue;
 
 // TACの1命令
 // dst = op(src1, src2);
-typedef struct TAC {
+typedef struct {
   TACCode  op;
   TACValue dst;
   TACValue src1;

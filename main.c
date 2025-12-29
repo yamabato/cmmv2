@@ -3,7 +3,7 @@
 
 #include "node.h"
 #include "parser.h"
-#include "tac.h"
+#include "gentac.h"
 #include "show.h"
 
 extern FILE *yyin;
@@ -11,6 +11,7 @@ extern FILE *yyin;
 int main(int argc, char **argv) {
   char *fname;
   FILE *ast_file;
+  TAC *tac;
 
   if (argc < 2) {
     printf("usage: %s <input file>\n", argv[0]);
@@ -27,6 +28,8 @@ int main(int argc, char **argv) {
 
   ast_file = fopen(strcat(fname, ".ast"), "w");
   show_ast(ast_root, ast_file);
+
+  tac = gen_tac(ast_root);
 
   return 0;
 }
