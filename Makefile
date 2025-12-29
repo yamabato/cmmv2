@@ -5,9 +5,9 @@ CFLAGS = -Wall -g
 LIBS   = -ly -lfl
 
 TARGET = cmm
-OBJS    = main.o show.o ast.o y.tab.o
+OBJS    = main.o show.o ast.o gentac.o y.tab.o
 
-TEST_PROG = sample/fact.cmm
+TEST_PROG = sample/test.cmm
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
@@ -24,6 +24,7 @@ lex.yy.c: cmm.l
 main.o: main.c node.h parser.h y.tab.h
 ast.o: ast.c ast.h node.h
 show.o: show.h show.c
+gentac.o: tac.h gentac.h gentac.c
 y.tab.o: y.tab.c lex.yy.c node.h
 lex.yy.o: lex.yy.c
 

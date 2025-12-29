@@ -162,8 +162,27 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_END_OF_FILE 1
 #define EOB_ACT_LAST_MATCH 2
     
-    #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
+    /* Note: We specifically omit the test for yy_rule_can_match_eol because it requires
+     *       access to the local variable yy_act. Since yyless() is a macro, it would break
+     *       existing scanners that call yyless() from OUTSIDE yylex.
+     *       One obvious solution it to make yy_act a global. I tried that, and saw
+     *       a 5% performance hit in a non-yylineno scanner, because yy_act is
+     *       normally declared as a register variable-- so it is not worth it.
+     */
+    #define  YY_LESS_LINENO(n) \
+            do { \
+                int yyl;\
+                for ( yyl = n; yyl < yyleng; ++yyl )\
+                    if ( yytext[yyl] == '\n' )\
+                        --yylineno;\
+            }while(0)
+    #define YY_LINENO_REWIND_TO(dst) \
+            do {\
+                const char *p;\
+                for ( p = yy_cp-1; p >= (dst); --p)\
+                    if ( *p == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -475,6 +494,12 @@ static const flex_int16_t yy_chk[134] =
        80,   80,   80
     } ;
 
+/* Table of booleans, true if rule could match eol. */
+static const flex_int32_t yy_rule_can_match_eol[38] =
+    {   0,
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
+
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
 
@@ -493,9 +518,9 @@ char *yytext;
 #line 2 "cmm.l"
 #undef ECHO
 #define ECHO printf("%s", yytext);
-#line 497 "lex.yy.c"
+#line 522 "lex.yy.c"
 #define YY_NO_INPUT 1
-#line 499 "lex.yy.c"
+#line 524 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -710,9 +735,9 @@ YY_DECL
 		}
 
 	{
-#line 7 "cmm.l"
+#line 9 "cmm.l"
 
-#line 716 "lex.yy.c"
+#line 741 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -758,6 +783,16 @@ yy_find_action:
 
 		YY_DO_BEFORE_ACTION;
 
+		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
+			{
+			int yyl;
+			for ( yyl = 0; yyl < yyleng; ++yyl )
+				if ( yytext[yyl] == '\n' )
+					
+    yylineno++;
+;
+			}
+
 do_action:	/* This label is used only to access EOF actions. */
 
 		switch ( yy_act )
@@ -771,162 +806,162 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "cmm.l"
+#line 10 "cmm.l"
 { ECHO;  return VAR; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "cmm.l"
+#line 11 "cmm.l"
 { ECHO;  return MAIN; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "cmm.l"
+#line 12 "cmm.l"
 { ECHO;  return LPAR; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "cmm.l"
+#line 13 "cmm.l"
 { ECHO;  return RPAR; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "cmm.l"
+#line 14 "cmm.l"
 { ECHO;  return COMMA; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "cmm.l"
+#line 15 "cmm.l"
 { ECHO;  return LBRA; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 14 "cmm.l"
+#line 16 "cmm.l"
 { ECHO;  return RBRA; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "cmm.l"
+#line 17 "cmm.l"
 { ECHO;  return WRITE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "cmm.l"
+#line 18 "cmm.l"
 { ECHO;  return WRITELN; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 17 "cmm.l"
+#line 19 "cmm.l"
 { ECHO;  return SEMI; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 18 "cmm.l"
+#line 20 "cmm.l"
 { ECHO;  return PLUS; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 19 "cmm.l"
+#line 21 "cmm.l"
 { ECHO;  return PLUS2; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 20 "cmm.l"
+#line 22 "cmm.l"
 { ECHO;  return MINUS; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 21 "cmm.l"
+#line 23 "cmm.l"
 { ECHO;  return MULT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 22 "cmm.l"
+#line 24 "cmm.l"
 { ECHO;  return DIV; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 23 "cmm.l"
+#line 25 "cmm.l"
 { ECHO;  return MOD; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 24 "cmm.l"
+#line 26 "cmm.l"
 { ECHO;  return IF; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 25 "cmm.l"
+#line 27 "cmm.l"
 { ECHO;  return THEN; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 26 "cmm.l"
+#line 28 "cmm.l"
 { ECHO;  return ELSE; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 27 "cmm.l"
+#line 29 "cmm.l"
 { ECHO;  return ENDIF; } 
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 28 "cmm.l"
+#line 30 "cmm.l"
 { ECHO;  return WHILE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 29 "cmm.l"
+#line 31 "cmm.l"
 { ECHO;  return DO; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 30 "cmm.l"
+#line 32 "cmm.l"
 { ECHO;  return READ; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 31 "cmm.l"
+#line 33 "cmm.l"
 { ECHO;  return RETURN; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 32 "cmm.l"
+#line 34 "cmm.l"
 { ECHO;  return COLEQ; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 33 "cmm.l"
+#line 35 "cmm.l"
 { ECHO;  return GE; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 34 "cmm.l"
+#line 36 "cmm.l"
 { ECHO;  return GT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 35 "cmm.l"
+#line 37 "cmm.l"
 { ECHO;  return LE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 36 "cmm.l"
+#line 38 "cmm.l"
 { ECHO;  return LT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 37 "cmm.l"
+#line 39 "cmm.l"
 { ECHO;  return NE; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 38 "cmm.l"
+#line 40 "cmm.l"
 { ECHO;  return EQ; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 40 "cmm.l"
+#line 42 "cmm.l"
 {
 	ECHO;
 	yylval.val = atoi(yytext);
@@ -935,7 +970,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 45 "cmm.l"
+#line 47 "cmm.l"
 {
 	ECHO;
 	yylval.fval = atof(yytext);
@@ -944,7 +979,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 50 "cmm.l"
+#line 52 "cmm.l"
 {
 	ECHO;
 	yylval.name = (char*)malloc(strlen(yytext)+1);
@@ -955,14 +990,14 @@ YY_RULE_SETUP
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 56 "cmm.l"
+#line 58 "cmm.l"
 {
 	ECHO;
 }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 59 "cmm.l"
+#line 61 "cmm.l"
 {
 	ECHO;
 	return yytext[0];
@@ -970,10 +1005,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 63 "cmm.l"
+#line 65 "cmm.l"
 ECHO;
 	YY_BREAK
-#line 977 "lex.yy.c"
+#line 1012 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1380,6 +1415,11 @@ static int yy_get_next_buffer (void)
 	c = *(unsigned char *) (yy_c_buf_p);	/* cast for 8-bit char's */
 	*(yy_c_buf_p) = '\0';	/* preserve yytext */
 	(yy_hold_char) = *++(yy_c_buf_p);
+
+	if ( c == '\n' )
+		
+    yylineno++;
+;
 
 	return c;
 }
@@ -1847,6 +1887,9 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
+    /* We do not touch yylineno unless the option is enabled. */
+    yylineno =  1;
+    
     (yy_buffer_stack) = NULL;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
@@ -1941,4 +1984,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 63 "cmm.l"
+#line 65 "cmm.l"

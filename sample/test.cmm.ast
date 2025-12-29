@@ -1,0 +1,33 @@
+FUNC DEF: main ()
+  BLOCK
+    VAR:
+      ID: n
+
+    BINARY OPER: :=
+      LEFT:
+        ID: n
+      RIGHT:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    BINARY OPER: :=
+      LEFT:
+        ID: n
+      RIGHT:
+        INT: 10
+    UNARY OPER: WRITE
+      RIGHT:
+        ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    UNARY OPER: WRITE
+      RIGHT:
+        ID: n
+    UNARY OPER: WRITELN
+      RIGHT:
+    UNARY OPER: WRITELN
+      RIGHT:
+

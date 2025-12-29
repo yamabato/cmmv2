@@ -2,6 +2,8 @@
 
 #include "ast.h"
 
+extern int yylineno;
+
 Node *new_node(NodeKind kind) {
   Node *node = (Node *)malloc(sizeof(Node));
 
@@ -15,6 +17,8 @@ Node *new_node(NodeKind kind) {
   node->next = NULL;
 
   node->cval = NULL;
+
+  node->line = yylineno;
 
   return node;
 }

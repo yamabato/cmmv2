@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include "parser.h"
+#include "tac.h"
 #include "show.h"
 
 extern FILE *yyin;

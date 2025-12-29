@@ -12,6 +12,7 @@ void show_node(Node *node, int depth, FILE *fp) {
 
   NodeKind kind = node->kind;
 
+  // fprintf(fp, "%04d: ", node->line);
   print_spaces(depth, fp);
   switch (kind) {
     case NK_INT:

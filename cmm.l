@@ -2,6 +2,8 @@
 #undef ECHO
 #define ECHO printf("%s", yytext);
 %}
+%option yylineno
+
 %option noinput
 %option nounput
 %%

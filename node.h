@@ -29,6 +29,8 @@ typedef struct Node {
   struct Node *ids;
   struct Node *stmts;
 
+  int line;
+
   int ival;
   double dval;
   char *cval;
