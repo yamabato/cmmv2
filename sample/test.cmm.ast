@@ -1,33 +1,16 @@
-FUNC DEF: main ()
-  BLOCK
-    VAR:
-      ID: n
+0007: 0x5fba02700e00 (nil) FUNC DEF: main ()
+0007: 0x5fba02700d80 (nil)   BLOCK
+0002: 0x5fba027009c0 0x5fba02700b60     VAR:
+0002: 0x5fba02700940 (nil)       ID: n
 
-    BINARY OPER: :=
+0004: 0x5fba02700b60 0x5fba02700c80     BINARY OPER: :=
       LEFT:
-        ID: n
+0004: 0x5fba02700ae0 (nil)         ID: n
       RIGHT:
-        INT: 10
-    UNARY OPER: WRITE
+0004: 0x5fba02700a60 (nil)         INT: 10
+0005: 0x5fba02700c80 0x5fba02700d00     UNARY OPER: WRITE
       RIGHT:
-        ID: n
-    UNARY OPER: WRITELN
-      RIGHT:
-    BINARY OPER: :=
-      LEFT:
-        ID: n
-      RIGHT:
-        INT: 10
-    UNARY OPER: WRITE
-      RIGHT:
-        ID: n
-    UNARY OPER: WRITELN
-      RIGHT:
-    UNARY OPER: WRITE
-      RIGHT:
-        ID: n
-    UNARY OPER: WRITELN
-      RIGHT:
-    UNARY OPER: WRITELN
+0005: 0x5fba02700c00 (nil)         ID: n
+0006: 0x5fba02700d00 (nil)     UNARY OPER: WRITELN
       RIGHT:
 

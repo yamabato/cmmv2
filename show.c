@@ -12,7 +12,8 @@ void show_node(Node *node, int depth, FILE *fp) {
 
   NodeKind kind = node->kind;
 
-  // fprintf(fp, "%04d: ", node->line);
+  fprintf(fp, "%04d: ", node->line);
+  // fprintf(fp, "%p %p ", node, node->next);
   print_spaces(depth, fp);
   switch (kind) {
     case NK_INT:
@@ -75,9 +76,7 @@ void show_node(Node *node, int depth, FILE *fp) {
 
     case NK_BLOCK:
       fprintf(fp, "BLOCK\n");
-      for (Node *s=node->stmts; s!=NULL; s=s->next) {
-        show_node(s, depth+1, fp);
-      }
+      show_node(node->stmts, depth+1, fp);
       break;
     case NK_IF:
       fprintf(fp, "IF\n");
