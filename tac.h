@@ -2,9 +2,14 @@
 
 #include <stdint.h>
 
+typedef struct TAC TAC;
+
 // TACの命令種
 typedef enum {
   TO_ADD,
+
+  TO_JMP,
+  TO_LBL,
 } TACCode;
 
 typedef enum {
@@ -40,6 +45,9 @@ typedef union {
   } var;
   // 一時変数
   int tvar;
+
+  // ジャンプ先など
+  TAC *tac;
 } TACVal;
 
 // TACでの値
@@ -51,9 +59,11 @@ typedef struct {
 
 // TACの1命令
 // dst = op(src1, src2);
-typedef struct {
+struct TAC {
   TACCode  op;
   TACValue dst;
   TACValue src1;
   TACValue src2;
-} TAC;
+
+  TAC *next;
+};

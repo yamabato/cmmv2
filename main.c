@@ -31,5 +31,8 @@ int main(int argc, char **argv) {
 
   tac = gen_tac(ast_root);
 
+  printf("%d\n", tac->op);
+  printf("%d\n", tac->next->op);
+
   return 0;
 }
