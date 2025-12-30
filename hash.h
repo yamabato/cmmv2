@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 // pearson hashing
-static uint8_t PH_T_TABLE[256] = {
+static const uint8_t PH_T_TABLE[256] = {
   134, 248, 155, 223, 228, 189, 218, 139, 176, 117,
   122, 113, 152, 170, 211,  12, 252, 115, 153,  81,
    47,  83,  77, 124, 233,  16,  82,  22, 125,  67,

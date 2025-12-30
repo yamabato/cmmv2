@@ -32,7 +32,7 @@ typedef union {
 // TAC生成時などにシンボルを管理するよう
 typedef struct Symbol {
   char *name;
-  int *hash;
+  int hash;
   ValueType  type; // 変数や返り値の型(int, float, ...)
   SymbolKind kind; // 種類(variable, constant, function)
   SymbolInfo info;
@@ -42,4 +42,8 @@ typedef struct Symbol {
 typedef struct SymbolTable {
   Symbol *buckets[256];
   SymbolTable *parent;
+  int level;
 } SymbolTable;
+
+SymbolTable *new_symbol_table(SymbolTable *);
+Symbol *append_symbol(SymbolTable *, char *, SymbolKind);
