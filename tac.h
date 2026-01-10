@@ -61,9 +61,9 @@ typedef struct {
 // dst = op(src1, src2);
 struct TAC {
   TACCode  op;
-  TACValue dst;
-  TACValue src1;
-  TACValue src2;
+  TACValue *dst;
+  TACValue *src1;
+  TACValue *src2;
 
   TAC *next;
 };
