@@ -55,6 +55,14 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
   CodeBlock *blk;
   SymbolTable *ftbl;
+  int sym_ld;
+
+  sym_ld = search_symbol(tbl, node->cval, NULL);
+  if (sym_ld == 0) {
+    printf("error\n");
+    exit(1);
+  }
+  append_symbol(tbl, node->cval, SK_FUNC);
 
   blk = (CodeBlock *)malloc(sizeof(CodeBlock));
   blk->name = strdup(node->cval);
@@ -75,6 +83,11 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   CodeBlock *fb;
   CodeBlock *blk;
 
+  blk = (CodeBlock *)malloc(sizeof(CodeBlock));
+  blk->head = blk->tail = NULL;
+  blk->param_count = blk->var_count = 0;
+  blk->next = NULL;
+
   if (tbl == NULL) {
     tbl = new_symbol_table(NULL);
   }
@@ -86,7 +99,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   }
 
   for (Node *n=node; n!=NULL; n=n->next) {
-    if (n->kind==NK_FUNC && strcmp(n->cval, "main")!=0) {
+    if (n->kind==NK_FUNC && strcmp(n->cval, "main")==0) {
       fb = gen_func_code_block(n, tbl);
       blk = connect_code_block(blk, fb);
       break;
@@ -95,7 +108,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   connect_code(blk, new_code(INS_OPR, 0, 0));
 
   for (Node *n=node; n!=NULL; n=n->next) {
-    if (n->kind==NK_FUNC && strcmp(n->cval, "main")==0) {
+    if (n->kind==NK_FUNC && strcmp(n->cval, "main")!=0) {
       fb = gen_func_code_block(n, tbl);
       blk = connect_code_block(blk, fb);
     }

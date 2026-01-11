@@ -42,10 +42,10 @@ int search_symbol(SymbolTable *st, char *name, Symbol **sym) {
   int lvl = 0;
   int hash = pearson_hashing(name);
 
-  for (SymbolTable *tbl=st; st!=NULL; st=st->parent) {
+  for (SymbolTable *tbl=st; tbl!=NULL; tbl=tbl->parent) {
     for (Symbol *s=tbl->buckets[hash]; s!=NULL; s=s->next) {
-      if (strcmp(s->name, name) == 1) {
-        *sym = s;
+      if (strcmp(s->name, name) == 0) {
+        if (sym!=NULL) { *sym = s; }
         return lvl;
       }
     }

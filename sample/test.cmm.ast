@@ -12,6 +12,20 @@ FUNC DEF: f (x, y)
               ID: y
 
 
+FUNC DEF: f (x, y)
+  BLOCK
+    RETURN
+      BINARY OPER: +
+        LEFT:
+          ID: x
+        RIGHT:
+          BINARY OPER: *
+            LEFT:
+              ID: y
+            RIGHT:
+              ID: y
+
+
 FUNC DEF: main ()
   BLOCK
     VAR:

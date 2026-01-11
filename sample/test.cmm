@@ -1,6 +1,9 @@
 f (x, y) {
   return x+y*y;
 }
+f (x, y) {
+  return x+y*y;
+}
 
 main {
   var n;

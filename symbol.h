@@ -33,10 +33,14 @@ typedef union {
 typedef struct Symbol {
   char *name;
   int hash;
-  ValueType  type; // 変数や返り値の型(int, float, ...)
   SymbolKind kind; // 種類(variable, constant, function)
-  SymbolInfo info;
+  int parms; // 引数の個数
+  int rets;  // 返り値の個数
   Symbol *next;
+
+  // 未使用
+  ValueType  type; // 変数や返り値の型(int, float, ...)
+  SymbolInfo info;
 } Symbol;
 
 typedef struct SymbolTable {
