@@ -6,6 +6,8 @@ Node *new_node(NodeKind);
 
 Node *new_int_node(int);
 Node *new_id_node(char *);
+Node *new_param_node(Node *, char *);
+Node *new_type_name_node(char *);
 Node *new_binary_node(NodeKind, Node *, Node *);
 Node *new_unary_node(NodeKind, Node *);
 Node *new_if_node(Node *, Node *, Node *);

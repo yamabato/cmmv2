@@ -13,6 +13,7 @@ typedef enum {
   NK_VAR,    // 21
   NK_ASSIGN, // 22
   NK_WRITE, NK_WRITELN, NK_READ, // 23-25
+  NK_PARAM, NK_TYPE, // 26-27
 } NodeKind;
 
 // ノード

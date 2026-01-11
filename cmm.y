@@ -29,6 +29,7 @@ Node *ast_root;
 %}
 
 %token VAR
+%token INT
 %token MAIN
 %token ID
 %token LPAR RPAR
@@ -97,6 +98,15 @@ params
 }
 	| { /* epsilon */
 	$$.node = NULL;
+};
+
+param : type_name ID {
+	$$.node = new_param_node($1.node, $2.name);
+};
+
+type_name
+	: INT {
+	$$.node = new_type_name_node($1.name);
 };
 
 body

@@ -37,3 +37,20 @@ Symbol *append_symbol(SymbolTable *st, char *name, SymbolKind kind) {
 
   return sym;
 }
+
+int search_symbol(SymbolTable *st, char *name, Symbol **sym) {
+  int lvl = 0;
+  int hash = pearson_hashing(name);
+
+  for (SymbolTable *tbl=st; st!=NULL; st=st->parent) {
+    for (Symbol *s=tbl->buckets[hash]; s!=NULL; s=s->next) {
+      if (strcmp(s->name, name) == 1) {
+        *sym = s;
+        return lvl;
+      }
+    }
+    lvl++;
+  }
+
+  return -1;
+}

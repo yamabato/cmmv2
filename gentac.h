@@ -20,9 +20,16 @@ typedef struct TACList {
   TAC *tail;
 } TACList;
 
+ValueType conv_to_value_type(Node *);
+
+TACValue *new_tac_value(TACArgKind, ValueType);
+TACValue *new_tv_imm_int(int);
+TACValue *new_tv_var(int, char *, ValueType);
+
 TAC *emit_instr_lbl(int);
 TAC *emit_instr_jmp(TAC *);
 TAC *emit_instr_ret(TACValue *);
+TAC *emit_instr_param(char *, int);
 
 TACList *connect_tac_list(TACList *, TACList *);
 TACList *insert_tac(TACList *, TAC *, bool);

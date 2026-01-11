@@ -8,6 +8,7 @@
 %option nounput
 %%
 "var"     { ECHO;  return VAR; }
+"int"     { ECHO;  return INT; }
 "main"    { ECHO;  return MAIN; }
 "("       { ECHO;  return LPAR; }
 ")"       { ECHO;  return RPAR; }

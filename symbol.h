@@ -47,3 +47,4 @@ typedef struct SymbolTable {
 
 SymbolTable *new_symbol_table(SymbolTable *);
 Symbol *append_symbol(SymbolTable *, char *, SymbolKind);
+int search_symbol(SymbolTable *, char *, Symbol **);

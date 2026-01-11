@@ -3,15 +3,16 @@
 
 #include "node.h"
 #include "parser.h"
-#include "gentac.h"
 #include "show.h"
+#include "show.h"
+#include "gencode.h"
 
 extern FILE *yyin;
 
 int main(int argc, char **argv) {
   char *fname;
   FILE *ast_file;
-  TAC *tac;
+  CodeBlock *code_blocks;
 
   if (argc < 2) {
     printf("usage: %s <input file>\n", argv[0]);
@@ -29,10 +30,8 @@ int main(int argc, char **argv) {
   ast_file = fopen(strcat(fname, ".ast"), "w");
   show_ast(ast_root, ast_file);
 
-  tac = gen_tac(ast_root);
-
-  printf("%d\n", tac->op);
-  printf("%d\n", tac->next->op);
+  // AST -> PL/0コード
+  code_blocks = gen_code_blocks(ast_root);
 
   return 0;
 }

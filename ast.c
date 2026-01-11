@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdlib.h>
 
 #include "ast.h"
@@ -32,6 +33,20 @@ Node *new_int_node(int val) {
 Node *new_id_node(char *name) {
   Node *node = new_node(NK_ID);
   node->cval = name;
+  return node;
+}
+
+
+Node *new_param_node(Node *type, char *name) {
+  Node *node = new_node(NK_PARAM);
+  node->left = type;
+  node->cval = strdup(name);
+  return node;
+}
+
+Node *new_type_name_node(char *name) {
+  Node *node =new_node(NK_TYPE);
+  node->cval = strdup(name);
   return node;
 }
 

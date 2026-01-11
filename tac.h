@@ -8,8 +8,12 @@ typedef struct TAC TAC;
 typedef enum {
   TO_ADD,
 
+  TO_PRM, // 引数を受け取る
+  TO_ARG,   // 引数を与える
+
   TO_JMP,
   TO_LBL,
+  TO_RET,
 } TACCode;
 
 typedef enum {
