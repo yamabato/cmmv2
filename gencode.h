@@ -1,9 +1,11 @@
 #pragma once
 
 #include "node.h"
+#include "symbol.h"
 
 typedef enum {
-  INS_ADD,
+  INS_OPR,
+  INS_RET,
 } Instr;
 
 typedef struct Code {
@@ -28,7 +30,6 @@ typedef struct CodeBlock {
 
 CodeBlock *connect_code_block(CodeBlock *, CodeBlock *);
 
-CodeBlock *gen_code(Node *);
-CodeBlock *gen_func_code_block(Node *);
-CodeBlock *gen_code_blocks(Node *);
-void append_code(CodeBlock *, Node *);
+CodeBlock *gen_func_code_block(Node *, SymbolTable *);
+CodeBlock *gen_code_blocks(Node *, SymbolTable *);
+void append_code(CodeBlock *, Node *, SymbolTable *);

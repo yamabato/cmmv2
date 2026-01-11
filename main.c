@@ -31,7 +31,9 @@ int main(int argc, char **argv) {
   show_ast(ast_root, ast_file);
 
   // AST -> PL/0コード
-  code_blocks = gen_code_blocks(ast_root);
+  code_blocks = gen_code_blocks(ast_root, NULL);
+
+  printf("%p\n", code_blocks->head);
 
   return 0;
 }
