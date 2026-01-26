@@ -35,6 +35,8 @@ Code *new_code(Instr instr, int l, int a) {
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int n, opr_n;
+  int iflbl, elselbl;
+  int lp_head_lbl, lp_tail_lbl;
   int ok;
   Symbol *sym;
 
@@ -62,21 +64,62 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         connect_code(blk, new_code(INS_INT, 0, n));
       }
       break;
+
     case NK_ASSIGN:
       append_code(blk, node->right, tbl);
       ok = search_symbol(tbl, node->left->cval, &sym);
       // ok = 0ならその関数内 -1は未定義
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
       break;
+
     case NK_ADD:
     case NK_MUL:
+    case NK_LT:
+    case NK_GT:
       append_code(blk, node->left, tbl);
       append_code(blk, node->right, tbl);
 
       opr_n = 7; // 未使用
       if (kind == NK_ADD) { opr_n = 2; }
       else if (kind == NK_MUL) { opr_n = 4; }
+      else if (kind == NK_LT) { opr_n = 10; }
+      else if (kind == NK_GT) { opr_n = 12; }
+
       connect_code(blk, new_code(INS_OPR, 0, opr_n));
+      break;
+
+    case NK_IF:
+      elselbl = (blk->label_n)++;
+      append_code(blk, node->cond, tbl);
+      connect_code(blk, new_code(INS_JPC, 0, elselbl));
+      append_code(blk, node->if_block, tbl);
+
+      if (node->else_block != NULL) {
+        iflbl = (blk->label_n)++;
+        connect_code(blk, new_code(INS_JMP, 0, iflbl));
+        connect_code(blk, new_code(INS_LAB, 0, elselbl));
+        append_code(blk, node->else_block, tbl);
+        connect_code(blk, new_code(INS_LAB, 0, iflbl));
+      } else {
+        connect_code(blk, new_code(INS_LAB, 0, elselbl));
+      }
+      break;
+    case NK_WHILE:
+      lp_tail_lbl = (blk->label_n)++;
+
+      connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
+      append_code(blk, node->cond, tbl);
+      connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
+      append_code(blk, node->body, tbl);
+      connect_code(blk, new_code(INS_JMP, 0, lp_head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
+
+      break;
+
+    case NK_BLOCK:
+      for (Node *s=node->stmts; s!=NULL; s=s->next) {
+        append_code(blk, s, tbl);
+      }
       break;
 
     case NK_CALL:
@@ -90,12 +133,20 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_RET, 0, blk->param_count));
       break;
+
     case NK_WRITE:
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_CSP, 0, 1));
       break;
     case NK_WRITELN:
       connect_code(blk, new_code(INS_CSP, 0, 2));
+      break;
+    case NK_READ:
+      if (node->right->kind == NK_ID) {
+        connect_code(blk, new_code(INS_CSP, 0, 0));
+        ok = search_symbol(tbl, node->right->cval, &sym);
+        connect_code(blk, new_code(INS_STO, 0, sym->offset));
+      }
       break;
     default:
       break;
@@ -130,7 +181,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Node *n=node->body->stmts; n!=NULL; n=n->next) {
     if (n->kind == NK_FUNC) {
       sym = append_symbol(ftbl, n->cval, SK_FUNC);
-      sym->label = ++(blk->label_n);
+      sym->label = (blk->label_n)++;
     }
   }
 
@@ -161,7 +212,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   blk->head = blk->tail = NULL;
   blk->param_count = blk->var_count = 0;
   blk->next = NULL;
-  blk->label_n = 0;
+  blk->label_n = 1;
 
   if (tbl == NULL) {
     tbl = new_symbol_table(NULL);
@@ -171,7 +222,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   for (Node *n=node; n!=NULL; n=n->next) {
     if (n->kind == NK_FUNC) {
       sym = append_symbol(tbl, n->cval, SK_FUNC);
-      sym->label = ++(blk->label_n);
+      sym->label = (blk->label_n)++;
     }
   }
 

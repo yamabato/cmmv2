@@ -1,152 +1,152 @@
-0001: FUNC DEF: test (a, b, c)
-0003:   BLOCK
-0002:     RETURN
-0002:       BINARY OPER: +
+FUNC DEF: test (a, b, c)
+  BLOCK
+    RETURN
+      BINARY OPER: +
         LEFT:
-0002:           ID: a
+          ID: a
         RIGHT:
-0002:           BINARY OPER: *
+          BINARY OPER: *
             LEFT:
-0002:               ID: b
+              ID: b
             RIGHT:
-0002:               ID: c
+              ID: c
 
 
-0005: FUNC DEF: fact (n)
-0011:   BLOCK
-0010:     IF
+FUNC DEF: fact (n)
+  BLOCK
+    IF
       COND
-0006:         BINARY OPER: <=
+        BINARY OPER: <=
           LEFT:
-0006:             ID: n
+            ID: n
           RIGHT:
-0006:             INT: 1
+            INT: 1
 
-0008:       BLOCK
-0007:         RETURN
-0007:           INT: 1
+      BLOCK
+        RETURN
+          INT: 1
 
     ELSE
-0010:       BLOCK
-0009:         RETURN
-0009:           BINARY OPER: *
+      BLOCK
+        RETURN
+          BINARY OPER: *
             LEFT:
-0009:               ID: n
+              ID: n
             RIGHT:
-0009:               CALL: fact
+              CALL: fact
                 PARAMS:
-0009:                   BINARY OPER: -
+                  BINARY OPER: -
                     LEFT:
-0009:                       ID: n
+                      ID: n
                     RIGHT:
-0009:                       INT: 1
+                      INT: 1
 
 
-0013: FUNC DEF: fizzbuzz (n)
-0031:   BLOCK
-0014:     VAR:
-0014:       ID: i
+FUNC DEF: fizzbuzz (n)
+  BLOCK
+    VAR:
+      ID: i
 
-0016:     BINARY OPER: :=
+    BINARY OPER: :=
       LEFT:
-0016:         ID: i
+        ID: i
       RIGHT:
-0016:         INT: 1
-0030:     WHILE
+        INT: 1
+    WHILE
       COND
-0018:         BINARY OPER: <=
+        BINARY OPER: <=
           LEFT:
-0018:             ID: i
+            ID: i
           RIGHT:
-0018:             ID: n
+            ID: n
 
-0030:       BLOCK
-0027:         IF
+      BLOCK
+        IF
           COND
-0019:             BINARY OPER: ==
+            BINARY OPER: ==
               LEFT:
-0019:                 BINARY OPER: %
+                BINARY OPER: %
                   LEFT:
-0019:                     ID: i
+                    ID: i
                   RIGHT:
-0019:                     INT: 15
+                    INT: 15
               RIGHT:
-0019:                 INT: 0
+                INT: 0
 
-0021:           BLOCK
-0020:             UNARY OPER: WRITE
+          BLOCK
+            UNARY OPER: WRITE
               RIGHT:
-0020:                 INT: 0
+                INT: 0
         ELSE
-0027:           IF
+          IF
             COND
-0021:               BINARY OPER: ==
+              BINARY OPER: ==
                 LEFT:
-0021:                   BINARY OPER: %
+                  BINARY OPER: %
                     LEFT:
-0021:                       ID: i
+                      ID: i
                     RIGHT:
-0021:                       INT: 3
+                      INT: 3
                 RIGHT:
-0021:                   INT: 0
+                  INT: 0
 
-0023:             BLOCK
-0022:               UNARY OPER: WRITE
+            BLOCK
+              UNARY OPER: WRITE
                 RIGHT:
-0022:                   INT: 1
+                  INT: 1
           ELSE
-0027:             IF
+            IF
               COND
-0023:                 BINARY OPER: ==
+                BINARY OPER: ==
                   LEFT:
-0023:                     BINARY OPER: %
+                    BINARY OPER: %
                       LEFT:
-0023:                         ID: i
+                        ID: i
                       RIGHT:
-0023:                         INT: 5
+                        INT: 5
                   RIGHT:
-0023:                     INT: 0
+                    INT: 0
 
-0025:               BLOCK
-0024:                 UNARY OPER: WRITE
+              BLOCK
+                UNARY OPER: WRITE
                   RIGHT:
-0024:                     INT: 2
+                    INT: 2
             ELSE
-0027:               BLOCK
-0026:                 UNARY OPER: WRITE
+              BLOCK
+                UNARY OPER: WRITE
                   RIGHT:
-0026:                     INT: 3
-0029:         BINARY OPER: :=
+                    INT: 3
+        BINARY OPER: :=
           LEFT:
-0029:             ID: i
+            ID: i
           RIGHT:
-0029:             BINARY OPER: +
+            BINARY OPER: +
               LEFT:
-0029:                 ID: i
+                ID: i
               RIGHT:
-0029:                 INT: 1
+                INT: 1
 
-0043: FUNC DEF: main ()
-0043:   BLOCK
-0034:     VAR:
-0034:       ID: n
+FUNC DEF: main ()
+  BLOCK
+    VAR:
+      ID: n
 
-0036:     UNARY OPER: READ
+    UNARY OPER: READ
       RIGHT:
-0036:         ID: n
-0037:     UNARY OPER: WRITE
+        ID: n
+    UNARY OPER: WRITE
       RIGHT:
-0037:         CALL: fact
+        CALL: fact
           PARAMS:
-0037:             ID: n
-0038:     UNARY OPER: WRITELN
+            ID: n
+    UNARY OPER: WRITELN
       RIGHT:
-0040:     CALL: fizzbuzz
+    CALL: fizzbuzz
       PARAMS:
-0040:         INT: 10
-0042:     UNARY OPER: WRITE
+        INT: 10
+    UNARY OPER: WRITE
       RIGHT:
-0042:         UNARY OPER: MINUS
+        UNARY OPER: MINUS
           RIGHT:
-0042:             INT: 1
+            INT: 1
 
