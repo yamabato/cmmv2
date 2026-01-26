@@ -35,6 +35,7 @@ Code *new_code(Instr instr, int l, int a) {
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int n;
+  Symbol *sym;
 
   if (node == NULL) { return; }
 
@@ -43,7 +44,8 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_VAR:
       n = 0;
       for (Node *id=node->ids; id!=NULL; id=id->next) {
-        append_symbol(tbl, id->cval, SK_VAR);
+        sym = append_symbol(tbl, id->cval, SK_VAR);
+        sym->offset = blk->var_count;
         blk->var_count++;
         n++;
       }
@@ -68,6 +70,8 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
   CodeBlock *blk;
   SymbolTable *ftbl;
   int sym_ld;
+  Symbol *sym;
+  int i;
 
   sym_ld = search_symbol(tbl, node->cval, NULL);
   if (sym_ld == 0) {
@@ -79,13 +83,16 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
   blk = (CodeBlock *)malloc(sizeof(CodeBlock));
   blk->name = strdup(node->cval);
   blk->head = blk->tail = NULL;
-  blk->param_count = blk->var_count = 0;
+  blk->param_count = 0;
+  blk->var_count = 3;
   blk->next = NULL;
 
   ftbl = new_symbol_table(tbl);
 
+  i = 0;
   for (Node *p=node->params; p!=NULL; p=p->next) {
-    append_symbol(ftbl, p->cval, SK_VAR);
+    sym = append_symbol(ftbl, p->cval, SK_VAR);
+    sym->offset = i - node->ival;
     blk->param_count++;
   }
 

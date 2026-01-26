@@ -82,6 +82,7 @@ fhead : fid LPAR params RPAR {
 	$$.node = new_node(NK_FUNC);
 	$$.node->cval = $1.node->cval;
 	$$.node->params = $3.node;
+	$$.node->ival = $3.node->ival;
 };
 
 fid : ID {
@@ -92,9 +93,11 @@ params
 	: params COMMA ID {
 	Node *p = new_id_node($3.name);
 	$$.node = append_node($1.node, p);
+	$$.node->ival = $1.node->ival + 1;
 }
 	| ID {
 	$$.node = new_id_node($1.name);
+	$$.node->ival = 1;
 }
 	| { /* epsilon */
 	$$.node = NULL;

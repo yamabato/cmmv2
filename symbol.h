@@ -36,6 +36,7 @@ typedef struct Symbol {
   SymbolKind kind; // 種類(variable, constant, function)
   int parms; // 引数の個数
   int rets;  // 返り値の個数
+  int offset;
   Symbol *next;
 
   // 未使用
