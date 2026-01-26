@@ -4,15 +4,31 @@
 #include "symbol.h"
 
 typedef enum {
+  INS_LOD,
+  INS_LIT,
+  INS_STO,
   INS_OPR,
-  INS_RET,
   INS_INT,
+  INS_JMP,
+  INS_JPC,
+  INS_CAL,
+  INS_CSP,
+  INS_LAB,
+  INS_RET,
 } Instr;
 
 static char *INSTR_NAME[] = {
+  "LOD",
+  "LIT",
+  "STO",
   "OPR",
-  "RET",
   "INT",
+  "JMP",
+  "JPC",
+  "CAL",
+  "CSP",
+  "LAB",
+  "RET",
 };
 
 typedef struct Code {

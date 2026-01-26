@@ -35,12 +35,21 @@ Code *new_code(Instr instr, int l, int a) {
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int n;
+  int ok;
   Symbol *sym;
 
   if (node == NULL) { return; }
 
   kind = node->kind;
   switch (kind) {
+    case NK_INT:
+      connect_code(blk, new_code(INS_LIT, 0, node->ival));
+      break;
+    case NK_ID:
+      ok = search_symbol(tbl, node->cval, &sym);
+      // ok!=0ならエラー対応(ok>0の場合は、オフセット不明)
+      connect_code(blk, new_code(INS_LOD, 0, sym->offset));
+      break;
     case NK_VAR:
       n = 0;
       for (Node *id=node->ids; id!=NULL; id=id->next) {
@@ -52,6 +61,12 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       if (n > 0) {
         connect_code(blk, new_code(INS_INT, 0, n));
       }
+      break;
+    case NK_ASSIGN:
+      append_code(blk, node->right, tbl);
+      ok = search_symbol(tbl, node->left->cval, &sym);
+      // ok = 0ならその関数内 -1は未定義
+      connect_code(blk, new_code(INS_STO, 0, sym->offset));
       break;
     case NK_RETURN:
       append_code(blk, node->right, tbl);
