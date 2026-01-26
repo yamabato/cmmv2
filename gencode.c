@@ -34,7 +34,7 @@ Code *new_code(Instr instr, int l, int a) {
 
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
-  int n;
+  int n, opr_n;
   int ok;
   Symbol *sym;
 
@@ -68,6 +68,16 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       // ok = 0ならその関数内 -1は未定義
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
       break;
+    case NK_ADD:
+    case NK_MUL:
+      append_code(blk, node->left, tbl);
+      append_code(blk, node->right, tbl);
+
+      opr_n = 7; // 未使用
+      if (kind == NK_ADD) { opr_n = 2; }
+      else if (kind == NK_MUL) { opr_n = 4; }
+      connect_code(blk, new_code(INS_OPR, 0, opr_n));
+      break;
     case NK_RETURN:
       append_code(blk, node->right, tbl);
       if (node->right == NULL) {
@@ -88,7 +98,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   }
 }
 
-CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
+CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   CodeBlock *blk;
   SymbolTable *ftbl;
   int sym_ld;
@@ -96,11 +106,10 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
   int i;
 
   sym_ld = search_symbol(tbl, node->cval, NULL);
-  if (sym_ld == 0) {
+  if (sym_ld > 0) {
     printf("error\n");
     exit(1);
   }
-  append_symbol(tbl, node->cval, SK_FUNC);
 
   blk = (CodeBlock *)malloc(sizeof(CodeBlock));
   blk->name = strdup(node->cval);
@@ -108,13 +117,26 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
   blk->param_count = 0;
   blk->var_count = 3;
   blk->next = NULL;
+  blk->label_n = lbl;
 
   ftbl = new_symbol_table(tbl);
+
+
+  // funcのスキャン
+  for (Node *n=node->body->stmts; n!=NULL; n=n->next) {
+    if (n->kind == NK_FUNC) {
+      sym = append_symbol(ftbl, n->cval, SK_FUNC);
+      sym->label = ++(blk->label_n);
+    }
+  }
+
+  search_symbol(tbl, node->cval, &sym);
+  connect_code(blk, new_code(INS_LAB, 0, sym->label));
 
   i = 0;
   for (Node *p=node->params; p!=NULL; p=p->next) {
     sym = append_symbol(ftbl, p->cval, SK_VAR);
-    sym->offset = i - node->ival;
+    sym->offset = (i++) - node->ival;
     blk->param_count++;
   }
 
@@ -128,14 +150,24 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl) {
 CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   CodeBlock *fb = NULL;
   CodeBlock *blk = NULL;
+  Symbol *sym;
 
   blk = (CodeBlock *)malloc(sizeof(CodeBlock));
   blk->head = blk->tail = NULL;
   blk->param_count = blk->var_count = 0;
   blk->next = NULL;
+  blk->label_n = 0;
 
   if (tbl == NULL) {
     tbl = new_symbol_table(NULL);
+  }
+
+  // 関数をスキャン
+  for (Node *n=node; n!=NULL; n=n->next) {
+    if (n->kind == NK_FUNC) {
+      sym = append_symbol(tbl, n->cval, SK_FUNC);
+      sym->label = ++(blk->label_n);
+    }
   }
 
   for (Node *n=node; n!=NULL; n=n->next) {
@@ -146,8 +178,9 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
 
   for (Node *n=node; n!=NULL; n=n->next) {
     if (n->kind==NK_FUNC && strcmp(n->cval, "main")==0) {
-      fb = gen_func_code_block(n, tbl);
+      fb = gen_func_code_block(n, tbl, blk->label_n);
       blk = connect_code_block(blk, fb);
+      blk->label_n = fb->label_n;
       break;
     }
   }
@@ -155,8 +188,9 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
 
   for (Node *n=node; n!=NULL; n=n->next) {
     if (n->kind==NK_FUNC && strcmp(n->cval, "main")!=0) {
-      fb = gen_func_code_block(n, tbl);
+      fb = gen_func_code_block(n, tbl, blk->label_n);
       blk = connect_code_block(blk, fb);
+      blk->label_n = fb->label_n;
     }
   }
 

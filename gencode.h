@@ -48,12 +48,14 @@ typedef struct CodeBlock {
   int param_count;
   int var_count;
 
+  int label_n;
+
   struct CodeBlock *next;
 } CodeBlock;
 
 CodeBlock *connect_code_block(CodeBlock *, CodeBlock *);
 
-CodeBlock *gen_func_code_block(Node *, SymbolTable *);
+CodeBlock *gen_func_code_block(Node *, SymbolTable *, int);
 CodeBlock *gen_code_blocks(Node *, SymbolTable *);
 void append_code(CodeBlock *, Node *, SymbolTable *);
 
