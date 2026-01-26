@@ -176,6 +176,9 @@ st
 	| RETURN E SEMI {
 	$$.node = new_unary_node(NK_RETURN, $2.node);
 }
+	| RETURN SEMI {
+	$$.node = new_node(NK_RETURN);
+	}
 	| body {
 	$$.node = $1.node;
 };

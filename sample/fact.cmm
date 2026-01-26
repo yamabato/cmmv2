@@ -25,6 +25,8 @@ fizzbuzz(n) {
 
     i := i+1;
   }
+
+  return;
 }
 
 main {
@@ -36,5 +38,6 @@ main {
 
   fizzbuzz(20);
 
-  write -1;
+  write -123;
+  writeln;
 }

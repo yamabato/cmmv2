@@ -73,7 +73,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_ADD:
     case NK_SUB:
     case NK_MUL:
+    case NK_DIV:
     case NK_EQ:
+    case NK_NE:
     case NK_LT:
     case NK_LE:
     case NK_GT:
@@ -85,7 +87,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       if (kind == NK_ADD) { opr_n = 2; }
       if (kind == NK_SUB) { opr_n = 3; }
       else if (kind == NK_MUL) { opr_n = 4; }
+      else if (kind == NK_DIV) { opr_n = 5; }
       else if (kind == NK_EQ) { opr_n = 8; }
+      else if (kind == NK_NE) { opr_n = 9; }
       else if (kind == NK_LT) { opr_n = 10; }
       else if (kind == NK_LE) { opr_n = 13; }
       else if (kind == NK_GT) { opr_n = 12; }
@@ -113,6 +117,11 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LOD, 0, tmp2_id));
       connect_code(blk, new_code(INS_OPR, 0, 4));
       connect_code(blk, new_code(INS_OPR, 0, 3));
+      break;
+
+    case NK_MINUS:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_OPR, 0, 1));
       break;
 
     case NK_IF:
@@ -157,8 +166,12 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_CAL, 0, sym->label));
       break;
     case NK_RETURN:
-      append_code(blk, node->right, tbl);
-      connect_code(blk, new_code(INS_RET, 0, blk->param_count));
+      if (node->right == NULL) {
+        connect_code(blk, new_code(INS_OPR, 0, 0));
+      } else {
+        append_code(blk, node->right, tbl);
+        connect_code(blk, new_code(INS_RET, 0, blk->param_count));
+      }
       break;
 
     case NK_WRITE:
@@ -226,6 +239,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Node *stmt=node->body->stmts; stmt!=NULL; stmt=stmt->next) {
     append_code(blk, stmt, ftbl);
   }
+  connect_code(blk, new_code(INS_OPR, 0, 0));
 
   int_code->arg += blk->var_count;
 

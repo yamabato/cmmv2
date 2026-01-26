@@ -113,6 +113,8 @@ FUNC DEF: fizzbuzz (n)
                 ID: i
               RIGHT:
                 INT: 1
+    RETURN
+
 
 FUNC DEF: main ()
   BLOCK
@@ -136,5 +138,7 @@ FUNC DEF: main ()
       RIGHT:
         UNARY OPER: MINUS
           RIGHT:
-            INT: 1
+            INT: 123
+    UNARY OPER: WRITELN
+      RIGHT:
 
