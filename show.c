@@ -42,17 +42,29 @@ void show_node(Node *node, int depth, FILE *fp) {
     case NK_ADD:
     case NK_SUB:
     case NK_MUL:
+    case NK_DIV:
     case NK_MOD:
+    case NK_POW:
     case NK_EQ:
+    case NK_NE:
+    case NK_LT:
     case NK_LE:
+    case NK_GT:
+    case NK_GE:
     case NK_ASSIGN:
       fprintf(fp, "BINARY OPER: ");
       if (kind == NK_ADD) { fprintf(fp, "+"); }
       else if (kind == NK_SUB) { fprintf(fp, "-"); }
       else if (kind == NK_MUL) { fprintf(fp, "*"); }
+      else if (kind == NK_DIV) { fprintf(fp, "/"); }
       else if (kind == NK_MOD) { fprintf(fp, "%%"); }
+      else if (kind == NK_POW) { fprintf(fp, "^"); }
       else if (kind == NK_EQ) { fprintf(fp, "=="); }
+      else if (kind == NK_NE) { fprintf(fp, "!="); }
+      else if (kind == NK_LT) { fprintf(fp, "<"); }
       else if (kind == NK_LE) { fprintf(fp, "<="); }
+      else if (kind == NK_GT) { fprintf(fp, ">"); }
+      else if (kind == NK_GE) { fprintf(fp, ">="); }
       else if (kind == NK_ASSIGN) { fprintf(fp, ":="); }
       fprintf(fp, "\n");
 

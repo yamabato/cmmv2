@@ -24,6 +24,7 @@
 "*"       { ECHO;  return MULT; }
 "/"       { ECHO;  return DIV; }
 "%"       { ECHO;  return MOD; }
+"^"       { ECHO;  return POW; }
 "if"      { ECHO;  return IF; }
 "then"    { ECHO;  return THEN; }
 "else"    { ECHO;  return ELSE; }
@@ -50,7 +51,7 @@
 	yylval.fval = atof(yytext);
 	return FLOAT;
 }
-[a-z][a-z0-9]* {
+_?[a-z][a-z0-9_]* {
 	ECHO;
 	yylval.name = (char*)malloc(strlen(yytext)+1);
 	strcpy(yylval.name, yytext);

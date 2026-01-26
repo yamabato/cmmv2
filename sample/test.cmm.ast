@@ -1,32 +1,128 @@
-FUNC DEF: f (x, y)
+FUNC DEF: _pow (a, b)
   BLOCK
+    VAR:
+      ID: r
+
+    BINARY OPER: :=
+      LEFT:
+        ID: r
+      RIGHT:
+        INT: 1
+    IF
+      COND
+        BINARY OPER: <
+          LEFT:
+            ID: b
+          RIGHT:
+            INT: 0
+
+      BLOCK
+        RETURN
+          INT: 1
+
+    WHILE
+      COND
+        BINARY OPER: >
+          LEFT:
+            ID: b
+          RIGHT:
+            INT: 0
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: b
+                  RIGHT:
+                    INT: 2
+              RIGHT:
+                INT: 1
+
+          BLOCK
+            BINARY OPER: :=
+              LEFT:
+                ID: r
+              RIGHT:
+                BINARY OPER: *
+                  LEFT:
+                    ID: r
+                  RIGHT:
+                    ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: a
+          RIGHT:
+            BINARY OPER: *
+              LEFT:
+                ID: a
+              RIGHT:
+                ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: b
+          RIGHT:
+            BINARY OPER: /
+              LEFT:
+                ID: b
+              RIGHT:
+                INT: 2
     RETURN
-      BINARY OPER: +
-        LEFT:
-          ID: x
-        RIGHT:
-          BINARY OPER: *
-            LEFT:
-              ID: y
-            RIGHT:
-              ID: y
+      ID: r
 
 
 FUNC DEF: main ()
   BLOCK
-    VAR:
-      ID: n
-
-    UNARY OPER: READ
-      RIGHT:
-        ID: n
     UNARY OPER: WRITE
       RIGHT:
-        BINARY OPER: +
+        CALL: _pow
+          PARAMS:
+            INT: 5
+            INT: 2
+            INT: 2
+    UNARY OPER: WRITELN
+      RIGHT:
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: ^
           LEFT:
-            ID: n
+            INT: 5
           RIGHT:
-            INT: 10
+            INT: 0
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: ^
+          LEFT:
+            INT: 5
+          RIGHT:
+            INT: 2
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: ^
+          LEFT:
+            INT: 5
+          RIGHT:
+            INT: 3
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: ^
+          LEFT:
+            INT: 5
+          RIGHT:
+            INT: 4
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: ^
+          LEFT:
+            UNARY OPER: MINUS
+              RIGHT:
+                INT: 1
+          RIGHT:
+            UNARY OPER: MINUS
+              RIGHT:
+                INT: 2
     UNARY OPER: WRITELN
       RIGHT:
 

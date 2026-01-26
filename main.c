@@ -6,6 +6,7 @@
 #include "show.h"
 #include "show.h"
 #include "gencode.h"
+#include "ast.h"
 
 extern FILE *yyin;
 
@@ -15,6 +16,7 @@ int main(int argc, char **argv) {
   char pl_fname[256];
   FILE *ast_file;
   uint64_t instrs;
+  Node *runtime_ast;
   CodeBlock *code_blocks;
 
   if (argc < 2) {
@@ -24,11 +26,17 @@ int main(int argc, char **argv) {
 
   fname = argv[1];
 
+  // ランタイムをASTに
+  yyin = fopen("./runtime/runtime.cmm", "r");
+  yyparse();
+  runtime_ast = ast_root;
+
   yyin = fopen(fname, "r");
   if (yyparse() != 0) {
     printf("Error!!\n");
     return 1;
   }
+  ast_root = append_node(runtime_ast, ast_root);
 
   strcpy(ast_fname, fname);
   ast_file = fopen(strcat(ast_fname, ".ast"), "w");

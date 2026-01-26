@@ -1,12 +1,11 @@
-f (x, y) {
-  return x+y*y;
-}
-
 main {
-  var n;
+  write _pow(5, 2);
+  writeln;
+  write 5^0;
+  write 5^2;
+  write 5^3;
+  write 5^4;
 
-  read n;
-
-  write n+10;
+  write (-1)^(-2);
   writeln;
 }

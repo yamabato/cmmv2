@@ -40,7 +40,7 @@ Node *ast_root;
 %token SEMI
 %token PLUS MINUS
 %token PLUS2 MINUS2
-%token MULT DIV MOD
+%token MULT DIV MOD POW
 %token NUMBER FLOAT
 %token IF THEN ELSE ENDIF
 %token WHILE DO
@@ -221,21 +221,29 @@ E
 };
 
 T
-	: T MULT F {
+	: T MULT P {
 	$$.node = new_binary_node(NK_MUL, $1.node, $3.node);
 }
-	| T DIV F {
+	| T DIV P {
 	$$.node = new_binary_node(NK_DIV, $1.node, $3.node);
 }
-	 | T MOD F {
+	 | T MOD P {
 	 $$.node = new_binary_node(NK_MOD, $1.node, $3.node);
 }
 	| MINUS F {
 	$$.node = new_unary_node(NK_MINUS, $2.node);
 }
-	| F {
+	| P {
 	$$.node = $1.node;
 };
+
+P
+	: F POW P {
+	 $$.node = new_binary_node(NK_POW, $1.node, $3.node);
+}
+	| F {
+	$$.node = $1.node;
+}
 
 F
 	: ID {

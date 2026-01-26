@@ -1,0 +1,67 @@
+FUNC DEF: pow (a, b)
+  BLOCK
+    VAR:
+      ID: r
+
+    BINARY OPER: :=
+      LEFT:
+        ID: r
+      RIGHT:
+        INT: 1
+    WHILE
+      COND
+        -*-UNSUPPORTED NODE KIND(4)-*-
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: b
+                  RIGHT:
+                    INT: 2
+              RIGHT:
+                INT: 1
+
+          BLOCK
+            BINARY OPER: :=
+              LEFT:
+                ID: r
+              RIGHT:
+                BINARY OPER: *
+                  LEFT:
+                    ID: r
+                  RIGHT:
+                    ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: a
+          RIGHT:
+            BINARY OPER: *
+              LEFT:
+                ID: a
+              RIGHT:
+                ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: b
+          RIGHT:
+            -*-UNSUPPORTED NODE KIND(13)-*-
+    RETURN
+      ID: r
+
+
+FUNC DEF: main ()
+  BLOCK
+    UNARY OPER: WRITE
+      RIGHT:
+        CALL: pow
+          PARAMS:
+            INT: 5
+            INT: 3
+            INT: 3
+    UNARY OPER: WRITELN
+      RIGHT:
+

@@ -137,6 +137,13 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_OPR, 0, 3));
       break;
 
+    case NK_POW:
+      append_code(blk, node->left, tbl);
+      append_code(blk, node->right, tbl);
+      ok = search_symbol(tbl, "_pow", &sym);
+      connect_code(blk, new_code(INS_CAL, 0, sym->label));
+      break;
+
     case NK_MINUS:
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_OPR, 0, 1));
