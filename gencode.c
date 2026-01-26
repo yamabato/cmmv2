@@ -76,6 +76,13 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         connect_code(blk, new_code(INS_RET, 0, 1));
       }
       break;
+    case NK_WRITE:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_CSP, 0, 1));
+      break;
+    case NK_WRITELN:
+      connect_code(blk, new_code(INS_CSP, 0, 2));
+      break;
     default:
       break;
   }
