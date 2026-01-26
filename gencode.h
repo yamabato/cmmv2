@@ -47,4 +47,4 @@ CodeBlock *gen_func_code_block(Node *, SymbolTable *, int);
 CodeBlock *gen_code_blocks(Node *, SymbolTable *);
 void append_code(CodeBlock *, Node *, SymbolTable *);
 
-int write_out_code(CodeBlock *, const char *);
+uint64_t write_out_code(CodeBlock *, const char *);

@@ -315,9 +315,10 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   return blk;
 }
 
-int write_out_code(CodeBlock *blk, const char *fname) {
+uint64_t write_out_code(CodeBlock *blk, const char *fname) {
   FILE *fp;
-  int instrs = 0;
+  uint64_t instrs = 0;
+  uint64_t lbls = 0;
 
   fp = fopen(fname, "w");
   if (fp == NULL) {
@@ -328,10 +329,11 @@ int write_out_code(CodeBlock *blk, const char *fname) {
     for (Code *c=b->head; c!=NULL; c=c->next) {
       fprintf(fp, "( %s, %d, %d )\n", INSTR_NAME[c->instr], c->lvl_diff, c->arg);
       instrs++;
+      if (c->instr == INS_LAB) { lbls++; }
     }
   }
 
   fclose(fp);
 
-  return instrs;
+  return (lbls<<32) + instrs;
 }

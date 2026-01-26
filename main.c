@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
   char ast_fname[256];
   char pl_fname[256];
   FILE *ast_file;
-  int instrs;
+  uint64_t instrs;
   CodeBlock *code_blocks;
 
   if (argc < 2) {
@@ -39,13 +39,14 @@ int main(int argc, char **argv) {
 
   strcpy(pl_fname, fname);
   dot_pos = strrchr(pl_fname, '.');
-  // if (dot_pos == NULL) { pl_fname=strcat(fname, ".pl"); }
   if (dot_pos == NULL) { strcat(pl_fname, ".pl"); }
   else { strcpy(dot_pos, ".pl"); }
   instrs = write_out_code(code_blocks, pl_fname);
 
   printf("%s -> %s -> %s\n", fname, ast_fname, pl_fname);
-  printf("Total Instructions: %d\n", instrs);
+  printf("    Total Instructions: %ld\n", instrs&(0xFFFFFFFF));
+  printf("    Label Instructions: %ld\n", instrs>>32);
+  printf("Non-Label Instructions: %d\n", (uint32_t)instrs-(uint32_t)(instrs>>32));
 
   return 0;
 }
