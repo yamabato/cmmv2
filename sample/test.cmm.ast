@@ -21,7 +21,15 @@ FUNC DEF: main ()
       LEFT:
         ID: n
       RIGHT:
-        INT: 10
+        BINARY OPER: +
+          LEFT:
+            INT: 10
+          RIGHT:
+            CALL: f
+              PARAMS:
+                INT: 15
+                INT: 20
+                INT: 20
     UNARY OPER: WRITE
       RIGHT:
         ID: n

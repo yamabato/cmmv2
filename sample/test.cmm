@@ -5,7 +5,7 @@ f (x, y) {
 main {
   var n;
 
-  n := 10;
+  n := 10+f(15, 20);
   write n;
   writeln;
 }

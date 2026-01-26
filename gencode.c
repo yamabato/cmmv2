@@ -78,13 +78,17 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       else if (kind == NK_MUL) { opr_n = 4; }
       connect_code(blk, new_code(INS_OPR, 0, opr_n));
       break;
+
+    case NK_CALL:
+      for (Node *p=node->params; p!=NULL; p=p->next) {
+        append_code(blk, p, tbl);
+      }
+      ok = search_symbol(tbl, node->cval, &sym);
+      connect_code(blk, new_code(INS_CAL, 0, sym->label));
+      break;
     case NK_RETURN:
       append_code(blk, node->right, tbl);
-      if (node->right == NULL) {
-        connect_code(blk, new_code(INS_RET, 0, 0));
-      } else {
-        connect_code(blk, new_code(INS_RET, 0, 1));
-      }
+      connect_code(blk, new_code(INS_RET, 0, blk->param_count));
       break;
     case NK_WRITE:
       append_code(blk, node->right, tbl);
@@ -132,6 +136,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
 
   search_symbol(tbl, node->cval, &sym);
   connect_code(blk, new_code(INS_LAB, 0, sym->label));
+  connect_code(blk, new_code(INS_INT, 0, 3));
 
   i = 0;
   for (Node *p=node->params; p!=NULL; p=p->next) {
