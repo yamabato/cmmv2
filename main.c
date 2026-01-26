@@ -34,7 +34,5 @@ int main(int argc, char **argv) {
   code_blocks = gen_code_blocks(ast_root, NULL);
   write_out_code(code_blocks, "output.pl");
 
-  printf("%p\n", code_blocks->head);
-
   return 0;
 }

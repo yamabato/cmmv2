@@ -518,7 +518,7 @@ char *yytext;
 #line 1 "cmm.l"
 #line 2 "cmm.l"
 #undef ECHO
-#define ECHO printf("%s", yytext);
+#define ECHO if(0) printf("%s", yytext);
 #line 523 "lex.yy.c"
 #define YY_NO_INPUT 1
 #line 525 "lex.yy.c"

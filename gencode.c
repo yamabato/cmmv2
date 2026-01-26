@@ -5,6 +5,20 @@
 #include "gencode.h"
 #include "symbol.h"
 
+char *INSTR_NAME[] = {
+  "LOD",
+  "LIT",
+  "STO",
+  "OPR",
+  "INT",
+  "JMP",
+  "JPC",
+  "CAL",
+  "CSP",
+  "LAB",
+  "RET",
+};
+
 CodeBlock *connect_code_block(CodeBlock *blk1, CodeBlock *blk2) {
   CodeBlock *tail;
 
@@ -37,7 +51,7 @@ Code *new_code(Instr instr, int l, int a) {
 
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
-  int n, opr_n;
+  int opr_n;
   int tmp1_id, tmp2_id;
   int iflbl, elselbl;
   int lp_head_lbl, lp_tail_lbl;
@@ -53,6 +67,10 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       break;
     case NK_ID:
       ok = search_symbol(tbl, node->cval, &sym);
+      if (ok != 0) {
+        printf("Err!!\n");
+        exit(1);
+      }
       // ok!=0ならエラー対応(ok>0の場合は、オフセット不明)
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
@@ -141,6 +159,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       break;
     case NK_WHILE:
+      lp_head_lbl = (blk->label_n)++;
       lp_tail_lbl = (blk->label_n)++;
 
       connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));

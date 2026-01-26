@@ -649,12 +649,12 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    54,    54,    58,    62,    69,    72,    76,    81,    88,
-      93,    98,   102,   116,   120,   125,   128,   131,   134,   138,
-     144,   148,   153,   156,   159,   163,   166,   170,   173,   176,
-     179,   182,   187,   190,   193,   197,   202,   205,   208,   211,
-     214,   217,   222,   225,   228,   233,   236,   239,   242,   245,
-     250,   253,   260,   263,   266,   270,   277,   280,   285,   288,
-     292
+      93,    98,   102,   107,   111,   116,   119,   122,   125,   129,
+     135,   139,   144,   147,   150,   154,   157,   161,   164,   167,
+     170,   173,   178,   181,   184,   188,   193,   196,   199,   202,
+     205,   208,   213,   216,   219,   224,   227,   230,   233,   236,
+     241,   244,   251,   254,   257,   261,   268,   271,   276,   279,
+     283
 };
 #endif
 
@@ -1383,7 +1383,7 @@ yyreduce:
     break;
 
   case 13: /* body: LBRA stmts RBRA  */
-#line 116 "cmm.y"
+#line 107 "cmm.y"
                           {
 	yyval.node = new_node(NK_BLOCK);
 	yyval.node->stmts = yyvsp[-1].node;
@@ -1392,7 +1392,7 @@ yyreduce:
     break;
 
   case 14: /* body: LBRA RBRA  */
-#line 120 "cmm.y"
+#line 111 "cmm.y"
                     {
 	yyval.node = new_node(NK_BLOCK);
 }
@@ -1400,7 +1400,7 @@ yyreduce:
     break;
 
   case 15: /* stmts: stmts st  */
-#line 125 "cmm.y"
+#line 116 "cmm.y"
                    {
 	yyval.node = append_node(yyvsp[-1].node, yyvsp[0].node);
 }
@@ -1408,7 +1408,7 @@ yyreduce:
     break;
 
   case 16: /* stmts: stmts vardecl  */
-#line 128 "cmm.y"
+#line 119 "cmm.y"
                         {
 	yyval.node = append_node(yyvsp[-1].node, yyvsp[0].node);
 }
@@ -1416,7 +1416,7 @@ yyreduce:
     break;
 
   case 17: /* stmts: st  */
-#line 131 "cmm.y"
+#line 122 "cmm.y"
              {
 	yyval.node = yyvsp[0].node;
 }
@@ -1424,7 +1424,7 @@ yyreduce:
     break;
 
   case 18: /* stmts: vardecl  */
-#line 134 "cmm.y"
+#line 125 "cmm.y"
                   {
 	yyval.node = yyvsp[0].node;
 }
@@ -1432,7 +1432,7 @@ yyreduce:
     break;
 
   case 19: /* vardecl: VAR ids SEMI  */
-#line 138 "cmm.y"
+#line 129 "cmm.y"
                        {
 	yyval.node = new_node(NK_VAR);
 	yyval.node->ids = yyvsp[-1].node;
@@ -1441,7 +1441,7 @@ yyreduce:
     break;
 
   case 20: /* ids: ids COMMA ID  */
-#line 144 "cmm.y"
+#line 135 "cmm.y"
                        {
 	Node *id = new_id_node(yyvsp[0].name);
 	yyval.node = append_node(yyvsp[-2].node, id);
@@ -1450,7 +1450,7 @@ yyreduce:
     break;
 
   case 21: /* ids: ID  */
-#line 148 "cmm.y"
+#line 139 "cmm.y"
              {
 	yyval.node = new_id_node(yyvsp[0].name);
 }
@@ -1458,7 +1458,7 @@ yyreduce:
     break;
 
   case 22: /* st: WRITE E SEMI  */
-#line 153 "cmm.y"
+#line 144 "cmm.y"
                        {
 	yyval.node = new_unary_node(NK_WRITE, yyvsp[-1].node);
 }
@@ -1466,7 +1466,7 @@ yyreduce:
     break;
 
   case 23: /* st: WRITELN SEMI  */
-#line 156 "cmm.y"
+#line 147 "cmm.y"
                        {
 	yyval.node = new_node(NK_WRITELN);
 }
@@ -1474,7 +1474,7 @@ yyreduce:
     break;
 
   case 24: /* st: READ ID SEMI  */
-#line 159 "cmm.y"
+#line 150 "cmm.y"
                        {
 	Node *id = new_id_node(yyvsp[-1].name);
 	yyval.node = new_unary_node(NK_READ, id);
@@ -1483,7 +1483,7 @@ yyreduce:
     break;
 
   case 25: /* st: FUNC_CALL SEMI  */
-#line 163 "cmm.y"
+#line 154 "cmm.y"
                          {
 	yyval.node = yyvsp[-1].node;
 }
@@ -1491,7 +1491,7 @@ yyreduce:
     break;
 
   case 26: /* st: ID COLEQ E SEMI  */
-#line 166 "cmm.y"
+#line 157 "cmm.y"
                           {
 	Node *id = new_id_node(yyvsp[-3].name);
 	yyval.node = new_binary_node(NK_ASSIGN, id, yyvsp[-1].node);
@@ -1500,7 +1500,7 @@ yyreduce:
     break;
 
   case 27: /* st: ifstmt  */
-#line 170 "cmm.y"
+#line 161 "cmm.y"
                 {
 	yyval.node = yyvsp[0].node;
 }
@@ -1508,7 +1508,7 @@ yyreduce:
     break;
 
   case 28: /* st: whilestmt  */
-#line 173 "cmm.y"
+#line 164 "cmm.y"
                    {
 	yyval.node = yyvsp[0].node;
 }
@@ -1516,7 +1516,7 @@ yyreduce:
     break;
 
   case 29: /* st: RETURN E SEMI  */
-#line 176 "cmm.y"
+#line 167 "cmm.y"
                         {
 	yyval.node = new_unary_node(NK_RETURN, yyvsp[-1].node);
 }
@@ -1524,7 +1524,7 @@ yyreduce:
     break;
 
   case 30: /* st: RETURN SEMI  */
-#line 179 "cmm.y"
+#line 170 "cmm.y"
                       {
 	yyval.node = new_node(NK_RETURN);
 	}
@@ -1532,7 +1532,7 @@ yyreduce:
     break;
 
   case 31: /* st: body  */
-#line 182 "cmm.y"
+#line 173 "cmm.y"
                {
 	yyval.node = yyvsp[0].node;
 }
@@ -1540,7 +1540,7 @@ yyreduce:
     break;
 
   case 32: /* ifstmt: IF cond body  */
-#line 187 "cmm.y"
+#line 178 "cmm.y"
                        {
 	yyval.node = new_if_node(yyvsp[-1].node, yyvsp[0].node, NULL);
 }
@@ -1548,7 +1548,7 @@ yyreduce:
     break;
 
   case 33: /* ifstmt: IF cond body ELSE body  */
-#line 190 "cmm.y"
+#line 181 "cmm.y"
                                  {
 	yyval.node = new_if_node(yyvsp[-3].node, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1556,7 +1556,7 @@ yyreduce:
     break;
 
   case 34: /* ifstmt: IF cond body ELSE ifstmt  */
-#line 193 "cmm.y"
+#line 184 "cmm.y"
                                    {
 	yyval.node = new_if_node(yyvsp[-3].node, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1564,7 +1564,7 @@ yyreduce:
     break;
 
   case 35: /* whilestmt: WHILE cond body  */
-#line 197 "cmm.y"
+#line 188 "cmm.y"
                             {
 	yyval.node = new_while_node(yyvsp[-1].node, yyvsp[0].node);
 }
@@ -1572,7 +1572,7 @@ yyreduce:
     break;
 
   case 36: /* cond: E GT E  */
-#line 202 "cmm.y"
+#line 193 "cmm.y"
                  {
 	yyval.node = new_binary_node(NK_GT, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1580,7 +1580,7 @@ yyreduce:
     break;
 
   case 37: /* cond: E GE E  */
-#line 205 "cmm.y"
+#line 196 "cmm.y"
                  {
 	yyval.node = new_binary_node(NK_GE, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1588,7 +1588,7 @@ yyreduce:
     break;
 
   case 38: /* cond: E LT E  */
-#line 208 "cmm.y"
+#line 199 "cmm.y"
                 {
 	yyval.node = new_binary_node(NK_LT, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1596,7 +1596,7 @@ yyreduce:
     break;
 
   case 39: /* cond: E LE E  */
-#line 211 "cmm.y"
+#line 202 "cmm.y"
                  {
 	yyval.node = new_binary_node(NK_LE, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1604,7 +1604,7 @@ yyreduce:
     break;
 
   case 40: /* cond: E NE E  */
-#line 214 "cmm.y"
+#line 205 "cmm.y"
                  {
 	yyval.node = new_binary_node(NK_NE, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1612,7 +1612,7 @@ yyreduce:
     break;
 
   case 41: /* cond: E EQ E  */
-#line 217 "cmm.y"
+#line 208 "cmm.y"
                  {
 	yyval.node = new_binary_node(NK_EQ, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1620,7 +1620,7 @@ yyreduce:
     break;
 
   case 42: /* E: E PLUS T  */
-#line 222 "cmm.y"
+#line 213 "cmm.y"
                    {
 	yyval.node = new_binary_node(NK_ADD, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1628,7 +1628,7 @@ yyreduce:
     break;
 
   case 43: /* E: E MINUS T  */
-#line 225 "cmm.y"
+#line 216 "cmm.y"
                     {
 	yyval.node = new_binary_node(NK_SUB, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1636,7 +1636,7 @@ yyreduce:
     break;
 
   case 44: /* E: T  */
-#line 228 "cmm.y"
+#line 219 "cmm.y"
             {
 	yyval.node = yyvsp[0].node;
 }
@@ -1644,7 +1644,7 @@ yyreduce:
     break;
 
   case 45: /* T: T MULT F  */
-#line 233 "cmm.y"
+#line 224 "cmm.y"
                    {
 	yyval.node = new_binary_node(NK_MUL, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1652,7 +1652,7 @@ yyreduce:
     break;
 
   case 46: /* T: T DIV F  */
-#line 236 "cmm.y"
+#line 227 "cmm.y"
                   {
 	yyval.node = new_binary_node(NK_DIV, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1660,7 +1660,7 @@ yyreduce:
     break;
 
   case 47: /* T: T MOD F  */
-#line 239 "cmm.y"
+#line 230 "cmm.y"
                    {
 	 yyval.node = new_binary_node(NK_MOD, yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1668,7 +1668,7 @@ yyreduce:
     break;
 
   case 48: /* T: MINUS F  */
-#line 242 "cmm.y"
+#line 233 "cmm.y"
                   {
 	yyval.node = new_unary_node(NK_MINUS, yyvsp[0].node);
 }
@@ -1676,7 +1676,7 @@ yyreduce:
     break;
 
   case 49: /* T: F  */
-#line 245 "cmm.y"
+#line 236 "cmm.y"
             {
 	yyval.node = yyvsp[0].node;
 }
@@ -1684,7 +1684,7 @@ yyreduce:
     break;
 
   case 50: /* F: ID  */
-#line 250 "cmm.y"
+#line 241 "cmm.y"
              {
 	yyval.node = new_id_node(yyvsp[0].name);
 }
@@ -1692,7 +1692,7 @@ yyreduce:
     break;
 
   case 51: /* F: ID PLUS2  */
-#line 253 "cmm.y"
+#line 244 "cmm.y"
                    {
 	Node *id  = new_id_node(yyvsp[-1].name);
 	Node *id_ = new_id_node(yyvsp[-1].name);
@@ -1704,7 +1704,7 @@ yyreduce:
     break;
 
   case 52: /* F: FUNC_CALL  */
-#line 260 "cmm.y"
+#line 251 "cmm.y"
                     {
 	yyval.node = yyvsp[0].node;
 }
@@ -1712,7 +1712,7 @@ yyreduce:
     break;
 
   case 53: /* F: NUMBER  */
-#line 263 "cmm.y"
+#line 254 "cmm.y"
                  {
 	yyval.node = new_int_node(yylval.val);
 }
@@ -1720,7 +1720,7 @@ yyreduce:
     break;
 
   case 54: /* F: LPAR E RPAR  */
-#line 266 "cmm.y"
+#line 257 "cmm.y"
                       {
 	yyval.node = yyvsp[-1].node;
 }
@@ -1728,7 +1728,7 @@ yyreduce:
     break;
 
   case 55: /* FUNC_CALL: ID LPAR fparams RPAR  */
-#line 270 "cmm.y"
+#line 261 "cmm.y"
                                  {
 	yyval.node = new_node(NK_CALL);
 	yyval.node->cval = yyvsp[-3].name;
@@ -1738,7 +1738,7 @@ yyreduce:
     break;
 
   case 56: /* fparams: %empty  */
-#line 277 "cmm.y"
+#line 268 "cmm.y"
                         {
 	yyval.node = NULL;
 }
@@ -1746,7 +1746,7 @@ yyreduce:
     break;
 
   case 57: /* fparams: ac_params  */
-#line 280 "cmm.y"
+#line 271 "cmm.y"
                     {
 	yyval.node = yyvsp[0].node;
 }
@@ -1754,7 +1754,7 @@ yyreduce:
     break;
 
   case 58: /* ac_params: ac_params COMMA fparam  */
-#line 285 "cmm.y"
+#line 276 "cmm.y"
                                  {
 	yyval.node = append_node(yyvsp[-2].node, yyvsp[0].node);
 }
@@ -1762,7 +1762,7 @@ yyreduce:
     break;
 
   case 59: /* ac_params: fparam  */
-#line 288 "cmm.y"
+#line 279 "cmm.y"
                  {
 	yyval.node = yyvsp[0].node;
 }
@@ -1770,7 +1770,7 @@ yyreduce:
     break;
 
   case 60: /* fparam: E  */
-#line 292 "cmm.y"
+#line 283 "cmm.y"
            {
 	yyval.node = yyvsp[0].node;
 }
@@ -1971,7 +1971,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 296 "cmm.y"
+#line 287 "cmm.y"
 
 
 #include "lex.yy.c"

@@ -1,6 +1,6 @@
 %{
 #undef ECHO
-#define ECHO printf("%s", yytext);
+#define ECHO if(0) printf("%s", yytext);
 %}
 %option yylineno
 

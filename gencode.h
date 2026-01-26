@@ -17,19 +17,7 @@ typedef enum {
   INS_RET,
 } Instr;
 
-static char *INSTR_NAME[] = {
-  "LOD",
-  "LIT",
-  "STO",
-  "OPR",
-  "INT",
-  "JMP",
-  "JPC",
-  "CAL",
-  "CSP",
-  "LAB",
-  "RET",
-};
+extern char *INSTR_NAME[];
 
 typedef struct Code {
   Instr instr;
