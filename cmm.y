@@ -175,19 +175,27 @@ st
 };
 
 ifstmt
-	: IF cond body {
+	: IF par_cond body {
 	$$.node = new_if_node($2.node, $3.node, NULL);
 }
-	| IF cond body ELSE body {
+	| IF par_cond body ELSE body {
 	$$.node = new_if_node($2.node, $3.node, $5.node);
 }
-	| IF cond body ELSE ifstmt {
+	| IF par_cond body ELSE ifstmt {
 	$$.node = new_if_node($2.node, $3.node, $5.node);
 };
 
-whilestmt : WHILE cond body {
+whilestmt : WHILE par_cond body {
 	$$.node = new_while_node($2.node, $3.node);
 };
+
+par_cond
+	: LPAR cond RPAR {
+	$$.node = $2.node;
+}
+	| cond {
+	$$.node = $1.node;
+}
 
 cond
 	: E GT E {
