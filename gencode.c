@@ -317,6 +317,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
 
 int write_out_code(CodeBlock *blk, const char *fname) {
   FILE *fp;
+  int instrs = 0;
 
   fp = fopen(fname, "w");
   if (fp == NULL) {
@@ -326,10 +327,11 @@ int write_out_code(CodeBlock *blk, const char *fname) {
   for (CodeBlock *b=blk; b!=NULL; b=b->next) {
     for (Code *c=b->head; c!=NULL; c=c->next) {
       fprintf(fp, "( %s, %d, %d )\n", INSTR_NAME[c->instr], c->lvl_diff, c->arg);
+      instrs++;
     }
   }
 
   fclose(fp);
 
-  return 0;
+  return instrs;
 }
