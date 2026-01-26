@@ -1,17 +1,3 @@
-FUNC DEF: test (a, b, c)
-  BLOCK
-    RETURN
-      BINARY OPER: +
-        LEFT:
-          ID: a
-        RIGHT:
-          BINARY OPER: *
-            LEFT:
-              ID: b
-            RIGHT:
-              ID: c
-
-
 FUNC DEF: fact (n)
   BLOCK
     IF
@@ -115,7 +101,9 @@ FUNC DEF: fizzbuzz (n)
               BLOCK
                 UNARY OPER: WRITE
                   RIGHT:
-                    INT: 3
+                    ID: i
+        UNARY OPER: WRITELN
+          RIGHT:
         BINARY OPER: :=
           LEFT:
             ID: i
@@ -143,7 +131,7 @@ FUNC DEF: main ()
       RIGHT:
     CALL: fizzbuzz
       PARAMS:
-        INT: 10
+        INT: 20
     UNARY OPER: WRITE
       RIGHT:
         UNARY OPER: MINUS

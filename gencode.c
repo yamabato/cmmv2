@@ -6,10 +6,13 @@
 #include "symbol.h"
 
 CodeBlock *connect_code_block(CodeBlock *blk1, CodeBlock *blk2) {
+  CodeBlock *tail;
+
   if (blk1->head == NULL) { return blk2; }
   if (blk2->head == NULL) { return blk1; }
 
-  blk1->next = blk2;
+  for (tail=blk1; tail->next!=NULL; tail=tail->next);
+  tail->next = blk2;
   return blk1;
 }
 
@@ -35,6 +38,7 @@ Code *new_code(Instr instr, int l, int a) {
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int n, opr_n;
+  int tmp1_id, tmp2_id;
   int iflbl, elselbl;
   int lp_head_lbl, lp_tail_lbl;
   int ok;
@@ -53,15 +57,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
     case NK_VAR:
-      n = 0;
       for (Node *id=node->ids; id!=NULL; id=id->next) {
         sym = append_symbol(tbl, id->cval, SK_VAR);
-        sym->offset = blk->var_count;
-        blk->var_count++;
-        n++;
-      }
-      if (n > 0) {
-        connect_code(blk, new_code(INS_INT, 0, n));
+        sym->offset = blk->var_count++;
       }
       break;
 
@@ -73,19 +71,48 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       break;
 
     case NK_ADD:
+    case NK_SUB:
     case NK_MUL:
+    case NK_EQ:
     case NK_LT:
+    case NK_LE:
     case NK_GT:
+    case NK_GE:
       append_code(blk, node->left, tbl);
       append_code(blk, node->right, tbl);
 
       opr_n = 7; // 未使用
       if (kind == NK_ADD) { opr_n = 2; }
+      if (kind == NK_SUB) { opr_n = 3; }
       else if (kind == NK_MUL) { opr_n = 4; }
+      else if (kind == NK_EQ) { opr_n = 8; }
       else if (kind == NK_LT) { opr_n = 10; }
+      else if (kind == NK_LE) { opr_n = 13; }
       else if (kind == NK_GT) { opr_n = 12; }
+      else if (kind == NK_GE) { opr_n = 11; }
 
       connect_code(blk, new_code(INS_OPR, 0, opr_n));
+      break;
+
+    case NK_MOD:
+      // intに限れば
+      // a%b -> a - (a/b)*bなど
+      // このとき、結果はbの符号と一致
+
+      tmp1_id = (blk->var_count)++;
+      tmp2_id = (blk->var_count)++;
+      append_code(blk, node->left, tbl);
+      connect_code(blk, new_code(INS_STO, 0, tmp1_id));
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_STO, 0, tmp2_id));
+
+      connect_code(blk, new_code(INS_LOD, 0, tmp1_id));
+      connect_code(blk, new_code(INS_LOD, 0, tmp1_id));
+      connect_code(blk, new_code(INS_LOD, 0, tmp2_id));
+      connect_code(blk, new_code(INS_OPR, 0, 5));
+      connect_code(blk, new_code(INS_LOD, 0, tmp2_id));
+      connect_code(blk, new_code(INS_OPR, 0, 4));
+      connect_code(blk, new_code(INS_OPR, 0, 3));
       break;
 
     case NK_IF:
@@ -159,6 +186,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   int sym_ld;
   Symbol *sym;
   int i;
+  Code *int_code;
 
   sym_ld = search_symbol(tbl, node->cval, NULL);
   if (sym_ld > 0) {
@@ -176,7 +204,6 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
 
   ftbl = new_symbol_table(tbl);
 
-
   // funcのスキャン
   for (Node *n=node->body->stmts; n!=NULL; n=n->next) {
     if (n->kind == NK_FUNC) {
@@ -187,7 +214,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
 
   search_symbol(tbl, node->cval, &sym);
   connect_code(blk, new_code(INS_LAB, 0, sym->label));
-  connect_code(blk, new_code(INS_INT, 0, 3));
+  connect_code(blk, int_code=new_code(INS_INT, 0, 3));
 
   i = 0;
   for (Node *p=node->params; p!=NULL; p=p->next) {
@@ -199,6 +226,8 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Node *stmt=node->body->stmts; stmt!=NULL; stmt=stmt->next) {
     append_code(blk, stmt, ftbl);
   }
+
+  int_code->arg += blk->var_count;
 
   return blk;
 }
@@ -267,7 +296,7 @@ int write_out_code(CodeBlock *blk, const char *fname) {
     }
   }
 
-  pclose(fp);
+  fclose(fp);
 
   return 0;
 }

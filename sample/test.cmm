@@ -5,24 +5,8 @@ f (x, y) {
 main {
   var n;
 
-  n := 0;
-  while n < 10 {
-    n := n + 1;
-  }
+  read n;
 
-  write n;
+  write n+10;
   writeln;
-
-  if n < 10 {
-    write n;
-    writeln;
-  } else {
-    write 121;
-    writeln;
-  }
-
-  if n > 100 {
-    write n;
-    writeln;
-  }
 }

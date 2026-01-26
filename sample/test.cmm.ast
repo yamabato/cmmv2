@@ -17,55 +17,16 @@ FUNC DEF: main ()
     VAR:
       ID: n
 
-    BINARY OPER: :=
-      LEFT:
-        ID: n
+    UNARY OPER: READ
       RIGHT:
-        INT: 0
-    WHILE
-      COND
-        -*-UNSUPPORTED NODE KIND(6)-*-
-
-      BLOCK
-        BINARY OPER: :=
+        ID: n
+    UNARY OPER: WRITE
+      RIGHT:
+        BINARY OPER: +
           LEFT:
             ID: n
           RIGHT:
-            BINARY OPER: +
-              LEFT:
-                ID: n
-              RIGHT:
-                INT: 1
-    UNARY OPER: WRITE
-      RIGHT:
-        ID: n
+            INT: 10
     UNARY OPER: WRITELN
       RIGHT:
-    IF
-      COND
-        -*-UNSUPPORTED NODE KIND(6)-*-
-
-      BLOCK
-        UNARY OPER: WRITE
-          RIGHT:
-            ID: n
-        UNARY OPER: WRITELN
-          RIGHT:
-    ELSE
-      BLOCK
-        UNARY OPER: WRITE
-          RIGHT:
-            INT: 121
-        UNARY OPER: WRITELN
-          RIGHT:
-    IF
-      COND
-        -*-UNSUPPORTED NODE KIND(4)-*-
-
-      BLOCK
-        UNARY OPER: WRITE
-          RIGHT:
-            ID: n
-        UNARY OPER: WRITELN
-          RIGHT:
 

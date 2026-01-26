@@ -1,7 +1,3 @@
-test(a, b, c) {
-  return a+b*c;
-}
-
 fact(n){
   if n<=1 {
     return 1;
@@ -23,8 +19,9 @@ fizzbuzz(n) {
     } else if i%5 == 0 {
       write 2;
     } else {
-      write 3;
+      write i;
     }
+    writeln;
 
     i := i+1;
   }
@@ -37,7 +34,7 @@ main {
   write fact(n);
   writeln;
 
-  fizzbuzz(10);
+  fizzbuzz(20);
 
   write -1;
 }
