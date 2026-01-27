@@ -1,14 +1,16 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "vm.h"
 #include "parse.h"
 
 int main(int argc, char **argv) {
-  FILE *fp;
-  Instr *instr;
   char *fname;
-  char buf[256];
+  FILE *fp;
+  Instr *head, *tail;
+
+  head = tail = NULL;
 
   if (argc < 2) {
     printf("usage: %s <input file>\n", argv[0]);
@@ -22,10 +24,10 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  while (fgets(buf, sizeof(buf), fp)) {
-    instr = (Instr *)malloc(sizeof(Instr));
-    parse_line(buf, instr);
-    printf("%d\n", instr->opcode);
+  parse(fp, &head, &tail);
+
+  for (Instr *i=head; i!=NULL; i=i->next) {
+    printf("%d\n", i->opcode);
   }
 
   return 0;

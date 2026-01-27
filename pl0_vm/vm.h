@@ -31,5 +31,6 @@ typedef struct Instr {
   OpCode opcode;
   int level;
   int arg;
+  struct Instr *prev;
   struct Instr *next;
 } Instr;

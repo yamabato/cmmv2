@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "vm.h"
 #include "parse.h"
@@ -25,4 +26,25 @@ int parse_line(char *line, Instr *instr) {
   instr->level = level;
   instr->arg = arg;
   return 1;
+}
+
+void parse(FILE *fp, Instr **head, Instr **tail) {
+  int ok;
+  Instr *instr;
+  char buf[256];
+
+  // 行ごとに命令をパース
+  while (fgets(buf, sizeof(buf), fp)) {
+    instr = (Instr *)malloc(sizeof(Instr));
+    memset(instr, 0, sizeof(Instr));
+    ok = parse_line(buf, instr);
+
+    if (ok == -1) {
+      printf("err: %s\n", buf);
+      continue;
+    }
+
+    if (*tail == NULL) { *head=*tail=instr; }
+    else { (*tail)->next=instr; instr->prev=*tail; *tail=instr; }
+  }
 }
