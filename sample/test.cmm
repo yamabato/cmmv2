@@ -1,18 +1,10 @@
 main {
   var n, m, l;
-  n := 0;
-  m := 0;
-  l := 10;
+  n := 5;
 
-  if (n==0 && m==0) {
-    write 1234;
-  }
-
-  if (!n==0 || l==0) {
-    write 5678;
-  }
-  if (!(n==0 || l==0)) {
-    write 5678;
-  }
+  write n++;
+  write n;
+  write ++n;
+  write n;
   writeln;
 }

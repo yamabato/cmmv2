@@ -14,7 +14,7 @@ typedef enum {
   NK_LABEL, NK_GOTO,
   NK_BLOCK,
   NK_VAR,
-  NK_ASSIGN,
+  NK_ASSIGN, NK_ASSIGN_ST,
   NK_WRITE, NK_WRITELN, NK_READ,
   NK_PARAM, NK_TYPE,
 } NodeKind;

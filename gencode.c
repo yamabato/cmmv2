@@ -83,11 +83,18 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       break;
 
-    case NK_ASSIGN:
+    case NK_ASSIGN_ST: // 文
       append_code(blk, node->right, tbl);
       ok = search_symbol(tbl, node->left->cval, &sym);
       // ok = 0ならその関数内 -1は未定義
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
+      break;
+    case NK_ASSIGN: // 式
+      append_code(blk, node->right, tbl);
+      ok = search_symbol(tbl, node->left->cval, &sym);
+      // ok = 0ならその関数内 -1は未定義
+      connect_code(blk, new_code(INS_STO, 0, sym->offset));
+      connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
 
     case NK_ADD:

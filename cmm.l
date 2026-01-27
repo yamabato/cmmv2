@@ -20,7 +20,8 @@
 ";"       { ECHO;  return SEMI; }
 ":"       { ECHO;  return COLON; }
 "+"       { ECHO;  return PLUS; }
-"++"      { ECHO;  return PLUS2; }
+"++"      { ECHO;  return INC; }
+"--"      { ECHO;  return DEC; }
 "-"       { ECHO;  return MINUS; }
 "*"       { ECHO;  return MULT; }
 "/"       { ECHO;  return DIV; }
@@ -38,6 +39,7 @@
 "case"    { ECHO;  return CASE; }
 "default" { ECHO;  return DEFAULT; }
 ":="      { ECHO;  return COLEQ; }
+"="       { ECHO;  return ASSIGN; }
 ">="      { ECHO;  return GE; }
 ">"       { ECHO;  return GT; }
 "<="      { ECHO;  return LE; }

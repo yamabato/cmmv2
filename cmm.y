@@ -40,7 +40,7 @@ Node *ast_root;
 %token WRITELN
 %token SEMI COLON
 %token PLUS MINUS
-%token PLUS2 MINUS2
+%token INC DEC
 %token MULT DIV MOD POW
 %token NUMBER FLOAT
 %token IF ELSE
@@ -49,7 +49,7 @@ Node *ast_root;
 %token SWITCH CASE DEFAULT
 %token GOTO
 %token READ
-%token COLEQ
+%token COLEQ ASSIGN
 %token GE GT LE LT NE EQ
 %token AND OR NOT
 %token RETURN
@@ -161,7 +161,7 @@ st
 }
 	| ID COLEQ E SEMI {
 	Node *id = new_id_node($1.name);
-	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 }
 	| ifstmt {
 	$$.node = $1.node;
@@ -288,7 +288,7 @@ comp
 };
 
 E
-	: ID COLEQ E {
+	: ID ASSIGN E {
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
 }
@@ -336,13 +336,20 @@ F
 	: ID {
 	$$.node = new_id_node($1.name);
 }
-	| ID PLUS2 {
+	| ID INC {
 	Node *id  = new_id_node($1.name);
-	Node *id_ = new_id_node($1.name);
 	Node *one = new_int_node(1);
-	Node *add = new_binary_node(NK_ADD, id_, one);
-	$$.node = new_binary_node(NK_ASSIGN, id, add);
+	Node *add = new_binary_node(NK_ADD, id, one);
+	Node *inc = new_binary_node(NK_ASSIGN, id, add);
+	$$.node = new_binary_node(NK_SUB, inc, one);
 }
+	| INC ID {
+	Node *id  = new_id_node($1.name);
+	Node *one = new_int_node(1);
+	Node *add = new_binary_node(NK_ADD, id, one);
+	Node *inc = new_binary_node(NK_ASSIGN, id, add);
+	$$.node = inc;
+	}
 	| FUNC_CALL {
 	$$.node = $1.node;
 }
