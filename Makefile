@@ -13,7 +13,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 y.tab.c y.tab.h: cmm.y
-	$(YACC) -o y.tab.c cmm.y
+	$(YACC) -o y.tab.c cmm.y -Wcounterexamples
 
 lex.yy.c: cmm.l
 	$(LEX) cmm.l

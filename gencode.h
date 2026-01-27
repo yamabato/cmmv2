@@ -28,6 +28,12 @@ typedef struct Code {
   struct Code *next;
 } Code;
 
+typedef struct Goto {
+  Code *code;
+  char *label;
+  struct Goto *next;
+} Goto;
+
 typedef struct CodeBlock {
   char *name;
   Code *head;
@@ -37,6 +43,8 @@ typedef struct CodeBlock {
   int var_count;
 
   int label_n;
+
+  Goto *gotos;
 
   struct CodeBlock *next;
 } CodeBlock;

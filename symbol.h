@@ -11,6 +11,7 @@ typedef enum {
   SK_VAR,
   SK_CONST,
   SK_FUNC,
+  SK_LABEL,
 } SymbolKind;
 
 typedef struct {

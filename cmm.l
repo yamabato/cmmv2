@@ -18,6 +18,7 @@
 "write"   { ECHO;  return WRITE; }
 "writeln" { ECHO;  return WRITELN; }
 ";"       { ECHO;  return SEMI; }
+":"       { ECHO;  return COLON; }
 "+"       { ECHO;  return PLUS; }
 "++"      { ECHO;  return PLUS2; }
 "-"       { ECHO;  return MINUS; }
@@ -34,6 +35,8 @@
 "for"     { ECHO;  return FOR; }
 "read"    { ECHO;  return READ; }
 "return"  { ECHO;  return RETURN; }
+"label"   { ECHO;  return LABEL; }
+"goto"    { ECHO;  return GOTO; }
 ":="      { ECHO;  return COLEQ; }
 ">="      { ECHO;  return GE; }
 ">"       { ECHO;  return GT; }

@@ -7,6 +7,7 @@
 **/
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "node.h"
@@ -37,7 +38,7 @@ Node *ast_root;
 %token LBRA RBRA
 %token WRITE
 %token WRITELN
-%token SEMI
+%token SEMI COLON
 %token PLUS MINUS
 %token PLUS2 MINUS2
 %token MULT DIV MOD POW
@@ -45,6 +46,7 @@ Node *ast_root;
 %token IF THEN ELSE ENDIF
 %token WHILE DO
 %token FOR
+%token LABEL GOTO
 %token READ
 %token COLEQ
 %token GE GT LE LT NE EQ
@@ -173,9 +175,17 @@ st
 }
 	| RETURN SEMI {
 	$$.node = new_node(NK_RETURN);
-	}
+}
 	| body {
 	$$.node = $1.node;
+}
+	| LABEL ID COLON {
+	$$.node = new_node(NK_LABEL);
+	$$.node->cval = strdup($2.name);
+}
+	| GOTO ID SEMI {
+	$$.node = new_node(NK_GOTO);
+	$$.node->cval = strdup($2.name);
 };
 
 ifstmt
@@ -230,10 +240,15 @@ E
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
 }
-	| E PLUS T {
+	| ADD_SUB {
+	$$.node = $1.node;
+};
+
+ADD_SUB
+	: ADD_SUB PLUS T {
 	$$.node = new_binary_node(NK_ADD, $1.node, $3.node);
 }
-	| E MINUS T {
+	| ADD_SUB MINUS T {
 	$$.node = new_binary_node(NK_SUB, $1.node, $3.node);
 }
 	| T {

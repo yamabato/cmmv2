@@ -1,7 +1,6 @@
 main {
   var n;
-  for (n:=0; n<10; n:=n+1) {
-    write n;
-    writeln;
-  }
+  goto lbl;
+  write n;
+  label lbl:
 }

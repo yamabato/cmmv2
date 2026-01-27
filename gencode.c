@@ -56,6 +56,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   int iflbl, elselbl;
   int lp_head_lbl, lp_tail_lbl;
   int ok;
+  Goto *gt = NULL;
   Symbol *sym;
 
   if (node == NULL) { return; }
@@ -191,6 +192,19 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
       break;
 
+    case NK_GOTO:
+      gt = (Goto *)malloc(sizeof(Goto));
+      gt->code = new_code(INS_JMP, 0, -1);
+      connect_code(blk, gt->code);
+      gt->label = node->cval; // 一時的に使うだけなので、コピーしない
+      gt->next = blk->gotos;
+      blk->gotos = gt;
+      break;
+    case NK_LABEL:
+      sym = append_symbol(tbl, node->cval, SK_LABEL);
+      sym->label = blk->label_n++;
+      break;
+
     case NK_BLOCK:
       for (Node *s=node->stmts; s!=NULL; s=s->next) {
         append_code(blk, s, tbl);
@@ -252,6 +266,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   blk->param_count = 0;
   blk->var_count = 3;
   blk->next = NULL;
+  blk->gotos = NULL;
   blk->label_n = lbl;
 
   ftbl = new_symbol_table(tbl);
@@ -295,6 +310,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   blk->param_count = blk->var_count = 0;
   blk->next = NULL;
   blk->label_n = 1;
+  blk->gotos = NULL;
 
   if (tbl == NULL) {
     tbl = new_symbol_table(NULL);
