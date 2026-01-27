@@ -12,6 +12,7 @@ Node *new_binary_node(NodeKind, Node *, Node *);
 Node *new_unary_node(NodeKind, Node *);
 Node *new_if_node(Node *, Node *, Node *);
 Node *new_while_node(Node *, Node *);
+Node *new_do_while_node(Node *, Node *);
 Node *new_for_node(Node *, Node *, Node *, Node *);
 Node *new_switch_node(Node *, Node *, Node *);
 Node *new_case_node(Node *, Node *);

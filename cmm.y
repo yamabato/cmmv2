@@ -211,6 +211,9 @@ st
 	| whilestmt {
 	$$.node = $1.node;
 }
+	| dowhilestmt {
+	$$.node = $1.node;
+}
 	| forstmt {
 	$$.node = $1.node;
 }
@@ -248,6 +251,10 @@ ifstmt
 
 whilestmt : WHILE cond body {
 	$$.node = new_while_node($2.node, $3.node);
+};
+
+dowhilestmt : DO body WHILE cond SEMI {
+	$$.node = new_do_while_node($4.node, $2.node);
 };
 
 forstmt : FOR LPAR E SEMI cond SEMI E RPAR body {

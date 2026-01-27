@@ -1,32 +1,10 @@
 main {
-  var n, m, l:=123;
-  m := true;
-  n := 5;
+  var v;
 
-  n += 100;
-  write n;
+  v := 10;
 
-  n -= 50;
-  write n;
-
-  n *= 2;
-  write n;
-
-  n /= 3;
-  write n;
-
-  n %= 33;
-  write n;
-
-  n ^= 5;
-  write n;
-
-  writeln;
-  m &&= false;
-  write m;
-
-  m ||= true;
-  write m;
-
-  writeln;
+  do {
+    write v++;
+    writeln;
+  } while (v<10);
 }

@@ -70,6 +70,13 @@ Node *new_while_node(Node *cond, Node *body) {
   return node;
 }
 
+Node *new_do_while_node(Node *cond, Node *body) {
+  Node *node = new_node(NK_DO_WHILE);
+  node->while_cond = cond;
+  node->body = body;
+  return node;
+}
+
 Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
   Node *node = new_node(NK_FOR);
   node->init = init;

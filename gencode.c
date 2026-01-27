@@ -243,6 +243,16 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
       break;
+    case NK_DO_WHILE:
+      head_lbl = (blk->label_n)++;
+      tail_lbl = (blk->label_n)++;
+      connect_code(blk, new_code(INS_LAB, 0, head_lbl));
+      append_code(blk, node->body, tbl);
+      append_code(blk, node->while_cond, tbl);
+      connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
+      connect_code(blk, new_code(INS_JMP, 0, head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
+      break;
     case NK_FOR:
       head_lbl = (blk->label_n)++;
       tail_lbl = (blk->label_n)++;
