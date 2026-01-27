@@ -185,6 +185,9 @@ st
 	| WRITELN SEMI {
 	$$.node = new_node(NK_WRITELN);
 }
+	| WRITELN E SEMI {
+	$$.node = new_unary_node(NK_WRITELN, $2.node);
+}
 	| READ ID SEMI {
 	Node *id = new_id_node($2.name);
 	$$.node = new_unary_node(NK_READ, id);

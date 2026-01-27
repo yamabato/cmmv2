@@ -330,6 +330,10 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_CSP, 0, 1));
       break;
     case NK_WRITELN:
+      if (node->right != NULL) {
+        append_code(blk, node->right, tbl);
+        connect_code(blk, new_code(INS_CSP, 0, 1));
+      }
       connect_code(blk, new_code(INS_CSP, 0, 2));
       break;
     case NK_READ:
