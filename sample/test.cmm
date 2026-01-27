@@ -1,14 +1,32 @@
 main {
   var n, m, l:=123;
-  const c:=10, b:=12;
+  m := true;
   n := 5;
 
-  write l;
+  n += 100;
+  write n;
+
+  n -= 50;
+  write n;
+
+  n *= 2;
+  write n;
+
+  n /= 3;
+  write n;
+
+  n %= 33;
+  write n;
+
+  n ^= 5;
+  write n;
+
   writeln;
-  write c;
-  writeln;
-  write c+20;
-  writeln;
+  m &&= false;
+  write m;
+
+  m ||= true;
+  write m;
 
   writeln;
 }

@@ -52,6 +52,14 @@
 "&&"      { ECHO;  return AND; }
 "||"      { ECHO;  return OR; }
 "!"       { ECHO;  return NOT; }
+"+="      { ECHO;  return ADD_ASSIGN; }
+"*="      { ECHO;  return MUL_ASSIGN; }
+"-="      { ECHO;  return SUB_ASSIGN; }
+"/="      { ECHO;  return DIV_ASSIGN; }
+"^="      { ECHO;  return POW_ASSIGN; }
+"%="      { ECHO;  return MOD_ASSIGN; }
+"&&="     { ECHO;  return AND_ASSIGN; }
+"||="     { ECHO;  return OR_ASSIGN; }
 
 [0-9]+ {
 	ECHO;

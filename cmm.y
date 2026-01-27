@@ -51,6 +51,9 @@ Node *ast_root;
 %token GOTO
 %token READ
 %token COLEQ ASSIGN
+%token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN
+%token POW_ASSIGN MOD_ASSIGN
+%token AND_ASSIGN OR_ASSIGN
 %token GE GT LE LT NE EQ
 %token AND OR NOT
 %token RETURN
@@ -166,14 +169,14 @@ const_init : ID COLEQ E {
 	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 };
 
-ids
+/**ids
 	: ids COMMA ID {
 	Node *id = new_id_node($3.name);
 	$$.node = append_node($1.node, id);
 }
 	| ID {
 	$$.node = new_id_node($1.name);
-};
+};**/
 
 st
 	: WRITE E SEMI {
@@ -198,6 +201,9 @@ st
 	| ID COLEQ E SEMI {
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
+}
+	| compound_assignment SEMI {
+	$$.node = $1.node;
 }
 	| ifstmt {
 	$$.node = $1.node;
@@ -323,10 +329,56 @@ comp
 	$$.node = $1.node;
 };
 
+compound_assignment
+	: ID ADD_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_ADD, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID SUB_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_SUB, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID MUL_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_MUL, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID DIV_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_DIV, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID POW_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_POW, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID MOD_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_MOD, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID AND_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_AND, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+	| ID OR_ASSIGN E {
+	Node *id = new_id_node($1.name);
+	Node *right = new_binary_node(NK_OR, id, $3.node);
+	$$.node = new_binary_node(NK_ASSIGN, id, right);
+}
+
+
 E
 	: ID ASSIGN E {
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
+}
+	| compound_assignment {
+	$$.node = $1.node;
 }
 	| ADD_SUB {
 	$$.node = $1.node;
