@@ -2,5 +2,8 @@ main {
   var n;
   goto lbl;
   write n;
-  label lbl:
+  lbl:
+  goto start;
+  start:
+  write n;
 }

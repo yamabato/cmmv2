@@ -35,7 +35,6 @@
 "for"     { ECHO;  return FOR; }
 "read"    { ECHO;  return READ; }
 "return"  { ECHO;  return RETURN; }
-"label"   { ECHO;  return LABEL; }
 "goto"    { ECHO;  return GOTO; }
 ":="      { ECHO;  return COLEQ; }
 ">="      { ECHO;  return GE; }

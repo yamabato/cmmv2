@@ -203,6 +203,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_LABEL:
       sym = append_symbol(tbl, node->cval, SK_LABEL);
       sym->label = blk->label_n++;
+      connect_code(blk, new_code(INS_LAB, 0, sym->label));
       break;
 
     case NK_BLOCK:
@@ -251,7 +252,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   SymbolTable *ftbl;
   int sym_ld;
   Symbol *sym;
-  int i;
+  int i, ok;
   Code *int_code;
 
   sym_ld = search_symbol(tbl, node->cval, NULL);
@@ -264,7 +265,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   blk->name = strdup(node->cval);
   blk->head = blk->tail = NULL;
   blk->param_count = 0;
-  blk->var_count = 3;
+  blk->var_count = 0;
   blk->next = NULL;
   blk->gotos = NULL;
   blk->label_n = lbl;
@@ -294,6 +295,15 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
     append_code(blk, stmt, ftbl);
   }
   connect_code(blk, new_code(INS_OPR, 0, 0));
+
+  for (Goto *gt=blk->gotos; gt!=NULL; gt=gt->next) {
+    ok = search_symbol(ftbl, gt->label, &sym);
+    if (ok != 0) {
+      printf("Err!!\n");
+      exit(1);
+    }
+    gt->code->arg = sym->label;
+  }
 
   int_code->arg += blk->var_count;
 

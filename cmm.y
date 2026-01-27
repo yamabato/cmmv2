@@ -46,7 +46,7 @@ Node *ast_root;
 %token IF THEN ELSE ENDIF
 %token WHILE DO
 %token FOR
-%token LABEL GOTO
+%token GOTO
 %token READ
 %token COLEQ
 %token GE GT LE LT NE EQ
@@ -179,7 +179,7 @@ st
 	| body {
 	$$.node = $1.node;
 }
-	| LABEL ID COLON {
+	| ID COLON {
 	$$.node = new_node(NK_LABEL);
 	$$.node->cval = strdup($2.name);
 }
