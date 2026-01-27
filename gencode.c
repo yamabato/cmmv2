@@ -152,7 +152,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 
     case NK_IF:
       elselbl = (blk->label_n)++;
-      append_code(blk, node->cond, tbl);
+      append_code(blk, node->if_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, elselbl));
       append_code(blk, node->if_block, tbl);
 
@@ -171,7 +171,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       lp_tail_lbl = (blk->label_n)++;
 
       connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
-      append_code(blk, node->cond, tbl);
+      append_code(blk, node->while_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
       append_code(blk, node->body, tbl);
       connect_code(blk, new_code(INS_JMP, 0, lp_head_lbl));
@@ -184,7 +184,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 
       append_code(blk, node->init, tbl);
       connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
-      append_code(blk, node->cond, tbl);
+      append_code(blk, node->for_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
       append_code(blk, node->body, tbl);
       append_code(blk, node->incr, tbl);

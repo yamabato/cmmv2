@@ -94,7 +94,7 @@ void show_node(Node *node, int depth, FILE *fp) {
       fprintf(fp, "IF\n");
       print_spaces(depth+1, fp);
       fprintf(fp, "COND\n");
-      show_node(node->cond, depth+2, fp);
+      show_node(node->if_cond, depth+2, fp);
       fprintf(fp, "\n");
       show_node(node->if_block, depth+1, fp);
 
@@ -109,7 +109,7 @@ void show_node(Node *node, int depth, FILE *fp) {
       fprintf(fp, "WHILE\n");
       print_spaces(depth+1, fp);
       fprintf(fp, "COND\n");
-      show_node(node->cond, depth+2, fp);
+      show_node(node->while_cond, depth+2, fp);
       fprintf(fp, "\n");
       show_node(node->body, depth+1, fp);
       break;
@@ -121,7 +121,7 @@ void show_node(Node *node, int depth, FILE *fp) {
       show_node(node->init, depth+2, fp);
       print_spaces(depth+1, fp);
       fprintf(fp, "COND\n");
-      show_node(node->cond, depth+2, fp);
+      show_node(node->for_cond, depth+2, fp);
       print_spaces(depth+1, fp);
       fprintf(fp, "INCR\n");
       show_node(node->incr, depth+2, fp);
@@ -143,7 +143,7 @@ void show_node(Node *node, int depth, FILE *fp) {
         if (p->next!=NULL) { fprintf(fp, ", "); }
       }
       fprintf(fp, ")\n");
-      show_node(node->body, depth+1, fp);
+      show_node(node->fbody, depth+1, fp);
       fprintf(fp, "\n");
       break;
     case NK_RETURN:

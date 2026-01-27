@@ -9,13 +9,16 @@ Node *new_node(NodeKind kind) {
   Node *node = (Node *)malloc(sizeof(Node));
 
   node->kind = kind;
-  node->left = NULL;
-  node->right = NULL;
-  node->body = NULL;
-  node->stmts = NULL;
-  node->cond = NULL;
-  node->ids = NULL;
-  node->next = NULL;
+  node->left =
+    node->right =
+    node->params =
+    node->body =
+    node->stmts =
+    node->if_cond =
+    node->while_cond =
+    node->for_cond =
+    node->ids =
+    node->next = NULL;
 
   node->cval = NULL;
 
@@ -35,7 +38,6 @@ Node *new_id_node(char *name) {
   node->cval = name;
   return node;
 }
-
 
 Node *new_param_node(Node *type, char *name) {
   Node *node = new_node(NK_PARAM);
@@ -65,7 +67,7 @@ Node *new_unary_node(NodeKind kind, Node *n) {
 
 Node *new_if_node(Node *cond, Node *if_block, Node *else_block) {
   Node *node = new_node(NK_IF);
-  node->cond = cond;
+  node->if_cond = cond;
   node->if_block = if_block;
   node->else_block = else_block;
   return node;
@@ -73,7 +75,7 @@ Node *new_if_node(Node *cond, Node *if_block, Node *else_block) {
 
 Node *new_while_node(Node *cond, Node *body) {
   Node *node = new_node(NK_WHILE);
-  node->cond = cond;
+  node->while_cond = cond;
   node->body = body;
   return node;
 }
@@ -81,7 +83,7 @@ Node *new_while_node(Node *cond, Node *body) {
 Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
   Node *node = new_node(NK_FOR);
   node->init = init;
-  node->cond = cond;
+  node->for_cond = cond;
   node->incr = incr;
   node->body = body;
   return node;

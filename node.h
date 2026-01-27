@@ -21,18 +21,38 @@ typedef enum {
 // ノード
 typedef struct Node {
   NodeKind kind;
+
+  union {
+    struct { // 単項・二項演算
+      struct Node *left;
+      struct Node *right;
+    };
+    struct { // for
+      struct Node *init;
+      struct Node *incr;
+      struct Node *for_cond;
+    };
+    struct { // while
+      struct Node *while_cond;
+      struct Node *body;
+    };
+    struct { // if
+      struct Node *if_cond;
+      struct Node *if_block;
+      struct Node *else_block;
+    };
+    struct { // block
+      struct Node *stmts;
+    };
+    struct { // call
+      struct Node *params;
+      struct Node *fbody;
+    };
+    struct { // var
+      struct Node *ids;
+    };
+  };
   struct Node *next;
-  struct Node *left;
-  struct Node *right;
-  struct Node *init;
-  struct Node *incr;
-  struct Node *cond;
-  struct Node *body;
-  struct Node *if_block;
-  struct Node *else_block;
-  struct Node *params;
-  struct Node *ids;
-  struct Node *stmts;
 
   int line;
 

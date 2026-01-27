@@ -79,7 +79,7 @@ fdecls
 
 fdecl : fhead body {
 	$$.node = $1.node;
-	$$.node->body = $2.node;
+	$$.node->fbody = $2.node;
 };
 
 fhead : fid LPAR params RPAR {
@@ -211,7 +211,7 @@ forstmt : FOR LPAR E SEMI cond SEMI E RPAR body {
 	$$.node = new_for_node($3.node, $5.node, $7.node, $9.node);
 }
 
-switchstmt : SWITCH E LPAR cases case_default RPAR {
+switchstmt : SWITCH E LBRA cases case_default RBRA {
 	$$.node = new_switch_node($2.node, $4.node, $5.node);
 };
 

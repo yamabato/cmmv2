@@ -1,10 +1,91 @@
 FUNC DEF: _pow (a, b)
-  BINARY OPER: :=
-    LEFT:
-    RIGHT:
+  BLOCK
+    VAR:
+      ID: r
+
+    BINARY OPER: :=
+      LEFT:
+        ID: r
+      RIGHT:
+        INT: 1
+    IF
+      COND
+        BINARY OPER: <
+          LEFT:
+            ID: b
+          RIGHT:
+            INT: 0
+
+      BLOCK
+        RETURN
+          INT: 1
+
+    WHILE
+      COND
+        BINARY OPER: >
+          LEFT:
+            ID: b
+          RIGHT:
+            INT: 0
+
+      BLOCK
+        IF
+          COND
+            BINARY OPER: ==
+              LEFT:
+                BINARY OPER: %
+                  LEFT:
+                    ID: b
+                  RIGHT:
+                    INT: 2
+              RIGHT:
+                INT: 1
+
+          BLOCK
+            BINARY OPER: :=
+              LEFT:
+                ID: r
+              RIGHT:
+                BINARY OPER: *
+                  LEFT:
+                    ID: r
+                  RIGHT:
+                    ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: a
+          RIGHT:
+            BINARY OPER: *
+              LEFT:
+                ID: a
+              RIGHT:
+                ID: a
+        BINARY OPER: :=
+          LEFT:
+            ID: b
+          RIGHT:
+            BINARY OPER: /
+              LEFT:
+                ID: b
+              RIGHT:
+                INT: 2
+    RETURN
+      ID: r
+
 
 FUNC DEF: main ()
-  BINARY OPER: :=
-    LEFT:
-    RIGHT:
+  BLOCK
+    VAR:
+      ID: n
+
+    -*-UNSUPPORTED NODE KIND(25)-*-
+    UNARY OPER: WRITE
+      RIGHT:
+        ID: n
+    -*-UNSUPPORTED NODE KIND(24)-*-
+    -*-UNSUPPORTED NODE KIND(25)-*-
+    -*-UNSUPPORTED NODE KIND(24)-*-
+    UNARY OPER: WRITE
+      RIGHT:
+        ID: n
 
