@@ -29,7 +29,7 @@ typedef struct Codeval {
 Node *ast_root;
 %}
 
-%token VAR
+%token VAR CONST
 %token INT
 %token MAIN
 %token ID
@@ -122,19 +122,31 @@ stmts
 	: stmts st {
 	$$.node = append_node($1.node, $2.node);
 }
-	| stmts vardecl {
-	$$.node = append_node($1.node, $2.node);
-}
 	| st {
-	$$.node = $1.node;
-}
-	| vardecl {
 	$$.node = $1.node;
 };
 
 vardecl : VAR ids SEMI {
 	$$.node = new_node(NK_VAR);
 	$$.node->ids = $2.node;
+};
+
+decl_const : CONST const_inits SEMI {
+	$$.node = new_node(NK_CONST);
+	$$.node->ids = $2.node;
+};
+
+const_inits
+	: const_inits COMMA const_init {
+	$$.node = append_node($1.node, $3.node);
+}
+	| const_init {
+	$$.node = $1.node;
+};
+
+const_init : ID COLEQ E {
+	Node *id = new_id_node($1.name);
+	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 };
 
 ids
@@ -158,6 +170,12 @@ st
 	$$.node = new_unary_node(NK_READ, id);
 }
 	| FUNC_CALL SEMI {
+	$$.node = $1.node;
+}
+	| vardecl {
+	$$.node = $1.node;
+}
+	| decl_const {
 	$$.node = $1.node;
 }
 	| ID COLEQ E SEMI {

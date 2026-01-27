@@ -79,7 +79,25 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_VAR:
       for (Node *id=node->ids; id!=NULL; id=id->next) {
         sym = append_symbol(tbl, id->cval, SK_VAR);
+        if (sym == NULL) {
+          printf("Err var\n");
+          exit(1);
+        }
         sym->offset = blk->var_count++;
+      }
+      break;
+
+    case NK_CONST:
+      for (Node *init=node->ids; init!=NULL; init=init->next) {
+        sym = append_symbol(tbl, init->left->cval, SK_CONST);
+        if (sym == NULL) {
+          printf("Err const\n");
+          exit(1);
+        }
+        sym->offset = blk->var_count++;
+
+        append_code(blk, init->right, tbl);
+        connect_code(blk, new_code(INS_STO, 0, sym->offset));
       }
       break;
 
@@ -87,12 +105,20 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       append_code(blk, node->right, tbl);
       ok = search_symbol(tbl, node->left->cval, &sym);
       // ok = 0ならその関数内 -1は未定義
+      if (sym->kind != SK_VAR) {
+        printf("Err assign\n");
+        exit(1);
+      }
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
       break;
     case NK_ASSIGN: // 式
       append_code(blk, node->right, tbl);
       ok = search_symbol(tbl, node->left->cval, &sym);
       // ok = 0ならその関数内 -1は未定義
+      if (sym->kind != SK_VAR) {
+        printf("Err assign\n");
+        exit(1);
+      }
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;

@@ -8,19 +8,8 @@ extern int yylineno;
 Node *new_node(NodeKind kind) {
   Node *node = (Node *)malloc(sizeof(Node));
 
+  memset(node, 0, sizeof(Node));
   node->kind = kind;
-  node->left =
-    node->right =
-    node->params =
-    node->body =
-    node->stmts =
-    node->if_cond =
-    node->else_block =
-    node->while_cond =
-    node->for_cond =
-    node->ids =
-    node->next = NULL;
-
   node->cval = NULL;
 
   node->line = yylineno;

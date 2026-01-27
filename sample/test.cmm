@@ -1,13 +1,12 @@
 main {
   var n, m, l;
+  const c:=10, b:=12;
   n := 5;
 
-  write true;
-  write false;
-
-  if (true && !false) {
-    write 123;
-  }
+  write c;
+  writeln;
+  write c+20;
+  writeln;
 
   writeln;
 }
