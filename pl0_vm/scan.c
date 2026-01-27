@@ -13,10 +13,11 @@ int search_jump_addr(LabelInfo *head, int label) {
 }
 
 void scan_labels(Instr *head, Instr *tail, VM *vm) {
-  int lineno = 1;
+  int lineno = 0;
   int instr_no = 0;
   int addr = 0;
   int lbl;
+  Instr *next_instr;
   LabelInfo *li_head= NULL;
   LabelInfo *lbl_info;
 
@@ -35,7 +36,9 @@ void scan_labels(Instr *head, Instr *tail, VM *vm) {
 
   vm->program = (Instr *)calloc(lineno-1, sizeof(Instr));
   vm->prog_size = lineno-1;
-  for (Instr *instr=head; instr!=NULL; free(instr)) {
+  for (Instr *instr=head; instr!=NULL; instr=next_instr) {
+    next_instr = instr->next;
+
     instr_no++;
     if (instr->opcode != INS_LAB) {
       memcpy(&(vm->program[addr++]), instr, sizeof(Instr));
@@ -51,7 +54,7 @@ void scan_labels(Instr *head, Instr *tail, VM *vm) {
       }
     }
 
-    instr=instr->next;
+    free(instr);
   }
 
 

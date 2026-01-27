@@ -1,5 +1,7 @@
 #pragma once
 
+#define STACK_SIZE 256
+
 typedef enum {
   INS_LOD,
   INS_LIT,
@@ -44,3 +46,6 @@ typedef struct {
   Instr *program;
   int prog_size;
 } VM;
+
+void run(VM *);
+void exec_program(VM *);

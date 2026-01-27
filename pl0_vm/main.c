@@ -30,5 +30,7 @@ int main(int argc, char **argv) {
   vm = (VM *)malloc(sizeof(VM));
   scan_labels(head, tail, vm);
 
+  run(vm);
+
   return 0;
 }
