@@ -34,3 +34,13 @@ typedef struct Instr {
   struct Instr *prev;
   struct Instr *next;
 } Instr;
+
+typedef struct {
+  int* stack;
+  int stack_size;
+  int pc;
+  int bp;
+  int sp;
+  Instr *program;
+  int prog_size;
+} VM;

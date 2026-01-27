@@ -23,6 +23,8 @@ int parse_line(char *line, Instr *instr) {
   if (count != 3) { return -1; }
 
   instr->opcode = str_to_opcode(iname);
+  if (instr->opcode == INS_UNK) { return -1; }
+
   instr->level = level;
   instr->arg = arg;
   return 1;

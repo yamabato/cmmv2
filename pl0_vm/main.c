@@ -4,11 +4,13 @@
 
 #include "vm.h"
 #include "parse.h"
+#include "scan.h"
 
 int main(int argc, char **argv) {
   char *fname;
   FILE *fp;
   Instr *head, *tail;
+  VM *vm;
 
   head = tail = NULL;
 
@@ -25,10 +27,8 @@ int main(int argc, char **argv) {
   }
 
   parse(fp, &head, &tail);
-
-  for (Instr *i=head; i!=NULL; i=i->next) {
-    printf("%d\n", i->opcode);
-  }
+  vm = (VM *)malloc(sizeof(VM));
+  scan_labels(head, tail, vm);
 
   return 0;
 }
