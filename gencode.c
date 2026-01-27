@@ -49,6 +49,31 @@ Code *new_code(Instr instr, int l, int a) {
   return c;
 }
 
+void set_loop_label(CodeBlock *blk, int head_lbl, int tail_lbl) {
+  LoopLbl *lp_head, *lp_tail;
+
+  lp_head = (LoopLbl *)malloc(sizeof(LoopLbl));
+  lp_tail = (LoopLbl *)malloc(sizeof(LoopLbl));
+  lp_head->label = head_lbl;
+  lp_tail->label = tail_lbl;
+  lp_head->next = blk->lp_head;
+  blk->lp_head = lp_head;
+  lp_tail->next = blk->lp_tail;
+  blk->lp_tail = lp_tail;
+}
+
+void unset_loop_label(CodeBlock *blk) {
+  LoopLbl *lp_head, *lp_tail;
+  lp_head = blk->lp_head;
+  lp_tail = blk->lp_tail;
+
+  blk->lp_head = blk->lp_head->next;
+  blk->lp_tail = blk->lp_tail->next;
+
+  free(lp_head);
+  free(lp_tail);
+}
+
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   char *name;
@@ -235,6 +260,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_WHILE:
       head_lbl = (blk->label_n)++;
       tail_lbl = (blk->label_n)++;
+      set_loop_label(blk, head_lbl, tail_lbl);
 
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->while_cond, tbl);
@@ -242,20 +268,27 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       append_code(blk, node->body, tbl);
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
+
+      unset_loop_label(blk);
       break;
     case NK_DO_WHILE:
       head_lbl = (blk->label_n)++;
       tail_lbl = (blk->label_n)++;
+      set_loop_label(blk, head_lbl, tail_lbl);
+
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->body, tbl);
       append_code(blk, node->while_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
+
+      unset_loop_label(blk);
       break;
     case NK_FOR:
       head_lbl = (blk->label_n)++;
       tail_lbl = (blk->label_n)++;
+      set_loop_label(blk, head_lbl, tail_lbl);
 
       append_code(blk, node->init, tbl);
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
@@ -265,7 +298,22 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       append_code(blk, node->incr, tbl);
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
+
+      unset_loop_label(blk);
       break;
+
+    case NK_BREAK:
+      // NULLの可能性あり
+      tail_lbl = blk->lp_tail->label;
+      connect_code(blk, new_code(INS_JMP, 0, tail_lbl));
+      break;
+
+    case NK_CONTINUE:
+      // NULLの可能性あり
+      head_lbl = blk->lp_head->label;
+      connect_code(blk, new_code(INS_JMP, 0, head_lbl));
+      break;
+
     case NK_SWITCH:
       tail_lbl = (blk->label_n)++;
 
@@ -369,6 +417,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   blk->var_count = 3;
   blk->next = NULL;
   blk->gotos = NULL;
+  blk->lp_head = blk->lp_tail = NULL;
   blk->label_n = lbl;
 
   ftbl = new_symbol_table(tbl);
@@ -422,6 +471,7 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   blk->next = NULL;
   blk->label_n = 1;
   blk->gotos = NULL;
+  blk->lp_head = blk->lp_tail = NULL;
 
   if (tbl == NULL) {
     tbl = new_symbol_table(NULL);

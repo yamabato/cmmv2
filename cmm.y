@@ -47,6 +47,7 @@ Node *ast_root;
 %token IF ELSE
 %token WHILE DO
 %token FOR
+%token BREAK CONTINUE
 %token SWITCH CASE DEFAULT
 %token GOTO
 %token READ
@@ -228,6 +229,12 @@ st
 }
 	| RETURN SEMI {
 	$$.node = new_node(NK_RETURN);
+}
+	| BREAK SEMI {
+	$$.node = new_node(NK_BREAK);
+}
+	| CONTINUE SEMI {
+	$$.node = new_node(NK_CONTINUE);
 }
 	| body {
 	$$.node = $1.node;

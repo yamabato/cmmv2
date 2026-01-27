@@ -34,6 +34,11 @@ typedef struct Goto {
   struct Goto *next;
 } Goto;
 
+typedef struct LoopLbl {
+  int label;
+  struct LoopLbl *next;
+} LoopLbl;
+
 typedef struct CodeBlock {
   char *name;
   Code *head;
@@ -45,6 +50,8 @@ typedef struct CodeBlock {
   int label_n;
 
   Goto *gotos;
+  LoopLbl *lp_head;
+  LoopLbl *lp_tail;
 
   struct CodeBlock *next;
 } CodeBlock;
@@ -54,5 +61,7 @@ CodeBlock *connect_code_block(CodeBlock *, CodeBlock *);
 CodeBlock *gen_func_code_block(Node *, SymbolTable *, int);
 CodeBlock *gen_code_blocks(Node *, SymbolTable *);
 void append_code(CodeBlock *, Node *, SymbolTable *);
+void set_loop_label(CodeBlock *, int, int);
+void unset_loop_label(CodeBlock *);
 
 uint64_t write_out_code(CodeBlock *, const char *);
