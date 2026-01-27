@@ -70,7 +70,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_ID:
       ok = search_symbol(tbl, node->cval, &sym);
       if (ok != 0) {
-        printf("Err!!\n");
+        printf("Err id!!\n");
         exit(1);
       }
       // ok!=0ならエラー対応(ok>0の場合は、オフセット不明)
@@ -117,7 +117,6 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 
       connect_code(blk, new_code(INS_OPR, 0, opr_n));
       break;
-
     case NK_MOD:
       // intに限れば
       // a%b -> a - (a/b)*bなど
@@ -144,6 +143,24 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       append_code(blk, node->right, tbl);
       ok = search_symbol(tbl, "_pow", &sym);
       connect_code(blk, new_code(INS_CAL, 0, sym->label));
+      break;
+
+    case NK_AND:
+    case NK_OR:
+      append_code(blk, node->left, tbl);
+      append_code(blk, node->right, tbl);
+
+      opr_n = 7;
+      if (kind == NK_AND) { opr_n = 4; }
+      else if (kind == NK_OR) { opr_n = 2; }
+
+      connect_code(blk, new_code(INS_OPR, 0, opr_n));
+      break;
+    case NK_NOT:
+      // false->0 true->それ以外と仮定
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_LIT, 0, 0));
+      connect_code(blk, new_code(INS_OPR, 0, 8));
       break;
 
     case NK_MINUS:
@@ -287,7 +304,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   blk->name = strdup(node->cval);
   blk->head = blk->tail = NULL;
   blk->param_count = 0;
-  blk->var_count = 0;
+  blk->var_count = 3;
   blk->next = NULL;
   blk->gotos = NULL;
   blk->label_n = lbl;
@@ -304,7 +321,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
 
   search_symbol(tbl, node->cval, &sym);
   connect_code(blk, new_code(INS_LAB, 0, sym->label));
-  connect_code(blk, int_code=new_code(INS_INT, 0, 3));
+  connect_code(blk, int_code=new_code(INS_INT, 0, 0));
 
   i = 0;
   for (Node *p=node->params; p!=NULL; p=p->next) {
@@ -321,7 +338,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Goto *gt=blk->gotos; gt!=NULL; gt=gt->next) {
     ok = search_symbol(ftbl, gt->label, &sym);
     if (ok != 0) {
-      printf("Err!!\n");
+      printf("Err goto!!\n");
       exit(1);
     }
     gt->code->arg = sym->label;

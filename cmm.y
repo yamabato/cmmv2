@@ -51,6 +51,7 @@ Node *ast_root;
 %token READ
 %token COLEQ
 %token GE GT LE LT NE EQ
+%token AND OR NOT
 %token RETURN
 %%
 
@@ -193,17 +194,17 @@ st
 };
 
 ifstmt
-	: IF par_cond body {
+	: IF cond body {
 	$$.node = new_if_node($2.node, $3.node, NULL);
 }
-	| IF par_cond body ELSE body {
+	| IF cond body ELSE body {
 	$$.node = new_if_node($2.node, $3.node, $5.node);
 }
-	| IF par_cond body ELSE ifstmt {
+	| IF cond body ELSE ifstmt {
 	$$.node = new_if_node($2.node, $3.node, $5.node);
 };
 
-whilestmt : WHILE par_cond body {
+whilestmt : WHILE cond body {
 	$$.node = new_while_node($2.node, $3.node);
 };
 
@@ -235,15 +236,35 @@ case_default
 	$$.node = NULL;
 };
 
-par_cond
-	: LPAR cond RPAR {
-	$$.node = $2.node;
-}
-	| cond {
+cond : cond_or {
 	$$.node = $1.node;
-}
+};
 
-cond
+cond_or
+	: cond_or OR cond_and {
+	$$.node = new_binary_node(NK_OR, $1.node, $3.node);
+}
+	| cond_and {
+	$$.node = $1.node;
+};
+
+cond_and
+	: cond_and AND cond_not {
+	$$.node = new_binary_node(NK_AND, $1.node, $3.node);
+}
+	| cond_not {
+	$$.node = $1.node;
+};
+
+cond_not
+	: NOT cond_not {
+	$$.node = new_unary_node(NK_NOT, $2.node);
+}
+	| comp {
+	$$.node = $1.node;
+};
+
+comp
 	: E GT E {
 	$$.node = new_binary_node(NK_GT, $1.node, $3.node);
 }
@@ -261,6 +282,9 @@ cond
 }
 	| E EQ E {
 	$$.node = new_binary_node(NK_EQ, $1.node, $3.node);
+}
+	| LPAR cond_or RPAR {
+	$$.node = $2.node;
 };
 
 E

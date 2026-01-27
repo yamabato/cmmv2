@@ -1,6 +1,6 @@
 %{
 #undef ECHO
-#define ECHO if(0) printf("%s", yytext);
+#define ECHO if(1) printf("%s", yytext);
 %}
 %option yylineno
 
@@ -44,6 +44,9 @@
 "<"       { ECHO;  return LT; }
 "!="      { ECHO;  return NE; }
 "=="      { ECHO;  return EQ; }
+"&&"      { ECHO;  return AND; }
+"||"      { ECHO;  return OR; }
+"!"       { ECHO;  return NOT; }
 
 [0-9]+ {
 	ECHO;

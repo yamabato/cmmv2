@@ -15,6 +15,7 @@ Node *new_node(NodeKind kind) {
     node->body =
     node->stmts =
     node->if_cond =
+    node->else_block =
     node->while_cond =
     node->for_cond =
     node->ids =
@@ -101,6 +102,7 @@ Node *new_case_node(Node *cond, Node *body) {
   Node *node = new_node(NK_CASE);
   node->case_expr = cond;
   node->case_body = body;
+  return node;
 }
 
 Node *append_node(Node *n1, Node *n2) {

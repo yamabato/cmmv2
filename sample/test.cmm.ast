@@ -1,108 +1,12 @@
-FUNC DEF: _pow (a, b)
-  BLOCK
-    VAR:
-      ID: r
+IF
+  COND
+    ID: a
+    ID: b
 
-    BINARY OPER: :=
-      LEFT:
-        ID: r
-      RIGHT:
-        INT: 1
-    IF
-      COND
-        BINARY OPER: <
-          LEFT:
-            ID: b
-          RIGHT:
-            INT: 0
+  UNARY OPER: WRITE
+    RIGHT:
+IF
+  COND
 
-      BLOCK
-        RETURN
-          INT: 1
-
-    WHILE
-      COND
-        BINARY OPER: >
-          LEFT:
-            ID: b
-          RIGHT:
-            INT: 0
-
-      BLOCK
-        IF
-          COND
-            BINARY OPER: ==
-              LEFT:
-                BINARY OPER: %
-                  LEFT:
-                    ID: b
-                  RIGHT:
-                    INT: 2
-              RIGHT:
-                INT: 1
-
-          BLOCK
-            BINARY OPER: :=
-              LEFT:
-                ID: r
-              RIGHT:
-                BINARY OPER: *
-                  LEFT:
-                    ID: r
-                  RIGHT:
-                    ID: a
-        BINARY OPER: :=
-          LEFT:
-            ID: a
-          RIGHT:
-            BINARY OPER: *
-              LEFT:
-                ID: a
-              RIGHT:
-                ID: a
-        BINARY OPER: :=
-          LEFT:
-            ID: b
-          RIGHT:
-            BINARY OPER: /
-              LEFT:
-                ID: b
-              RIGHT:
-                INT: 2
-    RETURN
-      ID: r
-
-
-FUNC DEF: main ()
-  BLOCK
-    VAR:
-      ID: n
-
-    BINARY OPER: :=
-      LEFT:
-        ID: n
-      RIGHT:
-        INT: 0
-    SWITCH
-      EXPR
-        ID: n
-        CASE
-          INT: 0
-          BLOCK
-            UNARY OPER: WRITE
-              RIGHT:
-                INT: 123
-        CASE
-          INT: 10
-          BLOCK
-            UNARY OPER: WRITE
-              RIGHT:
-                INT: 567
-      DEFAULT
-        BLOCK
-          UNARY OPER: WRITE
-            RIGHT:
-              INT: 987
-    UNARY OPER: WRITELN
-      RIGHT:
-
+  UNARY OPER: WRITE
+    RIGHT:

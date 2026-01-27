@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
   yyin = fopen(fname, "r");
   if (yyparse() != 0) {
-    printf("Error!!\n");
+    printf("Error PARSE!!\n");
     return 1;
   }
   ast_root = append_node(runtime_ast, ast_root);
