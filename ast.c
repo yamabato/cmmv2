@@ -87,6 +87,14 @@ Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
   return node;
 }
 
+Node *new_switch_node(Node *expr, Node *cases, Node *dflt) {
+  Node *node = new_node(NK_SWITCH);
+}
+
+Node *new_case_node(Node *cond, Node *body) {
+
+}
+
 Node *append_node(Node *n1, Node *n2) {
   if (n1==NULL && n2==NULL) { return NULL; }
   if (n1 == NULL) {

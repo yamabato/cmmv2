@@ -43,9 +43,10 @@ Node *ast_root;
 %token PLUS2 MINUS2
 %token MULT DIV MOD POW
 %token NUMBER FLOAT
-%token IF THEN ELSE ENDIF
+%token IF ELSE
 %token WHILE DO
 %token FOR
+%token SWITCH CASE DEFAULT
 %token GOTO
 %token READ
 %token COLEQ
@@ -170,6 +171,9 @@ st
 	| forstmt {
 	$$.node = $1.node;
 }
+	| switchstmt {
+	$$.node = $1.node;
+}
 	| RETURN E SEMI {
 	$$.node = new_unary_node(NK_RETURN, $2.node);
 }
@@ -206,6 +210,30 @@ whilestmt : WHILE par_cond body {
 forstmt : FOR LPAR E SEMI cond SEMI E RPAR body {
 	$$.node = new_for_node($3.node, $5.node, $7.node, $9.node);
 }
+
+switchstmt : SWITCH E LPAR cases case_default RPAR {
+	$$.node = new_switch_node($2.node, $4.node, $5.node);
+};
+
+cases
+	: cases case_item {
+	$$.node = append_node($1.node, $2.node);
+}
+	| case_item {
+	$$.node = $1.node;
+};
+
+case_item : CASE E COLON body {
+	$$.node = new_case_node($2.node, $4.node);
+};
+
+case_default
+	: DEFAULT COLON body {
+	$$.node = $3.node;
+}
+	| {
+	$$.node = NULL;
+};
 
 par_cond
 	: LPAR cond RPAR {
