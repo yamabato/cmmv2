@@ -126,9 +126,26 @@ stmts
 	$$.node = $1.node;
 };
 
-vardecl : VAR ids SEMI {
+decl_var: VAR var_inits SEMI {
 	$$.node = new_node(NK_VAR);
 	$$.node->ids = $2.node;
+};
+
+var_inits
+	: var_inits COMMA var_init {
+	$$.node = append_node($1.node, $3.node);
+}
+	| var_init {
+	$$.node = $1.node;
+};
+
+var_init
+	: ID {
+	$$.node = new_id_node($1.name);
+}
+	| ID COLEQ E {
+	Node *id = new_id_node($1.name);
+	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 };
 
 decl_const : CONST const_inits SEMI {
@@ -172,7 +189,7 @@ st
 	| FUNC_CALL SEMI {
 	$$.node = $1.node;
 }
-	| vardecl {
+	| decl_var {
 	$$.node = $1.node;
 }
 	| decl_const {

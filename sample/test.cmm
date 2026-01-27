@@ -1,8 +1,10 @@
 main {
-  var n, m, l;
+  var n, m, l:=123;
   const c:=10, b:=12;
   n := 5;
 
+  write l;
+  writeln;
   write c;
   writeln;
   write c+20;

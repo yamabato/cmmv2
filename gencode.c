@@ -51,6 +51,7 @@ Code *new_code(Instr instr, int l, int a) {
 
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
+  char *name;
   int opr_n;
   int tmp_id;
   int tmp1_id, tmp2_id;
@@ -78,12 +79,26 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       break;
     case NK_VAR:
       for (Node *id=node->ids; id!=NULL; id=id->next) {
-        sym = append_symbol(tbl, id->cval, SK_VAR);
+        if (id->kind == NK_ID) {
+          name = id->cval;
+        } else if (id->kind == NK_ASSIGN_ST) {
+          name = id->left->cval;
+        } else {
+          printf("Err v\n");
+          exit(1);
+        }
+
+        sym = append_symbol(tbl, name, SK_VAR);
         if (sym == NULL) {
           printf("Err var\n");
           exit(1);
         }
         sym->offset = blk->var_count++;
+
+        if (id->kind == NK_ASSIGN_ST) {
+          append_code(blk, id->right, tbl);
+          connect_code(blk, new_code(INS_STO, 0, sym->offset));
+        }
       }
       break;
 
