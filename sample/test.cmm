@@ -6,5 +6,10 @@ main {
   write n;
   write ++n;
   write n;
+
+  write n--;
+  write n;
+  write --n;
+  write n;
   writeln;
 }

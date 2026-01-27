@@ -349,7 +349,21 @@ F
 	Node *add = new_binary_node(NK_ADD, id, one);
 	Node *inc = new_binary_node(NK_ASSIGN, id, add);
 	$$.node = inc;
-	}
+}
+	| ID DEC {
+	Node *id  = new_id_node($1.name);
+	Node *one = new_int_node(1);
+	Node *add = new_binary_node(NK_SUB, id, one);
+	Node *dec = new_binary_node(NK_ASSIGN, id, add);
+	$$.node = new_binary_node(NK_ADD, dec, one);
+}
+	| DEC ID {
+	Node *id  = new_id_node($1.name);
+	Node *one = new_int_node(1);
+	Node *add = new_binary_node(NK_SUB, id, one);
+	Node *dec = new_binary_node(NK_ASSIGN, id, add);
+	$$.node = dec;
+}
 	| FUNC_CALL {
 	$$.node = $1.node;
 }
