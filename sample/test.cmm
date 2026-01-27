@@ -1,9 +1,17 @@
 main {
   var n;
-  goto lbl;
-  write n;
-  lbl:
-  goto start;
-  start:
-  write n;
+  n := 0;
+
+  switch (n) {
+    case 0 {
+      write 123;
+    }
+    case 10 {
+      write 567;
+    }
+    default {
+      write 987;
+    }
+  }
+  writeln;
 }

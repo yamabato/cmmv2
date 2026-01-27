@@ -91,10 +91,16 @@ Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
 
 Node *new_switch_node(Node *expr, Node *cases, Node *dflt) {
   Node *node = new_node(NK_SWITCH);
+  node->switch_expr = expr;
+  node->cases = cases;
+  node->dflt = dflt;
+  return node;
 }
 
 Node *new_case_node(Node *cond, Node *body) {
-
+  Node *node = new_node(NK_CASE);
+  node->case_expr = cond;
+  node->case_body = body;
 }
 
 Node *append_node(Node *n1, Node *n2) {

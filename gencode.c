@@ -52,9 +52,10 @@ Code *new_code(Instr instr, int l, int a) {
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int opr_n;
+  int tmp_id;
   int tmp1_id, tmp2_id;
   int iflbl, elselbl;
-  int lp_head_lbl, lp_tail_lbl;
+  int head_lbl, tail_lbl;
   int ok;
   Goto *gt = NULL;
   Symbol *sym;
@@ -167,29 +168,50 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       break;
     case NK_WHILE:
-      lp_head_lbl = (blk->label_n)++;
-      lp_tail_lbl = (blk->label_n)++;
+      head_lbl = (blk->label_n)++;
+      tail_lbl = (blk->label_n)++;
 
-      connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->while_cond, tbl);
-      connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
+      connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
       append_code(blk, node->body, tbl);
-      connect_code(blk, new_code(INS_JMP, 0, lp_head_lbl));
-      connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
-
+      connect_code(blk, new_code(INS_JMP, 0, head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
       break;
     case NK_FOR:
-      lp_head_lbl = (blk->label_n)++;
-      lp_tail_lbl = (blk->label_n)++;
+      head_lbl = (blk->label_n)++;
+      tail_lbl = (blk->label_n)++;
 
       append_code(blk, node->init, tbl);
-      connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->for_cond, tbl);
-      connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
+      connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
       append_code(blk, node->body, tbl);
       append_code(blk, node->incr, tbl);
-      connect_code(blk, new_code(INS_JMP, 0, lp_head_lbl));
-      connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
+      connect_code(blk, new_code(INS_JMP, 0, head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
+      break;
+    case NK_SWITCH:
+      tail_lbl = (blk->label_n)++;
+
+      tmp_id = (blk->var_count)++;
+      append_code(blk, node->switch_expr, tbl);
+      connect_code(blk, new_code(INS_STO, 0, tmp_id));
+
+      for (Node *c=node->cases; c!=NULL; c=c->next) {
+        head_lbl = (blk->label_n)++;
+        connect_code(blk, new_code(INS_LOD, 0, tmp_id));
+        append_code(blk, c->case_expr, tbl);
+        connect_code(blk, new_code(INS_OPR, 0, 8)); // =
+        connect_code(blk, new_code(INS_JPC, 0, head_lbl));
+        append_code(blk, c->case_body, tbl);
+        connect_code(blk, new_code(INS_JMP, 0, tail_lbl));
+        connect_code(blk, new_code(INS_LAB, 0, head_lbl));
+      }
+      if (node->dflt != NULL) {
+        append_code(blk, node->dflt, tbl);
+      }
+      connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
       break;
 
     case NK_GOTO:

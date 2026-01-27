@@ -78,14 +78,31 @@ FUNC DEF: main ()
     VAR:
       ID: n
 
-    -*-UNSUPPORTED NODE KIND(25)-*-
-    UNARY OPER: WRITE
-      RIGHT:
+    BINARY OPER: :=
+      LEFT:
         ID: n
-    -*-UNSUPPORTED NODE KIND(24)-*-
-    -*-UNSUPPORTED NODE KIND(25)-*-
-    -*-UNSUPPORTED NODE KIND(24)-*-
-    UNARY OPER: WRITE
       RIGHT:
+        INT: 0
+    SWITCH
+      EXPR
         ID: n
+        CASE
+          INT: 0
+          BLOCK
+            UNARY OPER: WRITE
+              RIGHT:
+                INT: 123
+        CASE
+          INT: 10
+          BLOCK
+            UNARY OPER: WRITE
+              RIGHT:
+                INT: 567
+      DEFAULT
+        BLOCK
+          UNARY OPER: WRITE
+            RIGHT:
+              INT: 987
+    UNARY OPER: WRITELN
+      RIGHT:
 

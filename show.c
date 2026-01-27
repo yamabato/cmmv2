@@ -104,6 +104,24 @@ void show_node(Node *node, int depth, FILE *fp) {
         show_node(node->else_block, depth+1, fp);
       }
       break;
+    case NK_SWITCH:
+      fprintf(fp, "SWITCH\n");
+      print_spaces(depth+1, fp);
+      fprintf(fp, "EXPR\n");
+      show_node(node->switch_expr, depth+2, fp);
+      show_node(node->cases, depth+2, fp);
+
+      if (node->dflt != NULL) {
+        print_spaces(depth+1, fp);
+        fprintf(fp, "DEFAULT\n");
+        show_node(node->dflt, depth+2, fp);
+      }
+      break;
+    case NK_CASE:
+      fprintf(fp, "CASE\n");
+      show_node(node->case_expr, depth+1, fp);
+      show_node(node->case_body, depth+1, fp);
+      break;
 
     case NK_WHILE:
       fprintf(fp, "WHILE\n");

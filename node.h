@@ -51,6 +51,15 @@ typedef struct Node {
     struct { // var
       struct Node *ids;
     };
+    struct { // switch
+      struct Node *switch_expr;
+      struct Node *cases;
+      struct Node *dflt;
+    };
+    struct { // case
+      struct Node *case_expr;
+      struct Node *case_body;
+    };
   };
   struct Node *next;
 

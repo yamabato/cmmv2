@@ -223,13 +223,13 @@ cases
 	$$.node = $1.node;
 };
 
-case_item : CASE E COLON body {
-	$$.node = new_case_node($2.node, $4.node);
+case_item : CASE E body {
+	$$.node = new_case_node($2.node, $3.node);
 };
 
 case_default
-	: DEFAULT COLON body {
-	$$.node = $3.node;
+	: DEFAULT body {
+	$$.node = $2.node;
 }
 	| {
 	$$.node = NULL;
