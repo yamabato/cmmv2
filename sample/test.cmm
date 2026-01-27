@@ -1,11 +1,7 @@
 main {
-  write _pow(5, 2);
-  writeln;
-  write 5^0;
-  write 5^2;
-  write 5^3;
-  write 5^4;
-
-  write (-1)^(-2);
-  writeln;
+  var n;
+  for (n:=0; n<10; n:=n+1) {
+    write n;
+    writeln;
+  }
 }

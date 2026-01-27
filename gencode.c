@@ -177,6 +177,19 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
 
       break;
+    case NK_FOR:
+      lp_head_lbl = (blk->label_n)++;
+      lp_tail_lbl = (blk->label_n)++;
+
+      append_code(blk, node->init, tbl);
+      connect_code(blk, new_code(INS_LAB, 0, lp_head_lbl));
+      append_code(blk, node->cond, tbl);
+      connect_code(blk, new_code(INS_JPC, 0, lp_tail_lbl));
+      append_code(blk, node->body, tbl);
+      append_code(blk, node->incr, tbl);
+      connect_code(blk, new_code(INS_JMP, 0, lp_head_lbl));
+      connect_code(blk, new_code(INS_LAB, 0, lp_tail_lbl));
+      break;
 
     case NK_BLOCK:
       for (Node *s=node->stmts; s!=NULL; s=s->next) {

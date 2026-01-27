@@ -75,54 +75,39 @@ FUNC DEF: _pow (a, b)
 
 FUNC DEF: main ()
   BLOCK
-    UNARY OPER: WRITE
-      RIGHT:
-        CALL: _pow
-          PARAMS:
-            INT: 5
-            INT: 2
-            INT: 2
-    UNARY OPER: WRITELN
-      RIGHT:
-    UNARY OPER: WRITE
-      RIGHT:
-        BINARY OPER: ^
+    VAR:
+      ID: n
+
+    FOR
+      INIT
+        BINARY OPER: :=
           LEFT:
-            INT: 5
+            ID: n
           RIGHT:
             INT: 0
-    UNARY OPER: WRITE
-      RIGHT:
-        BINARY OPER: ^
+      COND
+        BINARY OPER: <
           LEFT:
-            INT: 5
+            ID: n
           RIGHT:
-            INT: 2
-    UNARY OPER: WRITE
-      RIGHT:
-        BINARY OPER: ^
+            INT: 10
+      INCR
+        BINARY OPER: :=
           LEFT:
-            INT: 5
+            ID: n
           RIGHT:
-            INT: 3
-    UNARY OPER: WRITE
-      RIGHT:
-        BINARY OPER: ^
-          LEFT:
-            INT: 5
-          RIGHT:
-            INT: 4
-    UNARY OPER: WRITE
-      RIGHT:
-        BINARY OPER: ^
-          LEFT:
-            UNARY OPER: MINUS
+            BINARY OPER: +
+              LEFT:
+                ID: n
               RIGHT:
                 INT: 1
+
+      BLOCK
+        UNARY OPER: WRITE
           RIGHT:
-            UNARY OPER: MINUS
-              RIGHT:
-                INT: 2
-    UNARY OPER: WRITELN
-      RIGHT:
+            ID: n
+        UNARY OPER: WRITELN
+          RIGHT:
+VAR:
+
 

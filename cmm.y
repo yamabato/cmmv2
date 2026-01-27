@@ -44,6 +44,7 @@ Node *ast_root;
 %token NUMBER FLOAT
 %token IF THEN ELSE ENDIF
 %token WHILE DO
+%token FOR
 %token READ
 %token COLEQ
 %token GE GT LE LT NE EQ
@@ -158,10 +159,13 @@ st
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
 }
-	| ifstmt{
+	| ifstmt {
 	$$.node = $1.node;
 }
-	| whilestmt{
+	| whilestmt {
+	$$.node = $1.node;
+}
+	| forstmt {
 	$$.node = $1.node;
 }
 	| RETURN E SEMI {
@@ -188,6 +192,10 @@ ifstmt
 whilestmt : WHILE par_cond body {
 	$$.node = new_while_node($2.node, $3.node);
 };
+
+forstmt : FOR LPAR E SEMI cond SEMI E RPAR body {
+	$$.node = new_for_node($3.node, $5.node, $7.node, $9.node);
+}
 
 par_cond
 	: LPAR cond RPAR {
@@ -218,7 +226,11 @@ cond
 };
 
 E
-	: E PLUS T {
+	: ID COLEQ E {
+	Node *id = new_id_node($1.name);
+	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
+}
+	| E PLUS T {
 	$$.node = new_binary_node(NK_ADD, $1.node, $3.node);
 }
 	| E MINUS T {

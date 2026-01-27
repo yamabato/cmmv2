@@ -31,6 +31,7 @@
 "endif"   { ECHO;  return ENDIF; } 
 "while"   { ECHO;  return WHILE; }
 "do"      { ECHO;  return DO; }
+"for"     { ECHO;  return FOR; }
 "read"    { ECHO;  return READ; }
 "return"  { ECHO;  return RETURN; }
 ":="      { ECHO;  return COLEQ; }

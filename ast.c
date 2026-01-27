@@ -78,6 +78,15 @@ Node *new_while_node(Node *cond, Node *body) {
   return node;
 }
 
+Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
+  Node *node = new_node(NK_FOR);
+  node->init = init;
+  node->cond = cond;
+  node->incr = incr;
+  node->body = body;
+  return node;
+}
+
 Node *append_node(Node *n1, Node *n2) {
   if (n1==NULL && n2==NULL) { return NULL; }
   if (n1 == NULL) {

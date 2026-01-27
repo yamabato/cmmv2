@@ -114,6 +114,20 @@ void show_node(Node *node, int depth, FILE *fp) {
       show_node(node->body, depth+1, fp);
       break;
 
+    case NK_FOR:
+      fprintf(fp, "FOR\n");
+      print_spaces(depth+1, fp);
+      fprintf(fp, "INIT\n");
+      show_node(node->init, depth+2, fp);
+      print_spaces(depth+1, fp);
+      fprintf(fp, "COND\n");
+      show_node(node->cond, depth+2, fp);
+      print_spaces(depth+1, fp);
+      fprintf(fp, "INCR\n");
+      show_node(node->incr, depth+2, fp);
+      fprintf(fp, "\n");
+      show_node(node->body, depth+1, fp);
+
     case NK_VAR:
       fprintf(fp, "VAR:\n");
       for (Node *id=node->ids; id!=NULL; id=id->next) {
