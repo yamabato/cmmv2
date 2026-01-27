@@ -38,6 +38,8 @@
 "switch"  { ECHO;  return SWITCH; }
 "case"    { ECHO;  return CASE; }
 "default" { ECHO;  return DEFAULT; }
+"true"    { ECHO;  return LIT_TRUE; }
+"false"   { ECHO;  return LIT_FALSE; }
 ":="      { ECHO;  return COLEQ; }
 "="       { ECHO;  return ASSIGN; }
 ">="      { ECHO;  return GE; }

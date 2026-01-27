@@ -2,14 +2,12 @@ main {
   var n, m, l;
   n := 5;
 
-  write n++;
-  write n;
-  write ++n;
-  write n;
+  write true;
+  write false;
 
-  write n--;
-  write n;
-  write --n;
-  write n;
+  if (true && !false) {
+    write 123;
+  }
+
   writeln;
 }

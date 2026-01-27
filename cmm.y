@@ -33,6 +33,7 @@ Node *ast_root;
 %token INT
 %token MAIN
 %token ID
+%token LIT_TRUE LIT_FALSE
 %token LPAR RPAR
 %token COMMA
 %token LBRA RBRA
@@ -283,8 +284,8 @@ comp
 	| E EQ E {
 	$$.node = new_binary_node(NK_EQ, $1.node, $3.node);
 }
-	| LPAR cond_or RPAR {
-	$$.node = $2.node;
+	| E {
+	$$.node = $1.node;
 };
 
 E
@@ -336,6 +337,14 @@ F
 	: ID {
 	$$.node = new_id_node($1.name);
 }
+	| LIT_TRUE {
+	$$.node = new_node(NK_INT);
+	$$.node->ival = 1;
+}
+	| LIT_FALSE {
+	$$.node = new_node(NK_INT);
+	$$.node->ival = 0;
+}
 	| ID INC {
 	Node *id  = new_id_node($1.name);
 	Node *one = new_int_node(1);
@@ -370,7 +379,7 @@ F
 	| NUMBER {
 	$$.node = new_int_node(yylval.val);
 }
-	| LPAR E RPAR {
+	| LPAR cond RPAR {
 	$$.node = $2.node;
 };
 
