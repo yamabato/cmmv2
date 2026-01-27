@@ -6,6 +6,8 @@
 
 %option noinput
 %option nounput
+
+%x COMMENT
 %%
 "var"       { ECHO;  return VAR; }
 "const"     { ECHO;  return CONST; }
@@ -86,3 +88,8 @@ _?[a-z][a-z0-9_]* {
 	ECHO;
 	return yytext[0];
 }
+"/*"            { BEGIN(COMMENT); }
+<COMMENT>"*/"   { BEGIN(INITIAL); }
+<COMMENT>\n     { yylineno++; }
+<COMMENT>.      {}
+"//".*          {}

@@ -3,6 +3,8 @@ main {
 
   v := 0;
 
+  /* coo */
+  // comment
   do {
     writeln v++;
     if (v == 5) { continue; }
