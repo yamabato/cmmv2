@@ -13,6 +13,7 @@ void exec_program(VM *vm) {
   Instr instr;
   bool is_running = true;
   int arg;
+  int idx;
   int left, right, val;
   int ret_addr, old_bp;
 
@@ -99,6 +100,20 @@ void exec_program(VM *vm) {
         vm->pc = ret_addr;
         break;
 
+      case INS_LDI:
+        // 配列等のアクセスに使用
+        // bpを先頭、argをオフセット、stack[sp]をインデックス
+        vm->stack[vm->sp] = vm->stack[vm->bp+arg+vm->sp];
+        break;
+
+      case INS_STI:
+        // 配列等のアクセスに使用(書き込む)
+        // ... val idx
+        idx = vm->stack[vm->sp--];
+        val = vm->stack[vm->sp--];
+        vm->stack[vm->bp+arg+idx] = val;
+
+      case INS_LEA: // やめた
       case INS_LAB:
       case INS_UNK:
         break;

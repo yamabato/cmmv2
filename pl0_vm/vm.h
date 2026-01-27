@@ -15,6 +15,10 @@ typedef enum {
   INS_LAB,
   INS_RET,
 
+  INS_LEA,
+  INS_LDI,
+  INS_STI,
+
   INS_UNK,
 } OpCode;
 
@@ -27,6 +31,7 @@ static const MnemonicPair MnemonicMap[] = {
     {"LIT", INS_LIT}, {"OPR", INS_OPR}, {"LOD", INS_LOD}, {"STO", INS_STO},
     {"CAL", INS_CAL}, {"INT", INS_INT}, {"JMP", INS_JMP}, {"JPC", INS_JPC},
     {"CSP", INS_CSP}, {"LAB", INS_LAB}, {"RET", INS_RET},
+    {"LEA", INS_LEA}, {"LDI", INS_LDI}, {"STI", INS_STI},
 };
 
 typedef struct Instr {
