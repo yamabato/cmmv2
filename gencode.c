@@ -200,12 +200,27 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_STO, 0, tmp_id));
 
       counter = 0;
-      for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
-        append_code(blk, elem, tbl);
+      if (node->right->kind == NK_STR) {
+        for (int i=0; i<strlen(node->right->cval); i++) {
+          connect_code(blk, new_code(INS_LIT, 0, (int)(node->right->cval[i])));
+          connect_code(blk, new_code(INS_LOD, 0, tmp_id));
+          connect_code(blk, new_code(INS_LIT, 0, counter++));
+          connect_code(blk, new_code(INS_OPR, 0, 2));
+          connect_code(blk, new_code(INS_STI, 0, 0));
+        }
+        connect_code(blk, new_code(INS_LIT, 0, 0));
         connect_code(blk, new_code(INS_LOD, 0, tmp_id));
         connect_code(blk, new_code(INS_LIT, 0, counter++));
         connect_code(blk, new_code(INS_OPR, 0, 2));
         connect_code(blk, new_code(INS_STI, 0, 0));
+      } else if (node->right->kind == NK_ARR_ELEMS) {
+        for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
+          append_code(blk, elem, tbl);
+          connect_code(blk, new_code(INS_LOD, 0, tmp_id));
+          connect_code(blk, new_code(INS_LIT, 0, counter++));
+          connect_code(blk, new_code(INS_OPR, 0, 2));
+          connect_code(blk, new_code(INS_STI, 0, 0));
+        }
       }
 
       if (counter > size) {

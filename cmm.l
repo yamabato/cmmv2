@@ -94,6 +94,13 @@ _?[a-z][a-z0-9_]* {
 	strcpy(yylval.name, yytext+1);
 	return CHAR;
 }
+"\"".*"\"" {
+	ECHO;
+	yylval.name = (char *)malloc(strlen(yytext)+1);
+	yytext[strlen(yytext)-1] = 0;
+	strcpy(yylval.name, yytext+1);
+	return STR;
+}
 [ \t\n]+ {
 	ECHO;
 }

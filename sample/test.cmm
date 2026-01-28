@@ -3,8 +3,8 @@ main {
 
   var msg[30];
   msg = { 'H', 'e', 'l', 'l', 'o', 10, 0 };
+  msg = "https://www.tus.ac.jp/";
   _print(@msg);
-  // msg = "https://www.tus.ac.jp/";
 }
 
 f(a) {

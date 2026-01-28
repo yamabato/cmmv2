@@ -30,7 +30,7 @@ Node *ast_root;
 %}
 
 %token VAR CONST
-%token INT CHAR ID
+%token INT CHAR ID STR
 %token MAIN
 %token LIT_TRUE LIT_FALSE
 %token LPAR RPAR
@@ -541,6 +541,11 @@ F
 	$$.node = new_node(NK_GETC);
 };
 
+str : STR {
+	$$.node = new_node(NK_STR);
+	$$.node->cval = strdup($1.name);
+}
+
 FUNC_CALL : ID LPAR fparams RPAR {
 	$$.node = new_node(NK_CALL);
 	$$.node->cval = $1.name;
@@ -577,9 +582,13 @@ arr_ref : ID arr_index {
 	$$.node->right = $2.node;
 };
 
-arr_init : LBRA arr_elems RBRA {
+arr_init
+	:LBRA arr_elems RBRA {
 	$$.node = new_node(NK_ARR_ELEMS);
 	$$.node->right = $2.node;
+}
+	| str {
+	$$.node = $1.node;
 };
 
 arr_elems
