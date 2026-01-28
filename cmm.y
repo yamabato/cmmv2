@@ -110,7 +110,8 @@ params
 	$$.node->ival = 1;
 }
 	| { /* epsilon */
-	$$.node = NULL;
+	$$.node = new_node(NK_NOTHING);
+	$$.node->ival = 0;
 };
 
 body

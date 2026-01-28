@@ -541,7 +541,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   connect_code(blk, int_code=new_code(INS_INT, 0, 0));
 
   i = 0;
-  for (Node *p=node->params; p!=NULL; p=p->next) {
+  for (Node *p=node->params; p!=NULL&&p->kind!=NK_NOTHING; p=p->next) {
     sym = append_symbol(ftbl, p->cval, SK_VAR);
     sym->offset = (i++) - node->ival;
     blk->param_count++;

@@ -1,4 +1,8 @@
 main {
+  hello();
+}
+
+hello() {
   putc 'H';
   putc 'e';
   putc 'l';
@@ -14,9 +18,4 @@ main {
   putc '!';
   putc '!';
   putc 10;
-
-  var n:=0;
-  writeln n;
-  n++;
-  writeln n;
 }

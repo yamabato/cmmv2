@@ -43,7 +43,7 @@ void scan_labels(Instr *head, Instr *tail, VM *vm) {
     if (instr->opcode != INS_LAB) {
       memcpy(&(vm->program[addr++]), instr, sizeof(Instr));
 
-      if (instr->opcode==INS_JMP || instr->opcode==INS_JPC) {
+      if (instr->opcode==INS_JMP || instr->opcode==INS_JPC || instr->opcode==INS_CAL) {
         lbl = search_jump_addr(li_head, instr->arg);
 
         if (lbl == -1) {
