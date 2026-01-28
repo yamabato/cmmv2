@@ -180,10 +180,21 @@ const_init : ID ASSIGN E {
 	$$.node->right = $3.node;
 };
 
-array_decl : ID array_size {
+array_decl
+	: ID array_size {
 	$$.node = new_node(NK_ARR_DECL);
 	$$.node->cval = $1.name;
 	$$.node->arr_size = $2.node;
+}
+	| ID array_size ASSIGN arr_init {
+	Node *decl = new_node(NK_ARR_DECL);
+	decl->cval = $1.name;
+	decl->arr_size = $2.node;
+
+	Node *id = new_id_node($1.name);
+	Node *init = new_binary_node(NK_ARR_INIT, id, $4.node);
+
+	$$.node = append_node(decl, init);
 };
 
 array_size

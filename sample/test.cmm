@@ -6,6 +6,7 @@ main {
   writeln# c;
 
   // writeln# @c; // できない
+  // c = 123; // できない addrエラー
   // constの書き換え
   $4 = 200;
   writeln# c;
