@@ -20,6 +20,7 @@ char *INSTR_NAME[] = {
 
   "LDI",
   "STI",
+  "LEA",
 };
 
 CodeBlock *connect_code_block(CodeBlock *blk1, CodeBlock *blk2) {
@@ -122,17 +123,18 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         connect_code(blk, new_code(INS_LIT, 0, size));
         connect_code(blk, new_code(INS_OPR, 0, 4));
       }
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
 
       if (counter != sym->depth) {
         printf("Err arr ref\n");
         exit(1);
       }
 
-      for (int i=0; i<sym->depth-1; i++) {
+      for (int i=0; i<sym->depth; i++) {
         connect_code(blk, new_code(INS_OPR, 0, 2));
       }
 
-      connect_code(blk, new_code(INS_LDI, 0, sym->offset));
+      connect_code(blk, new_code(INS_LDI, 0, 0));
       break;
 
     case NK_ARR_INIT:
@@ -147,7 +149,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
           append_code(blk, elem, tbl);
           connect_code(blk, new_code(INS_LIT, 0, counter++));
-          connect_code(blk, new_code(INS_STI, 0, sym->offset));
+          connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+          connect_code(blk, new_code(INS_OPR, 0, 2));
+          connect_code(blk, new_code(INS_STI, 0, 0));
         }
 
         if (counter != sym->size) {
