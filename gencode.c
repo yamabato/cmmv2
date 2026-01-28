@@ -135,6 +135,30 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LDI, 0, sym->offset));
       break;
 
+    case NK_ARR_INIT:
+      if (node->left->kind == NK_ID) {
+        ok = search_symbol(tbl, node->left->cval, &sym);
+        if (ok == -1) {
+          printf("Err arr init\n");
+          exit(1);
+        }
+
+        counter = 0;
+        for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
+          append_code(blk, elem, tbl);
+          connect_code(blk, new_code(INS_LIT, 0, counter++));
+          connect_code(blk, new_code(INS_STI, 0, sym->offset));
+        }
+
+        if (counter != sym->size) {
+          printf("Err arr init2!\n");
+          exit(1);
+        }
+      } else {
+
+      }
+      break;
+
     case NK_VAR_DECL:
       sym = append_symbol(tbl, node->cval, SK_VAR);
       if (sym == NULL) {

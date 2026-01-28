@@ -232,9 +232,12 @@ st
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 }
-	| arr_ref COLEQ arr_init SEMI {
+	| ID COLEQ arr_init SEMI {
 	Node *id = new_id_node($1.name);
-	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
+	$$.node = new_binary_node(NK_ARR_INIT, id, $3.node);
+}
+	| arr_ref COLEQ arr_init SEMI {
+	$$.node = new_binary_node(NK_ARR_INIT, $1.node, $3.node);
 }
 	| compound_assignment SEMI {
 	$$.node = $1.node;

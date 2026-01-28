@@ -1,7 +1,11 @@
 main {
   var arr[3];
-  var arr2[5][4][10];
+  var i;
+  // var arr2[5][4][10];
 
+  arr := { 1, 2, 3 };
   writeln arr[0];
-  writeln arr2[1][2][3];
+  writeln arr[1];
+  writeln arr[2];
+  // writeln arr2[1][2][3];
 }
