@@ -12,6 +12,7 @@ typedef enum {
   SK_CONST,
   SK_FUNC,
   SK_LABEL,
+  SK_ARR,
 } SymbolKind;
 
 typedef struct {
@@ -40,6 +41,9 @@ typedef struct Symbol {
   int offset;
   int label;
   Symbol *next;
+
+  int depth;
+  int *arr_size;
 
   // 未使用
   ValueType  type; // 変数や返り値の型(int, float, ...)

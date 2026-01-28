@@ -103,7 +103,7 @@ void exec_program(VM *vm) {
       case INS_LDI:
         // 配列等のアクセスに使用
         // bpを先頭、argをオフセット、stack[sp]をインデックス
-        vm->stack[vm->sp] = vm->stack[vm->bp+arg+vm->sp];
+        vm->stack[vm->sp] = vm->stack[vm->bp+arg+vm->stack[vm->sp]];
         break;
 
       case INS_STI:
@@ -112,6 +112,7 @@ void exec_program(VM *vm) {
         idx = vm->stack[vm->sp--];
         val = vm->stack[vm->sp--];
         vm->stack[vm->bp+arg+idx] = val;
+        break;
 
       case INS_LEA: // やめた
       case INS_LAB:

@@ -37,6 +37,7 @@ Node *ast_root;
 %token LPAR RPAR
 %token COMMA
 %token LBRA RBRA
+%token LSQR RSQR
 %token WRITE
 %token WRITELN
 %token SEMI COLON
@@ -132,7 +133,7 @@ stmts
 
 decl_var: VAR var_inits SEMI {
 	$$.node = new_node(NK_VAR);
-	$$.node->ids = $2.node;
+	$$.node->decls = $2.node;
 };
 
 var_inits
@@ -145,16 +146,21 @@ var_inits
 
 var_init
 	: ID {
-	$$.node = new_id_node($1.name);
+	$$.node = new_node(NK_VAR_DECL);
+	$$.node->cval = $1.name;
 }
 	| ID COLEQ E {
-	Node *id = new_id_node($1.name);
-	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
+	Node *var = new_node(NK_VAR_DECL);
+	var->cval = $1.name;
+	var->right = $3.node;
+}
+	| array_decl {
+	$$.node = $1.node;
 };
 
 decl_const : CONST const_inits SEMI {
 	$$.node = new_node(NK_CONST);
-	$$.node->ids = $2.node;
+	$$.node->decls = $2.node;
 };
 
 const_inits
@@ -166,18 +172,36 @@ const_inits
 };
 
 const_init : ID COLEQ E {
-	Node *id = new_id_node($1.name);
-	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
+	$$.node = new_node(NK_CONST_DECL);
+	$$.node->cval = $1.name;
+	$$.node->right = $3.node;
 };
 
-/**ids
+array_decl : ID array_size {
+	$$.node = new_node(NK_ARR_DECL);
+	$$.node->cval = $1.name;
+	$$.node->arr_size = $2.node;
+};
+
+array_size
+	: array_size LSQR NUMBER RSQR {
+	Node *arr_size = new_node(NK_ARR_SIZE);
+	arr_size->ival = $3.val;
+	$$.node = append_node($1.node, arr_size);
+}
+	| LSQR NUMBER RSQR {
+	$$.node = new_node(NK_ARR_SIZE);
+	$$.node->ival = $2.val;
+};
+
+/*ids
 	: ids COMMA ID {
 	Node *id = new_id_node($3.name);
 	$$.node = append_node($1.node, id);
 }
 	| ID {
 	$$.node = new_id_node($1.name);
-};**/
+};*/
 
 st
 	: WRITE E SEMI {

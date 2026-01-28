@@ -18,6 +18,8 @@
 ","         { ECHO;  return COMMA; }
 "{"         { ECHO;  return LBRA; }
 "}"         { ECHO;  return RBRA; }
+"["         { ECHO;  return LSQR; }
+"]"         { ECHO;  return RSQR; }
 "write"     { ECHO;  return WRITE; }
 "writeln"   { ECHO;  return WRITELN; }
 ";"         { ECHO;  return SEMI; }

@@ -1,5 +1,7 @@
 main {
   var v;
+  var arr[3];
+  var arr2[5][4][3];
 
   v := 0;
 

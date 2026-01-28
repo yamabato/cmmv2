@@ -76,13 +76,13 @@ void unset_loop_label(CodeBlock *blk) {
 
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
-  char *name;
   int opr_n;
   int tmp_id;
   int tmp1_id, tmp2_id;
   int iflbl, elselbl;
   int head_lbl, tail_lbl;
   int ok;
+  int depth;
   Goto *gt = NULL;
   Symbol *sym;
 
@@ -103,33 +103,27 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
     case NK_VAR:
-      for (Node *id=node->ids; id!=NULL; id=id->next) {
-        if (id->kind == NK_ID) {
-          name = id->cval;
-        } else if (id->kind == NK_ASSIGN_ST) {
-          name = id->left->cval;
-        } else {
-          printf("Err v\n");
-          exit(1);
-        }
+      for (Node *decl=node->decls; decl!=NULL; decl=decl->next) {
+        append_code(blk, decl, tbl);
+      }
+      break;
 
-        sym = append_symbol(tbl, name, SK_VAR);
-        if (sym == NULL) {
-          printf("Err var\n");
-          exit(1);
-        }
-        sym->offset = blk->var_count++;
-
-        if (id->kind == NK_ASSIGN_ST) {
-          append_code(blk, id->right, tbl);
-          connect_code(blk, new_code(INS_STO, 0, sym->offset));
-        }
+    case NK_VAR_DECL:
+      sym = append_symbol(tbl, node->cval, SK_VAR);
+      if (sym == NULL) {
+        printf("Err var\n");
+        exit(1);
+      }
+      sym->offset = blk->var_count++;
+      if (node->right != NULL) {
+        append_code(blk, node->right, tbl);
+        connect_code(blk, new_code(INS_STO, 0, sym->offset));
       }
       break;
 
     case NK_CONST:
-      for (Node *init=node->ids; init!=NULL; init=init->next) {
-        sym = append_symbol(tbl, init->left->cval, SK_CONST);
+      for (Node *init=node->decls; init!=NULL; init=init->next) {
+        sym = append_symbol(tbl, init->cval, SK_CONST);
         if (sym == NULL) {
           printf("Err const\n");
           exit(1);
@@ -139,6 +133,21 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         append_code(blk, init->right, tbl);
         connect_code(blk, new_code(INS_STO, 0, sym->offset));
       }
+      break;
+
+    case NK_ARR_DECL:
+      sym = append_symbol(tbl, node->cval, SK_ARR);
+      if (sym == NULL) {
+        printf("Err var\n");
+        exit(1);
+      }
+
+      depth = 0;
+      for (Node *s=node->arr_size; s!=NULL; s=s->next) { depth++; }
+      sym->depth = depth;
+      sym->arr_size = (int *)calloc(depth, sizeof(int));
+      depth = 0;
+      for (Node *s=node->arr_size; s!=NULL; s=s->next) { sym->arr_size[depth++]=s->ival; }
       break;
 
     case NK_ASSIGN_ST: // 文

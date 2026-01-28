@@ -15,9 +15,11 @@ typedef enum {
   NK_LABEL, NK_GOTO,
   NK_BLOCK,
   NK_VAR, NK_CONST,
+  NK_VAR_DECL, NK_CONST_DECL,
   NK_ASSIGN, NK_ASSIGN_ST,
   NK_WRITE, NK_WRITELN, NK_READ,
   NK_PARAM, NK_TYPE,
+  NK_ARR_DECL, NK_ARR_SIZE, NK_ARR_REF,
 } NodeKind;
 
 // ノード
@@ -51,7 +53,7 @@ typedef struct Node {
       struct Node *fbody;
     };
     struct { // var
-      struct Node *ids;
+      struct Node *decls;
     };
     struct { // switch
       struct Node *switch_expr;
@@ -61,6 +63,9 @@ typedef struct Node {
     struct { // case
       struct Node *case_expr;
       struct Node *case_body;
+    };
+    struct { // array
+      struct Node *arr_size;
     };
   };
   struct Node *next;
