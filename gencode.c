@@ -82,7 +82,6 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int opr_n;
   int tmp_id;
-  int tmp1_id, tmp2_id;
   int iflbl, elselbl;
   int head_lbl, tail_lbl;
   int ok;
@@ -341,6 +340,35 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
     case NK_MINUS:
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_OPR, 0, 1));
+      break;
+
+    case NK_ADDR:
+      if (node->right->kind == NK_ID) {
+        ok = search_symbol(tbl, node->right->cval, &sym);
+        if (ok != 0) {
+          printf("Err addr id\n");
+          exit(1);
+        }
+        connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+      } else if (node->right->kind == NK_ARR_REF) {
+        ok = search_symbol(tbl, node->right->cval, &sym);
+        printf("%s\n", node->right->cval);
+
+        counter = 0;
+        size = sym->size;
+        for (Node *idx=node->right->right; idx!=NULL; idx=idx->next) {
+          size /= sym->arr_size[counter++];
+          printf("%d\n", idx->right->kind);
+          append_code(blk, idx->right, tbl);
+          connect_code(blk, new_code(INS_LIT, 0, size));
+          connect_code(blk, new_code(INS_OPR, 0, 4));
+        }
+        connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+
+        for (int i=0; i<counter; i++) {
+          connect_code(blk, new_code(INS_OPR, 0, 2));
+        }
+      }
       break;
 
     case NK_IF:

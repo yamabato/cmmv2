@@ -44,6 +44,7 @@ Node *ast_root;
 %token PLUS MINUS
 %token INC DEC
 %token MULT DIV MOD POW
+%token ADDR
 %token NUMBER FLOAT
 %token IF ELSE
 %token WHILE DO
@@ -473,6 +474,12 @@ F
 }
 	| MINUS F {
 	$$.node = new_unary_node(NK_MINUS, $2.node);
+}
+	| ADDR F {
+	$$.node = new_unary_node(NK_ADDR, $2.node);
+}
+	| POW F {
+	$$.node = new_unary_node(NK_DEREF, $2.node);
 }
 	| LIT_TRUE {
 	$$.node = new_node(NK_INT);

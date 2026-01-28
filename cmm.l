@@ -34,6 +34,7 @@
 "/"         { ECHO;  return DIV; }
 "%"         { ECHO;  return MOD; }
 "^"         { ECHO;  return POW; }
+"@"         { ECHO;  return ADDR; }
 "if"        { ECHO;  return IF; }
 "else"      { ECHO;  return ELSE; }
 "while"     { ECHO;  return WHILE; }

@@ -22,6 +22,7 @@ typedef enum {
   NK_PARAM, NK_TYPE,
   NK_ARR_DECL, NK_ARR_SIZE, NK_ARR_REF, NK_ARR_INDEX,
   NK_ARR_ELEMS, NK_ARR_INIT, NK_ARR_ASSIGN,
+  NK_ADDR, NK_DEREF,
 } NodeKind;
 
 // ノード

@@ -1,10 +1,11 @@
 main {
   hello();
 
-  writeln 5%3;
-  writeln 5%-3;
-  writeln -5%3;
-  writeln -5%-3;
+  var arr[10];
+  arr[5] := 123;
+
+  writeln arr[5];
+  writeln @arr[5];
 }
 
 hello() {
