@@ -174,6 +174,22 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       break;
 
+    case NK_ARR_ASSIGN:
+      ok = search_symbol(tbl, node->left->cval, &sym);
+      if (ok==-1 || sym->kind!=SK_ARR) {
+        printf("Err arr init\n");
+        exit(1);
+      }
+
+      append_code(blk, node->right, tbl);
+
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+      append_code(blk, node->left->right->right, tbl);
+      connect_code(blk, new_code(INS_OPR, 0, 2));
+
+      connect_code(blk, new_code(INS_STI, 0, 0));
+      break;
+
     case NK_VAR_DECL:
       sym = append_symbol(tbl, node->cval, SK_VAR);
       if (sym == NULL) {
