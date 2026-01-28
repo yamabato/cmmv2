@@ -24,7 +24,7 @@ _print(s) {
   do {
     c = $(s+i);
     i++;
-    putc c;
+    putc# c;
   } while (c != 0);
 }
 

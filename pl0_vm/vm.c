@@ -3,6 +3,7 @@ PL/0　インタプリタ
   レベル差は無視し、すべてフラットに扱う
 */
 
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -93,8 +94,11 @@ void exec_program(VM *vm) {
         if (arg == 0) { scanf("%d\n", &(vm->stack[++vm->sp])); }
         else if (arg == 1) { printf("%d", vm->stack[vm->sp--]); }
         else if (arg == 2) { printf("\n"); }
+
         else if (arg == 10) { putchar((char)vm->stack[vm->sp--]); }
         else if (arg == 11) { vm->stack[++vm->sp]=(int)getchar(); }
+
+        else if (arg == 20) { vm->stack[++vm->sp]=(int)time(NULL); }
         break;
 
       case INS_RET:

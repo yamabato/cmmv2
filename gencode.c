@@ -575,15 +575,13 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       connect_code(blk, new_code(INS_CSP, 0, 2));
       break;
-    case NK_READ:
-      connect_code(blk, new_code(INS_CSP, 0, 0));
-      break;
+
     case NK_PUTC:
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_CSP, 0, 10));
       break;
-    case NK_GETC:
-      connect_code(blk, new_code(INS_CSP, 0, 11));
+    case NK_CSP:
+      connect_code(blk, new_code(INS_CSP, 0, node->ival));
       break;
 
     default:

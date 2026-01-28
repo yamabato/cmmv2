@@ -20,10 +20,11 @@
 "}"         { ECHO;  return RBRA; }
 "["         { ECHO;  return LSQR; }
 "]"         { ECHO;  return RSQR; }
-"write"     { ECHO;  return WRITE; }
-"writeln"   { ECHO;  return WRITELN; }
-"putc"      { ECHO;  return PUTC; }
-"getc"      { ECHO;  return GETC; }
+"write#"    { ECHO;  return WRITE; }
+"writeln#"  { ECHO;  return WRITELN; }
+"putc#"     { ECHO;  return PUTC; }
+"getc#"     { ECHO;  return GETC; }
+"time#"     { ECHO;  return TIME; }
 ";"         { ECHO;  return SEMI; }
 ":"         { ECHO;  return COLON; }
 "+"         { ECHO;  return PLUS; }

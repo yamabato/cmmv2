@@ -9,6 +9,8 @@ main {
   l = _len(@msg);
   msg[l] = 10;
   _print(@msg);
+
+  writeln# time#;
 }
 
 f(a) {
@@ -16,19 +18,19 @@ f(a) {
 }
 
 hello() {
-  putc 'H';
-  putc 'e';
-  putc 'l';
-  putc 'l';
-  putc 'o';
-  putc ',';
-  putc ' ';
-  putc 'W';
-  putc 'o';
-  putc 'r';
-  putc 'l';
-  putc 'd';
-  putc '!';
-  putc '!';
-  putc 10;
+  putc# 'H';
+  putc# 'e';
+  putc# 'l';
+  putc# 'l';
+  putc# 'o';
+  putc# ',';
+  putc# ' ';
+  putc# 'W';
+  putc# 'o';
+  putc# 'r';
+  putc# 'l';
+  putc# 'd';
+  putc# '!';
+  putc# '!';
+  putc# 10;
 }

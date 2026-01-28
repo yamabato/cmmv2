@@ -39,6 +39,7 @@ Node *ast_root;
 %token LSQR RSQR
 %token WRITE WRITELN
 %token READ
+%token TIME
 %token PUTC GETC
 %token SEMI COLON
 %token PLUS MINUS
@@ -535,10 +536,16 @@ F
 	$$.node = $2.node;
 }
 	| READ {
-	$$.node = new_node(NK_READ);
+	$$.node = new_node(NK_CSP);
+	$$.node->ival = 0;
 }
 	| GETC {
-	$$.node = new_node(NK_GETC);
+	$$.node = new_node(NK_CSP);
+	$$.node->ival = 11;
+}
+	| TIME {
+	$$.node = new_node(NK_CSP);
+	$$.node->ival = 20;
 };
 
 str : STR {
