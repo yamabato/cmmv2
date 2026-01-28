@@ -78,6 +78,44 @@ void unset_loop_label(CodeBlock *blk) {
   free(lp_tail);
 }
 
+// id, arrrefなどのアドレス
+void gen_get_addr_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
+  int ok;
+  Symbol *sym;
+
+  switch (node->kind) {
+    case NK_ID:
+      ok = search_symbol(tbl, node->cval, &sym);
+      if (ok!=0 ||sym->kind!=SK_VAR) {
+        printf("Err id addr\n");
+        exit(1);
+      }
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+      break;
+
+    case NK_ARR_REF:
+      ok = search_symbol(tbl, node->cval, &sym);
+      if (ok!=0 || sym->kind!=SK_ARR) {
+        printf("Err arr init\n");
+        exit(1);
+      }
+
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+      append_code(blk, node->right->right, tbl);
+      connect_code(blk, new_code(INS_OPR, 0, 2));
+      break;
+
+    case NK_DEREF:
+      append_code(blk, node->right, tbl);
+      break;
+
+    default:
+      printf("Err addr\n");
+      exit(1);
+  }
+}
+
 void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int opr_n;
@@ -176,22 +214,6 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       }
       break;
 
-    case NK_ARR_ASSIGN:
-      ok = search_symbol(tbl, node->left->cval, &sym);
-      if (ok==-1 || sym->kind!=SK_ARR) {
-        printf("Err arr init\n");
-        exit(1);
-      }
-
-      append_code(blk, node->right, tbl);
-
-      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
-      append_code(blk, node->left->right->right, tbl);
-      connect_code(blk, new_code(INS_OPR, 0, 2));
-
-      connect_code(blk, new_code(INS_STI, 0, 0));
-      break;
-
     case NK_VAR_DECL:
       sym = append_symbol(tbl, node->cval, SK_VAR);
       if (sym == NULL) {
@@ -240,18 +262,15 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       blk->var_count += size;
       break;
 
-    case NK_ASSIGN_ST: // 文
-      append_code(blk, node->right, tbl);
-      ok = search_symbol(tbl, node->left->cval, &sym);
-      // ok = 0ならその関数内 -1は未定義
-      if (sym->kind != SK_VAR) {
-        printf("Err assign\n");
-        exit(1);
-      }
-      connect_code(blk, new_code(INS_STO, 0, sym->offset));
-      break;
     case NK_ASSIGN: // 式
       append_code(blk, node->right, tbl);
+
+      gen_get_addr_code(blk, node->left, tbl);
+      connect_code(blk, new_code(INS_STI, 0, 0));
+
+      break;
+
+      /*
       ok = search_symbol(tbl, node->left->cval, &sym);
       // ok = 0ならその関数内 -1は未定義
       if (sym->kind != SK_VAR) {
@@ -261,6 +280,23 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_STO, 0, sym->offset));
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
+
+    case NK_ARR_ASSIGN:
+      ok = search_symbol(tbl, node->left->cval, &sym);
+      if (ok==-1 || sym->kind!=SK_ARR) {
+        printf("Err arr init\n");
+        exit(1);
+      }
+
+      append_code(blk, node->right, tbl);
+
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
+      append_code(blk, node->left->right->right, tbl);
+      connect_code(blk, new_code(INS_OPR, 0, 2));
+
+      connect_code(blk, new_code(INS_STI, 0, 0));
+      break;
+      */
 
     case NK_ADD:
     case NK_SUB:
@@ -369,6 +405,10 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
           connect_code(blk, new_code(INS_OPR, 0, 2));
         }
       }
+      break;
+    case NK_DEREF:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_LDI, 0, 0));
       break;
 
     case NK_IF:

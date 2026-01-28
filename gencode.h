@@ -64,6 +64,7 @@ CodeBlock *connect_code_block(CodeBlock *, CodeBlock *);
 
 CodeBlock *gen_func_code_block(Node *, SymbolTable *, int);
 CodeBlock *gen_code_blocks(Node *, SymbolTable *);
+void gen_get_addr_code(CodeBlock *, Node *, SymbolTable *);
 void append_code(CodeBlock *, Node *, SymbolTable *);
 void set_loop_label(CodeBlock *, int, int);
 void unset_loop_label(CodeBlock *);

@@ -44,7 +44,7 @@ Node *ast_root;
 %token PLUS MINUS
 %token INC DEC
 %token MULT DIV MOD POW
-%token ADDR
+%token ADDR DEREF
 %token NUMBER FLOAT
 %token IF ELSE
 %token WHILE DO
@@ -150,7 +150,7 @@ var_init
 	$$.node = new_node(NK_VAR_DECL);
 	$$.node->cval = $1.name;
 }
-	| ID COLEQ E {
+	| ID EQ E {
 	Node *var = new_node(NK_VAR_DECL);
 	var->cval = $1.name;
 	var->right = $3.node;
@@ -173,7 +173,7 @@ const_inits
 	$$.node = $1.node;
 };
 
-const_init : ID COLEQ E {
+const_init : ID EQ E {
 	$$.node = new_node(NK_CONST_DECL);
 	$$.node->cval = $1.name;
 	$$.node->right = $3.node;
@@ -226,19 +226,12 @@ st
 	| decl_const {
 	$$.node = $1.node;
 }
-	| ID COLEQ E SEMI {
-	Node *id = new_id_node($1.name);
-	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
-}
-	| ID COLEQ arr_init SEMI {
+	| ID ASSIGN arr_init SEMI {
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ARR_INIT, id, $3.node);
 }
-	| arr_ref COLEQ arr_init SEMI {
+	| arr_ref ASSIGN arr_init SEMI {
 	$$.node = new_binary_node(NK_ARR_INIT, $1.node, $3.node);
-}
-	| arr_ref COLEQ E SEMI {
-	$$.node = new_binary_node(NK_ARR_ASSIGN, $1.node, $3.node);
 }
 	| ifstmt {
 	$$.node = $1.node;
@@ -428,6 +421,12 @@ E
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN, id, $3.node);
 }
+	| arr_ref ASSIGN E {
+	$$.node = new_binary_node(NK_ASSIGN, $1.node, $3.node);
+}
+	| deref ASSIGN E {
+	$$.node = new_binary_node(NK_ASSIGN, $1.node, $3.node);
+}
 	| compound_assignment {
 	$$.node = $1.node;
 }
@@ -477,6 +476,9 @@ F
 }
 	| ADDR F {
 	$$.node = new_unary_node(NK_ADDR, $2.node);
+}
+	| deref {
+	$$.node = $1.node;
 }
 	| POW F {
 	$$.node = new_unary_node(NK_DEREF, $2.node);
@@ -543,6 +545,10 @@ FUNC_CALL : ID LPAR fparams RPAR {
 	$$.node = new_node(NK_CALL);
 	$$.node->cval = $1.name;
 	$$.node->params = $3.node;
+};
+
+deref : DEREF F {
+	$$.node = new_unary_node(NK_DEREF, $2.node);
 };
 
 fparams
