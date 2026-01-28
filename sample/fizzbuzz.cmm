@@ -1,11 +1,22 @@
 main {
   var n;
 
+  var fizzbuzz[10], fizz[5], buzz[5];
+
+  fizzbuzz = "FizzBuzz";
+  fizz = "Fizz";
+  buzz = "Buzz";
+
   for (n=1; n<=100; n++) {
     if (n%15 == 0) {
-      putc 'F';
-      putc 'B';
-      writeln;
+      _print(@fizzbuzz);
+    } else if (n%3 == 0) {
+      _print(@fizz);
+    } else if (n%5 == 0) {
+      _print(@buzz);
+    } else {
+      write# n;
     }
+    writeln#;
   }
 }
