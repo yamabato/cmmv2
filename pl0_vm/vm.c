@@ -87,7 +87,7 @@ void exec_program(VM *vm) {
         break;
 
       case INS_CSP:
-        if (arg == 0) { scanf("%d", &(vm->stack[++vm->sp])); }
+        if (arg == 0) { scanf("%d\n", &(vm->stack[++vm->sp])); }
         else if (arg == 1) { printf("%d", vm->stack[vm->sp--]); }
         else if (arg == 2) { printf("\n"); }
         else if (arg == 10) { putchar((char)vm->stack[vm->sp--]); }

@@ -1,26 +1,9 @@
 main {
-  var arr[3];
-  var i;
-  var arr2[3][3];
+  var n;
+  var c;
+  n := read;
+  c := getc;
 
-  arr := { 100, 200, 300 };
-  writeln arr[0];
-  writeln arr[1];
-  writeln arr[2];
-
-  arr[1] := 123;
-  writeln arr[0];
-  writeln arr[1];
-  writeln arr[2];
-
-  arr2 := {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-  };
-  writeln arr2[1][2];
-  arr2[0][0] := 987;
-
-  writeln arr2[1][2];
-  writeln arr2[0][0];
+  writeln n;
+  putc c;
 }

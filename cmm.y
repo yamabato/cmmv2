@@ -38,8 +38,9 @@ Node *ast_root;
 %token COMMA
 %token LBRA RBRA
 %token LSQR RSQR
-%token WRITE
-%token WRITELN
+%token WRITE WRITELN
+%token READ
+%token PUTC GETC
 %token SEMI COLON
 %token PLUS MINUS
 %token INC DEC
@@ -51,7 +52,6 @@ Node *ast_root;
 %token BREAK CONTINUE
 %token SWITCH CASE DEFAULT
 %token GOTO
-%token READ
 %token COLEQ ASSIGN
 %token ADD_ASSIGN SUB_ASSIGN MUL_ASSIGN DIV_ASSIGN
 %token POW_ASSIGN MOD_ASSIGN
@@ -215,9 +215,8 @@ st
 	| WRITELN E SEMI {
 	$$.node = new_unary_node(NK_WRITELN, $2.node);
 }
-	| READ ID SEMI {
-	Node *id = new_id_node($2.name);
-	$$.node = new_unary_node(NK_READ, id);
+	| PUTC E SEMI {
+	$$.node = new_unary_node(NK_PUTC, $2.node);
 }
 	| FUNC_CALL SEMI {
 	$$.node = $1.node;
@@ -524,6 +523,12 @@ F
 }
 	| LPAR cond RPAR {
 	$$.node = $2.node;
+}
+	| READ {
+	$$.node = new_node(NK_READ);
+}
+	| GETC {
+	$$.node = new_node(NK_GETC);
 };
 
 FUNC_CALL : ID LPAR fparams RPAR {

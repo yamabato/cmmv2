@@ -22,6 +22,8 @@
 "]"         { ECHO;  return RSQR; }
 "write"     { ECHO;  return WRITE; }
 "writeln"   { ECHO;  return WRITELN; }
+"putc"      { ECHO;  return PUTC; }
+"getc"      { ECHO;  return GETC; }
 ";"         { ECHO;  return SEMI; }
 ":"         { ECHO;  return COLON; }
 "+"         { ECHO;  return PLUS; }

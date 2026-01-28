@@ -482,12 +482,16 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_CSP, 0, 2));
       break;
     case NK_READ:
-      if (node->right->kind == NK_ID) {
-        connect_code(blk, new_code(INS_CSP, 0, 0));
-        ok = search_symbol(tbl, node->right->cval, &sym);
-        connect_code(blk, new_code(INS_STO, 0, sym->offset));
-      }
+      connect_code(blk, new_code(INS_CSP, 0, 0));
       break;
+    case NK_PUTC:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_CSP, 0, 10));
+      break;
+    case NK_GETC:
+      connect_code(blk, new_code(INS_CSP, 0, 11));
+      break;
+
     default:
       break;
   }

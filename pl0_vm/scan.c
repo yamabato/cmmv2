@@ -34,8 +34,8 @@ void scan_labels(Instr *head, Instr *tail, VM *vm) {
     }
   }
 
-  vm->program = (Instr *)calloc(lineno-1, sizeof(Instr));
-  vm->prog_size = lineno-1;
+  vm->program = (Instr *)calloc(lineno, sizeof(Instr));
+  vm->prog_size = lineno;
   for (Instr *instr=head; instr!=NULL; instr=next_instr) {
     next_instr = instr->next;
 
