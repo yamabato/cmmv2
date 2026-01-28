@@ -1,0 +1,35 @@
+// https://atcoder.jp/contests/abc049/tasks/arc065_a
+main {
+  var S[100]; // 問題より短い制約で
+  var N;
+  var ok = 1;
+  var yes[5] = "YES\n";
+  var no[5] = "NO\n";
+
+  reads# @S;
+  N = _len(@S);
+
+  while (N>0) {
+    if (
+      N>=6 &&
+      S[N-1]=='r' && S[N-2]=='e' && S[N-3]=='s' && S[N-4]=='a' && S[N-5]=='r' && S[N-6]=='e'
+    ) { N -= 6; continue; }
+    if (
+      N>=5 &&
+      S[N-1]=='e' && S[N-2]=='s' && S[N-3]=='a' && S[N-4]=='r' && S[N-5]=='e'
+    ) { N -= 5; continue; }
+    if (
+      N>=7 &&
+      S[N-1]=='r' && S[N-2]=='e' && S[N-3]=='m' && S[N-4]=='a' && S[N-5]=='e' && S[N-6]=='r' && S[N-7]=='d'
+    ) { N -= 7; continue; }
+    if (
+      N>=5 &&
+      S[N-1]=='m' && S[N-2]=='a' && S[N-3]=='e' && S[N-4]=='r' && S[N-5]=='d'
+    ) { N -= 5; continue; }
+    ok = 0;
+    break;
+  }
+
+  if (ok == 1) { _print(@yes); }
+  else { _print(@no); }
+}

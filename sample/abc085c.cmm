@@ -1,0 +1,24 @@
+// https://atcoder.jp/contests/abc085/tasks/abc085_c
+main {
+  var N, Y;
+  var i, j;
+  var msg[10] = "-1 -1 -1\n";
+
+  N = read#;
+  Y = read#;
+
+  for (i=0; i<=N; i++) {
+    for (j=0; j<=N-i; j++) {
+      if (10000*i+5000*j+1000*(N-(i+j)) == Y) {
+        write# i;
+        putc# ' ';
+        write# j;
+        putc# ' ';
+        writeln# N-(i+j);
+        goto fin;
+      }
+    }
+  }
+  _print(@msg);
+  fin:
+}

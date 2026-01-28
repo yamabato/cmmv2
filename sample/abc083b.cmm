@@ -1,0 +1,16 @@
+// https://atcoder.jp/contests/abc083/tasks/abc083_b
+main {
+  var N, A, B;
+  var i, v, n = 0;
+
+  N = read#;
+  A = read#;
+  B = read#;
+
+  for (i=1; i<=N; i++) {
+    v = i/1000+(i/100)%10+(i/10)%10+i%10;
+    if (v>=A && v<=B) { n+=i;}
+  }
+
+  writeln# n;
+}

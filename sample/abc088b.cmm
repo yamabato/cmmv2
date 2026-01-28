@@ -1,0 +1,24 @@
+// https://atcoder.jp/contests/abc088/tasks/abc088_b
+main {
+  var N;
+  var i, j;
+  var max, maxj;
+  var diff = 0;
+  var A[100];
+
+  N = read#;
+  for (i=0; i<N; i++) {
+    A[i] = read#;
+  }
+
+  for (i=0; i<N; i++) {
+    max = 0;
+    for (j=0; j<N; j++) {
+      if (max<A[j]) { max=A[j]; maxj=j; }
+    }
+    A[maxj] = 0;
+    diff += (-1)^(isodd# i) * max;
+  }
+
+  writeln# diff;
+}

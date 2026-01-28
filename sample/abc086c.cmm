@@ -1,0 +1,27 @@
+// https://atcoder.jp/contests/abc086/tasks/arc089_a
+main {
+  var N, i;
+  var t_, x_, y_;
+  var t, x, y;
+  var dt, dist;
+  var ok = 1;
+  var yes[5] = "Yes\n";
+  var no[5] = "No\n";
+
+  t_ = x_ = y_ = 0;
+
+  N = read#;
+  for (i=0; i<N; i++) {
+    t = read#;
+    x = read#;
+    y = read#;
+
+    dt = t-t_;
+    dist = _abs(x-x_) + _abs(y-y_);
+    if (dist > dt) { ok=0; break; }
+    if (isodd#(dt)!=isodd#(dist)) { ok=0; break; }
+  }
+
+  if (ok==1) { _print(@yes); }
+  else { _print(@no); }
+}

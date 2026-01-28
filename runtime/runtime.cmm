@@ -31,7 +31,7 @@ _print(s) {
 _len(s) {
   var l, c;
   l = 0;
-  while (c != 0) {
+  while (true) {
     c = $(s+l);
     if (c == 0) { break; }
     l++;

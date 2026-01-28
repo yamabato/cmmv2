@@ -1,0 +1,16 @@
+// https://atcoder.jp/contests/abc085/tasks/abc085_b
+main {
+  var N, i, v, n=0;
+  var D[100];
+
+  N = read#;
+  for (i=0; i<N; i++) {
+    v = read#;
+    if (D[v-1] == 0) {
+      n++;
+      D[v-1] = 1;
+    }
+  }
+
+  writeln# n;
+}
