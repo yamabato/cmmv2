@@ -151,7 +151,7 @@ var_init
 	$$.node = new_node(NK_VAR_DECL);
 	$$.node->cval = $1.name;
 }
-	| ID EQ E {
+	| ID ASSIGN E {
 	Node *var = new_node(NK_VAR_DECL);
 	var->cval = $1.name;
 	var->right = $3.node;

@@ -1,34 +1,7 @@
 main {
-  hello();
-  var i, n;
-  var txt_abs[10];
+  var a=10;
 
-  n = time#;
-  for (i=0; i<10; i++) {
-    writeln# n;
-    n = _lcg(n);
-  }
-
-  txt_abs = "ABS:";
-  writeln# _len(@txt_abs);
-
-  txt_abs[_len(5)] = 10;
-  _print(5);
-  writeln# _abs(10);
-  writeln# _abs(-10);
-  writeln# _abs(-0);
-  writeln# _abs(0);
-
-  var msg[30];
-  var l;
-
-  msg = { 'H', 'e', 'l', 'l', 'o', 10, 0 };
-  msg = "https://www.tus.ac.jp/";
-  l = _len(@msg);
-  msg[l] = 10;
-  _print(@msg);
-
-  writeln# time#;
+  writeln# a;
 }
 
 f(a) {
