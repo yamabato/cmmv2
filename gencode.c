@@ -138,28 +138,39 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       break;
 
     case NK_ARR_INIT:
-      if (node->left->kind == NK_ID) {
-        ok = search_symbol(tbl, node->left->cval, &sym);
-        if (ok == -1) {
-          printf("Err arr init\n");
-          exit(1);
-        }
+      ok = search_symbol(tbl, node->left->cval, &sym);
+      if (ok==-1 || sym->kind!=SK_ARR) {
+        printf("Err arr init\n");
+        exit(1);
+      }
 
-        counter = 0;
-        for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
-          append_code(blk, elem, tbl);
-          connect_code(blk, new_code(INS_LIT, 0, counter++));
-          connect_code(blk, new_code(INS_LEA, 0, sym->offset));
-          connect_code(blk, new_code(INS_OPR, 0, 2));
-          connect_code(blk, new_code(INS_STI, 0, 0));
-        }
+      connect_code(blk, new_code(INS_LEA, 0, sym->offset));
 
-        if (counter != sym->size) {
-          printf("Err arr init2!\n");
-          exit(1);
-        }
-      } else {
+      size = sym->size;
+      depth = 0;
+      for (Node *idx=node->left->right; idx!=NULL; idx=idx->next) {
+        size /= sym->arr_size[depth++];
+        append_code(blk, idx, tbl);
+        connect_code(blk, new_code(INS_LIT, 0, size));
+        connect_code(blk, new_code(INS_OPR, 0, 4));
+      }
+      for (int i=0; i<depth; i++) { connect_code(blk, new_code(INS_OPR, 0, 2)); }
 
+      tmp_id = blk->var_count++;
+      connect_code(blk, new_code(INS_STO, 0, tmp_id));
+
+      counter = 0;
+      for (Node *elem=node->right->right; elem!=NULL; elem=elem->next) {
+        append_code(blk, elem, tbl);
+        connect_code(blk, new_code(INS_LOD, 0, tmp_id));
+        connect_code(blk, new_code(INS_LIT, 0, counter++));
+        connect_code(blk, new_code(INS_OPR, 0, 2));
+        connect_code(blk, new_code(INS_STI, 0, 0));
+      }
+
+      if (counter != size) {
+        printf("Err arr init 2\n");
+        exit(1);
       }
       break;
 

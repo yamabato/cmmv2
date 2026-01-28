@@ -561,14 +561,22 @@ arr_init : LBRA arr_elems RBRA {
 };
 
 arr_elems
-	: arr_elems COMMA E {
+	: arr_elems COMMA arr_initializer {
 	$$.node = append_node($1.node, $3.node);
 }
-	| E {
+	| arr_initializer {
 	$$.node = $1.node;
 }
 	| {
 	$$.node = NULL;
+};
+
+arr_initializer
+	: E {
+	$$.node = $1.node;
+}
+	| arr_init {
+	$$.node = $1.node->right;
 };
 
 arr_index
