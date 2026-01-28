@@ -1,5 +1,34 @@
 main {
+  var i, inp;
+  var n = 0;
+  var hidden_n = time#%100 + 1;
+
   var start_msg[50] = "I'm thinking of a number between 1 and 100.\n";
+  var guess_msg[20] = "Your Guess: ";
+  var ans_msg[15] = "The Answer is ";
+  var win_msg[15] = "Correct ^-^!\n";
+  var low_msg[15] = "Too Low!\n";
+  var high_msg[15] = "Too High!\n";
 
   _print(@start_msg);
+  // writeln# hidden_n;
+
+  while (true) {
+    _print(@guess_msg);
+    inp = read#;
+    n++;
+    if (inp == hidden_n) {
+      _print(@win_msg);
+      _print(@ans_msg);
+      writeln# hidden_n;
+      write# n;
+      putc# 32; putc# 'A'; putc# 't'; putc# 't'; putc# 'e'; putc# 'm'; putc# 'p'; putc# 't';
+      if (n > 1) {putc# 's';} putc# 10;
+      break;
+    } else if (inp < hidden_n) {
+      _print(@low_msg);
+    } else {
+      _print(@high_msg);
+    }
+  }
 }

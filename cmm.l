@@ -44,7 +44,7 @@
 "break"     { ECHO;  return BREAK; }
 "continue"  { ECHO;  return CONTINUE; }
 "for"       { ECHO;  return FOR; }
-"read"      { ECHO;  return READ; }
+"read#"     { ECHO;  return READ; }
 "return"    { ECHO;  return RETURN; }
 "goto"      { ECHO;  return GOTO; }
 "switch"    { ECHO;  return SWITCH; }
