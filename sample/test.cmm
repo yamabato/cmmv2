@@ -1,5 +1,25 @@
 main {
   hello();
+  var i, n;
+  var txt_abs[10];
+
+  n = time#;
+  for (i=0; i<10; i++) {
+    writeln# n;
+    n = _lcg(n);
+  }
+
+  txt_abs = "ABS:";
+  // ここを追加すると落ちる
+  writeln# _len(@txt_abs);
+
+  /*
+  txt_abs[_len(@txt_abs)] = 10;
+  _print(@txt_abs);
+  writeln# _abs(10);
+  writeln# _abs(-10);
+  writeln# _abs(-0);
+  writeln# _abs(0);
 
   var msg[30];
   var l;
@@ -11,6 +31,7 @@ main {
   _print(@msg);
 
   writeln# time#;
+  */
 }
 
 f(a) {
