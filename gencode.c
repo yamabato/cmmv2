@@ -410,6 +410,11 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_OPR, 0, 1));
       break;
 
+    case NK_IS_ODD:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_OPR, 0, 6));
+      break;
+
     case NK_ADDR:
       gen_get_addr_code(blk, node->right, tbl);
       break;

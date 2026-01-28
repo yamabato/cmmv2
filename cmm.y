@@ -40,6 +40,7 @@ Node *ast_root;
 %token WRITE WRITELN
 %token READ
 %token TIME
+%token ISODD
 %token PUTC GETC
 %token SEMI COLON
 %token PLUS MINUS
@@ -485,6 +486,9 @@ F
 }
 	| MINUS F {
 	$$.node = new_unary_node(NK_MINUS, $2.node);
+}
+	| ISODD F {
+	$$.node = new_unary_node(NK_IS_ODD, $2.node);
 }
 	| ADDR F {
 	$$.node = new_unary_node(NK_ADDR, $2.node);

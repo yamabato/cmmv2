@@ -25,6 +25,7 @@
 "putc#"     { ECHO;  return PUTC; }
 "getc#"     { ECHO;  return GETC; }
 "time#"     { ECHO;  return TIME; }
+"isodd#"    { ECHO;  return ISODD; }
 ";"         { ECHO;  return SEMI; }
 ":"         { ECHO;  return COLON; }
 "+"         { ECHO;  return PLUS; }
@@ -44,7 +45,6 @@
 "break"     { ECHO;  return BREAK; }
 "continue"  { ECHO;  return CONTINUE; }
 "for"       { ECHO;  return FOR; }
-"read#"     { ECHO;  return READ; }
 "return"    { ECHO;  return RETURN; }
 "goto"      { ECHO;  return GOTO; }
 "switch"    { ECHO;  return SWITCH; }

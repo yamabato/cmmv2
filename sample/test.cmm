@@ -12,6 +12,12 @@ main {
   writeln# c;
   f(4);
   writeln# c;
+
+  if (isodd# 0) {
+    writeln# 123;
+  } else {
+    writeln# 456;
+  }
 }
 
 f(a) {
