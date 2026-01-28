@@ -1,0 +1,18 @@
+// https://atcoder.jp/contests/abc081/tasks/abc081_b
+main {
+  var N, n, v, i;
+  var min = 30;
+
+  N = read#;
+  for (i=0; i<N; i++) {
+    v = read#;
+    n = 0;
+    while (!(isodd# v)) {
+      v /= 2;
+      n++;
+    }
+    if (n < min) { min = n; }
+  }
+
+  writeln# min;
+}

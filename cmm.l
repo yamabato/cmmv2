@@ -84,7 +84,7 @@
 	yylval.fval = atof(yytext);
 	return FLOAT;
 }
-_?[a-z][a-z0-9_]* {
+_?[a-zA-Z][a-zA-Z0-9_]* {
 	ECHO;
 	yylval.name = (char*)malloc(strlen(yytext)+1);
 	strcpy(yylval.name, yytext);
