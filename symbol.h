@@ -43,6 +43,7 @@ typedef struct Symbol {
   Symbol *next;
 
   int depth;
+  int size;
   int *arr_size;
 
   // 未使用

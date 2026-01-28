@@ -15,6 +15,9 @@ typedef enum {
   INS_CSP,
   INS_LAB,
   INS_RET,
+
+  INS_LDI,
+  INS_STI,
 } Instr;
 
 extern char *INSTR_NAME[];

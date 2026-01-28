@@ -232,6 +232,10 @@ st
 	Node *id = new_id_node($1.name);
 	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
 }
+	| arr_ref COLEQ arr_init SEMI {
+	Node *id = new_id_node($1.name);
+	$$.node = new_binary_node(NK_ASSIGN_ST, id, $3.node);
+}
 	| compound_assignment SEMI {
 	$$.node = $1.node;
 }
@@ -509,6 +513,9 @@ F
 	| NUMBER {
 	$$.node = new_int_node(yylval.val);
 }
+	| arr_ref {
+	$$.node = $1.node;
+}
 	| LPAR cond RPAR {
 	$$.node = $2.node;
 };
@@ -537,6 +544,39 @@ ac_params
 
 fparam : E {
 	$$.node = $1.node;
+};
+
+arr_ref : ID arr_index {
+	$$.node = new_node(NK_ARR_REF);
+	$$.node->cval = $1.name; // NAME[][]...という形式のみ対応
+	$$.node->right = $2.node;
+};
+
+arr_init : LBRA arr_elems RBRA {
+	$$.node = new_node(NK_ARR_ELEMS);
+	$$.node->right = $2.node;
+};
+
+arr_elems
+	: arr_elems COMMA E {
+	$$.node = append_node($1.node, $3.node);
+}
+	| E {
+	$$.node = $1.node;
+}
+	| {
+	$$.node = NULL;
+};
+
+arr_index
+	: LSQR E RSQR {
+	$$.node = new_node(NK_ARR_INDEX);
+	$$.node->right = $2.node;
+}
+	| arr_index LSQR E RSQR {
+	Node *ind = new_node(NK_ARR_INDEX);
+	ind->right = $3.node;
+	$$.node = append_node($1.node, ind);
 };
 
 %%

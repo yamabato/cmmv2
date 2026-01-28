@@ -17,6 +17,9 @@ char *INSTR_NAME[] = {
   "CSP",
   "LAB",
   "RET",
+
+  "LDI",
+  "STI",
 };
 
 CodeBlock *connect_code_block(CodeBlock *blk1, CodeBlock *blk2) {
@@ -82,7 +85,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   int iflbl, elselbl;
   int head_lbl, tail_lbl;
   int ok;
-  int depth, counter;
+  int depth, counter, size;
   Goto *gt = NULL;
   Symbol *sym;
 
@@ -106,6 +109,30 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       for (Node *decl=node->decls; decl!=NULL; decl=decl->next) {
         append_code(blk, decl, tbl);
       }
+      break;
+
+    case NK_ARR_REF:
+      ok = search_symbol(tbl, node->cval, &sym);
+
+      counter = 0;
+      size = sym->size;
+      for (Node *idx=node->right; idx!=NULL; idx=idx->next) {
+        size /= sym->arr_size[counter++];
+        append_code(blk, idx->right, tbl);
+        connect_code(blk, new_code(INS_LIT, 0, size));
+        connect_code(blk, new_code(INS_OPR, 0, 4));
+      }
+
+      if (counter != sym->depth) {
+        printf("Err arr ref\n");
+        exit(1);
+      }
+
+      for (int i=0; i<sym->depth-1; i++) {
+        connect_code(blk, new_code(INS_OPR, 0, 2));
+      }
+
+      connect_code(blk, new_code(INS_LDI, 0, sym->offset));
       break;
 
     case NK_VAR_DECL:
@@ -146,7 +173,14 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       sym->depth = depth;
       sym->arr_size = (int *)calloc(depth, sizeof(int));
       counter = 0;
-      for (Node *s=node->arr_size; s!=NULL; s=s->next) { sym->arr_size[counter++]=s->ival; }
+      size = 1;
+      for (Node *s=node->arr_size; s!=NULL; s=s->next) {
+        size *= s->ival;
+        sym->arr_size[counter++]=s->ival;
+      }
+      sym->offset = blk->var_count;
+      sym->size = size;
+      blk->var_count += size;
       break;
 
     case NK_ASSIGN_ST: // 文
