@@ -1,10 +1,10 @@
-IF
+WHILE
   COND
     ID: (null)
     ID: (null)
 
-  -*-UNSUPPORTED NODE KIND(32)-*-
-IF
+  -*-UNSUPPORTED NODE KIND(33)-*-
+WHILE
   COND
 
-  -*-UNSUPPORTED NODE KIND(32)-*-
+  -*-UNSUPPORTED NODE KIND(33)-*-

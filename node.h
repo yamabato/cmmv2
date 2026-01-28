@@ -3,7 +3,7 @@
 // ノードの種類
 typedef enum {
   NK_NOTHING,
-  NK_INT, NK_ID,
+  NK_INT, NK_ID, NK_CHAR,
   NK_MINUS,
   NK_GT, NK_GE, NK_LT, NK_LE, NK_EQ, NK_NE,
   NK_AND, NK_OR, NK_NOT,

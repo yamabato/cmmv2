@@ -30,9 +30,8 @@ Node *ast_root;
 %}
 
 %token VAR CONST
-%token INT
+%token INT CHAR ID
 %token MAIN
-%token ID
 %token LIT_TRUE LIT_FALSE
 %token LPAR RPAR
 %token COMMA
@@ -517,6 +516,9 @@ F
 }
 	| NUMBER {
 	$$.node = new_int_node(yylval.val);
+}
+	| CHAR {
+	$$.node = new_char_node($1.name);
 }
 	| arr_ref {
 	$$.node = $1.node;

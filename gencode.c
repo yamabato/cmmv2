@@ -106,6 +106,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       // ok!=0ならエラー対応(ok>0の場合は、オフセット不明)
       connect_code(blk, new_code(INS_LOD, 0, sym->offset));
       break;
+    case NK_CHAR:
+      connect_code(blk, new_code(INS_LIT, 0, (int)(node->cval[0])));
+      break;
     case NK_VAR:
       for (Node *decl=node->decls; decl!=NULL; decl=decl->next) {
         append_code(blk, decl, tbl);

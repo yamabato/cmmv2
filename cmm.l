@@ -85,6 +85,13 @@ _?[a-z][a-z0-9_]* {
 	strcpy(yylval.name, yytext);
 	return ID;
 }
+"'"."'" {
+	ECHO;
+	yylval.name = (char *)malloc(1);
+	yytext[2] = 0;
+	strcpy(yylval.name, yytext+1);
+	return CHAR;
+}
 [ \t\n]+ {
 	ECHO;
 }

@@ -29,6 +29,12 @@ Node *new_id_node(char *name) {
   return node;
 }
 
+Node *new_char_node(char *name) {
+  Node *node = new_node(NK_CHAR);
+  node->cval = name;
+  return node;
+}
+
 Node *new_param_node(Node *type, char *name) {
   Node *node = new_node(NK_PARAM);
   node->left = type;
