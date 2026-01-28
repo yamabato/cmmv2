@@ -10,12 +10,10 @@ main {
   }
 
   txt_abs = "ABS:";
-  // ここを追加すると落ちる
   writeln# _len(@txt_abs);
 
-  /*
-  txt_abs[_len(@txt_abs)] = 10;
-  _print(@txt_abs);
+  txt_abs[_len(5)] = 10;
+  _print(5);
   writeln# _abs(10);
   writeln# _abs(-10);
   writeln# _abs(-0);
@@ -31,7 +29,6 @@ main {
   _print(@msg);
 
   writeln# time#;
-  */
 }
 
 f(a) {
