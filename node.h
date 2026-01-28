@@ -72,6 +72,7 @@ typedef struct Node {
 
   int line;
 
+  int depth;
   int ival;
   double dval;
   char *cval;

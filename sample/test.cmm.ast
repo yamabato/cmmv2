@@ -1,7 +1,7 @@
 IF
   COND
-    ID: a
-    ID: b
+    ID: (null)
+    ID: (null)
 
   -*-UNSUPPORTED NODE KIND(32)-*-
 IF

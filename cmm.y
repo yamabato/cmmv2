@@ -188,10 +188,12 @@ array_size
 	Node *arr_size = new_node(NK_ARR_SIZE);
 	arr_size->ival = $3.val;
 	$$.node = append_node($1.node, arr_size);
+	$$.node->depth = $1.node->depth+1;
 }
 	| LSQR NUMBER RSQR {
 	$$.node = new_node(NK_ARR_SIZE);
 	$$.node->ival = $2.val;
+	$$.node->depth = 1;
 };
 
 /*ids

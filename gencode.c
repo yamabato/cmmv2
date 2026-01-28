@@ -82,7 +82,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   int iflbl, elselbl;
   int head_lbl, tail_lbl;
   int ok;
-  int depth;
+  int depth, counter;
   Goto *gt = NULL;
   Symbol *sym;
 
@@ -142,12 +142,11 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         exit(1);
       }
 
-      depth = 0;
-      for (Node *s=node->arr_size; s!=NULL; s=s->next) { depth++; }
+      depth = node->arr_size->depth;
       sym->depth = depth;
       sym->arr_size = (int *)calloc(depth, sizeof(int));
-      depth = 0;
-      for (Node *s=node->arr_size; s!=NULL; s=s->next) { sym->arr_size[depth++]=s->ival; }
+      counter = 0;
+      for (Node *s=node->arr_size; s!=NULL; s=s->next) { sym->arr_size[counter++]=s->ival; }
       break;
 
     case NK_ASSIGN_ST: // 文
