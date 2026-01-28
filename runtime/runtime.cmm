@@ -27,3 +27,13 @@ _print(s) {
     putc c;
   } while (c != 0);
 }
+
+_len(s) {
+  var l, c;
+  while (true) {
+    c = $(s+l);
+    if (c == 0) { break; }
+    l++;
+  }
+  return l;
+}

@@ -2,8 +2,12 @@ main {
   hello();
 
   var msg[30];
+  var l;
+
   msg = { 'H', 'e', 'l', 'l', 'o', 10, 0 };
   msg = "https://www.tus.ac.jp/";
+  l = _len(@msg);
+  msg[l] = 10;
   _print(@msg);
 }
 
