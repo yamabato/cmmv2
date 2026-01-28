@@ -497,13 +497,13 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       set_loop_label(blk, head_lbl, tail_lbl);
 
       append_code(blk, node->init, tbl);
-      connect_code(blk, new_code(INS_INT, 0, -1));
+      // connect_code(blk, new_code(INS_INT, 0, -1));
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->for_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
       append_code(blk, node->for_body, tbl);
       append_code(blk, node->incr, tbl);
-      connect_code(blk, new_code(INS_INT, 0, -1));
+      // connect_code(blk, new_code(INS_INT, 0, -1));
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
 

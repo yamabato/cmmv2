@@ -1,0 +1,13 @@
+main {
+  var i;
+  for (i=0; i<=10; i+=1) {
+    write# i;
+    putc# ':'; putc# ' ';
+    writeln# fib(i);
+  }
+}
+
+fib(n) {
+  if (n <= 1) { return n; }
+  return fib(n-2)+fib(n-1);
+}
