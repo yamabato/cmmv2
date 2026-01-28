@@ -17,3 +17,13 @@ _pow (a, b) {
 _mod (a, b) {
   return a - (a/b)*b;
 }
+
+_print(s) {
+  var i, c;
+  i = 0;
+  do {
+    c = $(s+i);
+    i++;
+    putc c;
+  } while (c != 0);
+}

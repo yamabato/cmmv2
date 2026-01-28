@@ -1,22 +1,10 @@
 main {
   hello();
 
-  var v;
-
-  var arr[10];
-  arr[0] = 987;
-  arr[5] = 123;
-
-  writeln arr[5];
-  writeln @arr[5];
-
-  f(@v);
-  writeln v;
-
-  $(@arr+6) = 765;
-  writeln arr[6];
-
-  writeln arr;
+  var msg[30];
+  msg = { 'H', 'e', 'l', 'l', 'o', 10, 0 };
+  _print(@msg);
+  // msg = "https://www.tus.ac.jp/";
 }
 
 f(a) {

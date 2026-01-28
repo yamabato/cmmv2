@@ -86,7 +86,7 @@ void gen_get_addr_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   switch (node->kind) {
     case NK_ID:
       ok = search_symbol(tbl, node->cval, &sym);
-      if (ok!=0 ||sym->kind!=SK_VAR) {
+      if (ok!=0 ||sym->kind==SK_FUNC || sym->kind==SK_CONST) {
         printf("Err id addr\n");
         exit(1);
       }
@@ -208,7 +208,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         connect_code(blk, new_code(INS_STI, 0, 0));
       }
 
-      if (counter != size) {
+      if (counter > size) {
         printf("Err arr init 2\n");
         exit(1);
       }
@@ -379,6 +379,9 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       break;
 
     case NK_ADDR:
+      gen_get_addr_code(blk, node->right, tbl);
+      break;
+      /*
       if (node->right->kind == NK_ID) {
         ok = search_symbol(tbl, node->right->cval, &sym);
         if (ok != 0) {
@@ -406,6 +409,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
         }
       }
       break;
+      */
     case NK_DEREF:
       append_code(blk, node->right, tbl);
       connect_code(blk, new_code(INS_LDI, 0, 0));
@@ -620,7 +624,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Node *stmt=node->fbody->stmts; stmt!=NULL; stmt=stmt->next) {
     append_code(blk, stmt, ftbl);
   }
-  connect_code(blk, new_code(INS_RET, 0, blk->param_count));
+  connect_code(blk, new_code(INS_OPR, 0, 0));
 
   for (Goto *gt=blk->gotos; gt!=NULL; gt=gt->next) {
     ok = search_symbol(ftbl, gt->label, &sym);
