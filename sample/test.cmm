@@ -13,12 +13,14 @@ main {
   f(@v);
   writeln v;
 
+  $(@arr+6) = 765;
+  writeln arr[6];
+
   writeln arr;
 }
 
 f(a) {
   $a = 123;
-  return 1;
 }
 
 hello() {

@@ -11,13 +11,12 @@ PL/0　インタプリタ
 
 void exec_program(VM *vm) {
   Instr instr;
-  bool is_running = true;
   int arg;
   int addr;
   int left, right, val;
   int ret_addr, old_bp;
 
-  while (is_running) {
+  while (true) {
     if (vm->pc<0 || vm->pc>=vm->prog_size) { break; }
 
     instr = vm->program[vm->pc++];
@@ -37,7 +36,11 @@ void exec_program(VM *vm) {
         break;
 
       case INS_OPR:
-        if (arg == 0) { is_running=false; }
+        if (arg == 0) {
+          vm->sp = vm->bp - 1;
+          vm->pc = vm->stack[vm->bp+2];
+          vm->bp = vm->stack[vm->bp+1];
+        }
         else if (arg == 1) { vm->stack[vm->sp]*=-1; }
         else if (arg == 6) {
           if (vm->stack[vm->sp]%2 == 0) { vm->stack[vm->sp]=0; }
