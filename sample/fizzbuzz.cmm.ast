@@ -47,41 +47,46 @@ FUNC DEF: _pow (a, b)
 
 FUNC DEF: main ()
   BLOCK
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
-    -*-UNSUPPORTED NODE KIND(43)-*-
     VAR:
       -*-UNSUPPORTED NODE KIND(36)-*-
 
-    UNARY OPER: WRITELN
-      RIGHT:
-        ID: n
-    BINARY OPER: -
-      LEFT:
+    FOR
+      INIT
         BINARY OPER: :=
           LEFT:
             ID: n
           RIGHT:
-            BINARY OPER: +
+            INT: 1
+      COND
+        BINARY OPER: <=
+          LEFT:
+            ID: n
+          RIGHT:
+            INT: 100
+      INCR
+        BINARY OPER: -
+          LEFT:
+            BINARY OPER: :=
               LEFT:
                 ID: n
               RIGHT:
-                INT: 1
-      RIGHT:
-        INT: 1
-    UNARY OPER: WRITELN
-      RIGHT:
-        ID: n
+                BINARY OPER: +
+                  LEFT:
+                    ID: n
+                  RIGHT:
+                    INT: 1
+          RIGHT:
+            INT: 1
+
+      BLOCK
+        UNARY OPER: WRITELN
+          RIGHT:
+            ID: n
+VAR:
+      BINARY OPER: :=
+        LEFT:
+          ID: n
+        RIGHT:
+          INT: 1
+
 

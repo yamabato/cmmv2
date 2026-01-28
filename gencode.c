@@ -365,7 +365,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->while_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
-      append_code(blk, node->body, tbl);
+      append_code(blk, node->while_body, tbl);
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
 
@@ -377,7 +377,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       set_loop_label(blk, head_lbl, tail_lbl);
 
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
-      append_code(blk, node->body, tbl);
+      append_code(blk, node->while_body, tbl);
       append_code(blk, node->while_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
@@ -391,11 +391,13 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       set_loop_label(blk, head_lbl, tail_lbl);
 
       append_code(blk, node->init, tbl);
+      connect_code(blk, new_code(INS_LIT, 0, -1));
       connect_code(blk, new_code(INS_LAB, 0, head_lbl));
       append_code(blk, node->for_cond, tbl);
       connect_code(blk, new_code(INS_JPC, 0, tail_lbl));
-      append_code(blk, node->body, tbl);
+      append_code(blk, node->for_body, tbl);
       append_code(blk, node->incr, tbl);
+      connect_code(blk, new_code(INS_LIT, 0, -1));
       connect_code(blk, new_code(INS_JMP, 0, head_lbl));
       connect_code(blk, new_code(INS_LAB, 0, tail_lbl));
 
@@ -527,7 +529,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   ftbl = new_symbol_table(tbl);
 
   // funcのスキャン
-  for (Node *n=node->body->stmts; n!=NULL; n=n->next) {
+  for (Node *n=node->fbody->stmts; n!=NULL; n=n->next) {
     if (n->kind == NK_FUNC) {
       sym = append_symbol(ftbl, n->cval, SK_FUNC);
       sym->label = (blk->label_n)++;
@@ -545,7 +547,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
     blk->param_count++;
   }
 
-  for (Node *stmt=node->body->stmts; stmt!=NULL; stmt=stmt->next) {
+  for (Node *stmt=node->fbody->stmts; stmt!=NULL; stmt=stmt->next) {
     append_code(blk, stmt, ftbl);
   }
   connect_code(blk, new_code(INS_OPR, 0, 0));

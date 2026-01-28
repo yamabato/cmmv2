@@ -14,4 +14,9 @@ main {
   putc '!';
   putc '!';
   putc 10;
+
+  var n:=0;
+  writeln n;
+  n++;
+  writeln n;
 }

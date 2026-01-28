@@ -37,10 +37,11 @@ typedef struct Node {
       struct Node *init;
       struct Node *incr;
       struct Node *for_cond;
+      struct Node *for_body;
     };
     struct { // while
       struct Node *while_cond;
-      struct Node *body;
+      struct Node *while_body;
     };
     struct { // if
       struct Node *if_cond;

@@ -72,14 +72,14 @@ Node *new_if_node(Node *cond, Node *if_block, Node *else_block) {
 Node *new_while_node(Node *cond, Node *body) {
   Node *node = new_node(NK_WHILE);
   node->while_cond = cond;
-  node->body = body;
+  node->while_body = body;
   return node;
 }
 
 Node *new_do_while_node(Node *cond, Node *body) {
   Node *node = new_node(NK_DO_WHILE);
   node->while_cond = cond;
-  node->body = body;
+  node->while_body = body;
   return node;
 }
 
@@ -88,7 +88,7 @@ Node *new_for_node(Node *init, Node *cond, Node *incr, Node *body) {
   node->init = init;
   node->for_cond = cond;
   node->incr = incr;
-  node->body = body;
+  node->for_body = body;
   return node;
 }
 

@@ -129,7 +129,7 @@ void show_node(Node *node, int depth, FILE *fp) {
       fprintf(fp, "COND\n");
       show_node(node->while_cond, depth+2, fp);
       fprintf(fp, "\n");
-      show_node(node->body, depth+1, fp);
+      show_node(node->while_body, depth+1, fp);
       break;
 
     case NK_FOR:
@@ -144,11 +144,11 @@ void show_node(Node *node, int depth, FILE *fp) {
       fprintf(fp, "INCR\n");
       show_node(node->incr, depth+2, fp);
       fprintf(fp, "\n");
-      show_node(node->body, depth+1, fp);
+      show_node(node->for_body, depth+1, fp);
 
     case NK_VAR:
       fprintf(fp, "VAR:\n");
-      for (Node *id=node->ids; id!=NULL; id=id->next) {
+      for (Node *id=node->decls; id!=NULL; id=id->next) {
         show_node(id, depth+1, fp);
       }
       fprintf(fp, "\n");

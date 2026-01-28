@@ -72,7 +72,7 @@ program
 main : MAIN body {
 	$$.node = new_node(NK_FUNC);
 	$$.node->cval = "main";
-	$$.node->body = $2.node;
+	$$.node->fbody = $2.node;
 };
 
 fdecls
@@ -152,6 +152,7 @@ var_init
 	Node *var = new_node(NK_VAR_DECL);
 	var->cval = $1.name;
 	var->right = $3.node;
+	$$.node = var;
 }
 	| array_decl {
 	$$.node = $1.node;
@@ -217,9 +218,6 @@ st
 	| PUTC E SEMI {
 	$$.node = new_unary_node(NK_PUTC, $2.node);
 }
-	| FUNC_CALL SEMI {
-	$$.node = $1.node;
-}
 	| decl_var {
 	$$.node = $1.node;
 }
@@ -239,9 +237,6 @@ st
 }
 	| arr_ref COLEQ E SEMI {
 	$$.node = new_binary_node(NK_ARR_ASSIGN, $1.node, $3.node);
-}
-	| compound_assignment SEMI {
-	$$.node = $1.node;
 }
 	| ifstmt {
 	$$.node = $1.node;
@@ -280,6 +275,9 @@ st
 	| GOTO ID SEMI {
 	$$.node = new_node(NK_GOTO);
 	$$.node->cval = strdup($2.name);
+}
+	| E SEMI {
+	$$.node = $1.node;
 };
 
 ifstmt
