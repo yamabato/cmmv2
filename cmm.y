@@ -174,7 +174,7 @@ const_inits
 	$$.node = $1.node;
 };
 
-const_init : ID EQ E {
+const_init : ID ASSIGN E {
 	$$.node = new_node(NK_CONST_DECL);
 	$$.node->cval = $1.name;
 	$$.node->right = $3.node;

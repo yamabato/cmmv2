@@ -1,7 +1,16 @@
 main {
   var a=10;
+  const c=100;
 
   writeln# a;
+  writeln# c;
+
+  // writeln# @c; // できない
+  // constの書き換え
+  $4 = 200;
+  writeln# c;
+  f(4);
+  writeln# c;
 }
 
 f(a) {
