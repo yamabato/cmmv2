@@ -13,9 +13,10 @@ PL/0　インタプリタ
 void exec_program(VM *vm) {
   Instr instr;
   int arg;
-  int addr;
+  int addr, pos;
   int left, right, val;
   int ret_addr, old_bp;
+  char *buf = (char *)malloc(sizeof(char)*STACK_SIZE);
 
   while (true) {
     if (vm->pc<0 || vm->pc>=vm->prog_size) { break; }
@@ -97,6 +98,13 @@ void exec_program(VM *vm) {
 
         else if (arg == 10) { putchar((char)vm->stack[vm->sp--]); }
         else if (arg == 11) { vm->stack[++vm->sp]=(int)getchar(); }
+        else if (arg == 12) {
+          addr = vm->stack[vm->sp--];
+          scanf("%s", buf);
+          pos = 0;
+          while ((val=(int)buf[pos])!= 0) { vm->stack[addr+pos++] = val; }
+          vm->stack[addr+pos] = 0;
+        }
 
         else if (arg == 20) { vm->stack[++vm->sp]=(int)time(NULL); }
         break;

@@ -1,0 +1,12 @@
+// https://atcoder.jp/contests/abc086/tasks/abc086_a
+main {
+  var a, b;
+  var even[6] = "Even\n";
+  var  odd[5] = "Odd\n";
+
+  a = read#;
+  b = read#;
+
+  if (isodd# (a*b)) { _print(@odd); }
+  else { _print(@even); }
+}

@@ -38,7 +38,7 @@ Node *ast_root;
 %token LBRA RBRA
 %token LSQR RSQR
 %token WRITE WRITELN
-%token READ
+%token READ READS
 %token TIME
 %token ISODD
 %token PUTC GETC
@@ -553,6 +553,10 @@ F
 	| READ {
 	$$.node = new_node(NK_CSP);
 	$$.node->ival = 0;
+}
+	| READS F {
+	$$.node = new_node(NK_READS);
+	$$.node->right = $2.node;
 }
 	| GETC {
 	$$.node = new_node(NK_CSP);

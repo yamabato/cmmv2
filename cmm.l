@@ -25,6 +25,8 @@
 "putc#"     { ECHO;  return PUTC; }
 "getc#"     { ECHO;  return GETC; }
 "time#"     { ECHO;  return TIME; }
+"read#"     { ECHO;  return READ; }
+"reads#"    { ECHO;  return READS; }
 "isodd#"    { ECHO;  return ISODD; }
 ";"         { ECHO;  return SEMI; }
 ":"         { ECHO;  return COLON; }

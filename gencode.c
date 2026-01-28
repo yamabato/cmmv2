@@ -606,6 +606,11 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_CSP, 0, node->ival));
       break;
 
+    case NK_READS:
+      append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_CSP, 0, 12));
+      break;
+
     default:
       break;
   }

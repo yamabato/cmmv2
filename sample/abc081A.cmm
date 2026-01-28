@@ -1,0 +1,13 @@
+// https://atcoder.jp/contests/abc081/tasks/abc081_a
+main {
+  var s[10];
+  var i;
+  var n = 0;
+
+  reads# @s;
+
+  for (i=0; i<3; i++) {
+    if ($(@s+i) == 49) { n++; }
+  }
+  writeln# n;
+}
