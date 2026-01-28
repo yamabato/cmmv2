@@ -291,10 +291,11 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_OPR, 0, opr_n));
       break;
     case NK_MOD:
-      // intに限れば
-      // a%b -> a - (a/b)*bなど
-      // このとき、結果はbの符号と一致
-
+      append_code(blk, node->left, tbl);
+      append_code(blk, node->right, tbl);
+      ok = search_symbol(tbl, "_mod", &sym);
+      connect_code(blk, new_code(INS_CAL, 0, sym->label));
+      /*
       tmp1_id = (blk->var_count)++;
       tmp2_id = (blk->var_count)++;
       append_code(blk, node->left, tbl);
@@ -309,6 +310,7 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
       connect_code(blk, new_code(INS_LOD, 0, tmp2_id));
       connect_code(blk, new_code(INS_OPR, 0, 4));
       connect_code(blk, new_code(INS_OPR, 0, 3));
+      */
       break;
 
     case NK_POW:
@@ -550,7 +552,7 @@ CodeBlock *gen_func_code_block(Node *node, SymbolTable *tbl, int lbl) {
   for (Node *stmt=node->fbody->stmts; stmt!=NULL; stmt=stmt->next) {
     append_code(blk, stmt, ftbl);
   }
-  connect_code(blk, new_code(INS_OPR, 0, 0));
+  connect_code(blk, new_code(INS_RET, 0, blk->param_count));
 
   for (Goto *gt=blk->gotos; gt!=NULL; gt=gt->next) {
     ok = search_symbol(ftbl, gt->label, &sym);

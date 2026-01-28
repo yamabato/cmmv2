@@ -1,5 +1,10 @@
 main {
   hello();
+
+  writeln 5%3;
+  writeln 5%-3;
+  writeln -5%3;
+  writeln -5%-3;
 }
 
 hello() {

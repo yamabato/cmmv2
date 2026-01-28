@@ -13,3 +13,7 @@ _pow (a, b) {
 
   return r;
 }
+
+_mod (a, b) {
+  return a - (a/b)*b;
+}

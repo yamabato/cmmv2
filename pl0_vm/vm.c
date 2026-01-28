@@ -95,11 +95,15 @@ void exec_program(VM *vm) {
         break;
 
       case INS_RET:
+        val = vm->stack[vm->sp];
+
         old_bp = vm->stack[vm->bp+1];
         ret_addr = vm->stack[vm->bp+2];
-        vm->sp = vm->bp - 1;
+        vm->sp = vm->bp - arg - 1;
         vm->bp = old_bp;
         vm->pc = ret_addr;
+
+        vm->stack[++vm->sp] = val;
         break;
 
       case INS_LEA: // load effective address

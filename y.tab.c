@@ -665,7 +665,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   406
+#define YYLAST   381
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  66
@@ -739,7 +739,7 @@ static const yytype_int16 yyrline[] =
      312,   315,   319,   324,   327,   331,   336,   339,   344,   347,
      352,   355,   360,   363,   366,   369,   372,   375,   378,   383,
      388,   393,   398,   403,   408,   413,   418,   426,   430,   433,
-     438,   441,   444,   449,   452,   455,   458,   461,   466,   469,
+     438,   441,   444,   449,   452,   455,   458,   463,   466,   471,
      474,   477,   481,   485,   492,   499,   506,   513,   516,   519,
      522,   525,   528,   531,   535,   542,   545,   550,   553,   557,
      561,   567,   573,   576,   579,   584,   587,   592,   596
@@ -800,7 +800,7 @@ static const yytype_int16 yypact[] =
 {
      -76,    19,    39,   -76,   -76,     9,   -76,   -76,     9,    20,
      218,   -76,    43,   -76,    47,    59,    71,   -76,   108,   -76,
-     -76,    15,   -76,   323,    83,   -76,   323,   -76,   373,    84,
+     -76,    15,   -76,   323,    83,   -76,   323,   -76,   348,    84,
       88,   -76,    15,    15,     9,    93,    85,    89,   323,   100,
      158,   -76,   258,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
      -76,   -76,    90,   -18,   -16,   -76,    91,   -76,    69,   -76,
@@ -809,7 +809,7 @@ static const yytype_int16 yypact[] =
      323,   323,   323,   101,    33,    15,   109,    62,    64,   -76,
      -76,   144,   -76,   104,   -76,   105,   106,     0,   -76,   -76,
      -76,     9,     9,    94,   323,   -76,   -76,   120,   114,   -76,
-     115,   -76,   -76,   -76,   348,   348,   373,   373,   373,   373,
+     115,   -76,   -76,   -76,   348,   348,   348,   348,   348,   348,
      298,   -76,   132,   107,   323,   125,    59,   -76,   323,    71,
      -76,   -76,   131,   133,   -76,   127,   298,   122,   130,   -76,
      -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   323,   -76,
@@ -830,15 +830,15 @@ static const yytype_int16 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        6,     0,     3,     1,     9,     0,     6,     5,     0,     0,
-       0,     4,     2,     7,    12,     0,     0,   109,   100,   101,
+       0,     4,     2,     7,    12,     0,     0,   109,    99,   101,
      102,     0,    14,     0,     0,   112,     0,   113,     0,     0,
        0,   108,     0,     0,     0,     0,     0,     0,     0,     0,
        0,    49,     0,    34,    35,    16,    40,    41,    42,    43,
-      44,    88,     0,    89,    92,    97,    99,   107,   110,    11,
+      44,    88,     0,    89,    92,    96,    98,   107,   110,    11,
        0,    20,     0,    19,    22,     0,     0,    25,   115,     0,
       50,   103,   105,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,   120,   100,     0,     0,    65,    67,    69,
-      71,    78,   110,     0,    31,     0,     0,   100,    96,   104,
+       0,     0,     0,   120,    99,     0,     0,    65,    67,    69,
+      71,    78,   110,     0,    31,     0,     0,    99,   100,   104,
      106,     0,     0,     0,     0,    47,    48,     0,     0,    46,
        0,    13,    15,    52,     0,     0,     0,     0,     0,     0,
        0,     8,     0,     0,     0,    27,     0,    17,     0,     0,
@@ -846,7 +846,7 @@ static const yytype_uint8 yydefact[] =
       79,    80,    81,    82,    83,    84,    85,    86,     0,    70,
      111,     0,     0,     0,     0,     0,     0,     0,     0,    30,
       32,    33,    53,    56,     0,     0,     0,    51,    45,    90,
-      91,    93,    94,    95,    98,     0,     0,    10,     0,    21,
+      91,    93,    94,    95,    97,     0,     0,    10,     0,    21,
        0,    18,    26,    24,   114,     0,   127,   125,   126,     0,
      123,    36,    37,     0,    66,    68,    73,    72,    75,    74,
       76,    77,     0,     0,     0,     0,    64,    61,    39,    38,
@@ -917,10 +917,8 @@ static const yytype_uint8 yytable[] =
        0,     0,     0,    25,     0,    27,     0,     0,     0,    28,
       29,    30,     0,     0,    17,    97,    31,    19,    20,    21,
        0,     0,     0,     0,     0,     0,     0,     0,    25,     0,
-      27,     0,     0,     0,    28,    29,    30,     0,     0,    17,
-      97,    31,    19,    20,    21,     0,     0,     0,     0,     0,
-       0,     0,     0,    25,     0,    27,     0,     0,     0,     0,
-      29,    30,     0,     0,     0,     0,    31
+      27,     0,     0,     0,    28,    29,    30,     0,     0,     0,
+       0,    31
 };
 
 static const yytype_int16 yycheck[] =
@@ -962,10 +960,8 @@ static const yytype_int16 yycheck[] =
       -1,    -1,    -1,    20,    -1,    22,    -1,    -1,    -1,    26,
       27,    28,    -1,    -1,     6,     7,    33,     9,    10,    11,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    20,    -1,
-      22,    -1,    -1,    -1,    26,    27,    28,    -1,    -1,     6,
-       7,    33,     9,    10,    11,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    20,    -1,    22,    -1,    -1,    -1,    -1,
-      27,    28,    -1,    -1,    -1,    -1,    33
+      22,    -1,    -1,    -1,    26,    27,    28,    -1,    -1,    -1,
+      -1,    33
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -1010,7 +1006,7 @@ static const yytype_int8 yyr1[] =
       90,    90,    91,    92,    92,    93,    94,    94,    95,    95,
       96,    96,    97,    97,    97,    97,    97,    97,    97,    98,
       98,    98,    98,    98,    98,    98,    98,    99,    99,    99,
-     100,   100,   100,   101,   101,   101,   101,   101,   102,   102,
+     100,   100,   100,   101,   101,   101,   101,   102,   102,   103,
      103,   103,   103,   103,   103,   103,   103,   103,   103,   103,
      103,   103,   103,   103,   104,   105,   105,   106,   106,   107,
      108,   109,   110,   110,   110,   111,   111,   112,   112
@@ -1028,8 +1024,8 @@ static const yytype_int8 yyr2[] =
        2,     1,     3,     2,     0,     1,     3,     1,     3,     1,
        2,     1,     3,     3,     3,     3,     3,     3,     1,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     1,     1,
-       3,     3,     1,     3,     3,     3,     2,     1,     3,     1,
-       1,     1,     1,     2,     2,     2,     2,     1,     1,     1,
+       3,     3,     1,     3,     3,     3,     1,     3,     1,     1,
+       2,     1,     1,     2,     2,     2,     2,     1,     1,     1,
        1,     3,     1,     1,     4,     0,     1,     3,     1,     1,
        2,     3,     3,     1,     0,     1,     1,     3,     4
 };
@@ -1500,7 +1496,7 @@ yyreduce:
 	Node *node = append_node(yyvsp[-2].node, yyvsp[-1].node);
 	ast_root = append_node(node, yyvsp[0].node);
 }
-#line 1504 "y.tab.c"
+#line 1500 "y.tab.c"
     break;
 
   case 3: /* program: fdecls  */
@@ -1508,7 +1504,7 @@ yyreduce:
                  {
 	ast_root = yyvsp[0].node;
 }
-#line 1512 "y.tab.c"
+#line 1508 "y.tab.c"
     break;
 
   case 4: /* main: MAIN body  */
@@ -1518,7 +1514,7 @@ yyreduce:
 	yyval.node->cval = "main";
 	yyval.node->fbody = yyvsp[0].node;
 }
-#line 1522 "y.tab.c"
+#line 1518 "y.tab.c"
     break;
 
   case 5: /* fdecls: fdecls fdecl  */
@@ -1526,7 +1522,7 @@ yyreduce:
                        {
 	yyval.node = append_node(yyvsp[-1].node, yyvsp[0].node);
 }
-#line 1530 "y.tab.c"
+#line 1526 "y.tab.c"
     break;
 
   case 6: /* fdecls: %empty  */
@@ -1534,7 +1530,7 @@ yyreduce:
                         {
 	yyval.node = NULL;
 }
-#line 1538 "y.tab.c"
+#line 1534 "y.tab.c"
     break;
 
   case 7: /* fdecl: fhead body  */
@@ -1543,7 +1539,7 @@ yyreduce:
 	yyval.node = yyvsp[-1].node;
 	yyval.node->fbody = yyvsp[0].node;
 }
-#line 1547 "y.tab.c"
+#line 1543 "y.tab.c"
     break;
 
   case 8: /* fhead: fid LPAR params RPAR  */
@@ -1554,7 +1550,7 @@ yyreduce:
 	yyval.node->params = yyvsp[-1].node;
 	yyval.node->ival = yyvsp[-1].node->ival;
 }
-#line 1558 "y.tab.c"
+#line 1554 "y.tab.c"
     break;
 
   case 9: /* fid: ID  */
@@ -1562,7 +1558,7 @@ yyreduce:
          {
 	yyval.node = new_id_node(yyvsp[0].name);
 }
-#line 1566 "y.tab.c"
+#line 1562 "y.tab.c"
     break;
 
   case 10: /* params: params COMMA ID  */
@@ -1572,7 +1568,7 @@ yyreduce:
 	yyval.node = append_node(yyvsp[-2].node, p);
 	yyval.node->ival = yyvsp[-2].node->ival + 1;
 }
-#line 1576 "y.tab.c"
+#line 1572 "y.tab.c"
     break;
 
   case 11: /* params: ID  */
@@ -1581,7 +1577,7 @@ yyreduce:
 	yyval.node = new_id_node(yyvsp[0].name);
 	yyval.node->ival = 1;
 }
-#line 1585 "y.tab.c"
+#line 1581 "y.tab.c"
     break;
 
   case 12: /* params: %empty  */
@@ -1590,7 +1586,7 @@ yyreduce:
 	yyval.node = new_node(NK_NOTHING);
 	yyval.node->ival = 0;
 }
-#line 1594 "y.tab.c"
+#line 1590 "y.tab.c"
     break;
 
   case 13: /* body: LBRA stmts RBRA  */
@@ -1599,7 +1595,7 @@ yyreduce:
 	yyval.node = new_node(NK_BLOCK);
 	yyval.node->stmts = yyvsp[-1].node;
 }
-#line 1603 "y.tab.c"
+#line 1599 "y.tab.c"
     break;
 
   case 14: /* body: LBRA RBRA  */
@@ -1607,7 +1603,7 @@ yyreduce:
                     {
 	yyval.node = new_node(NK_BLOCK);
 }
-#line 1611 "y.tab.c"
+#line 1607 "y.tab.c"
     break;
 
   case 15: /* stmts: stmts st  */
@@ -1615,7 +1611,7 @@ yyreduce:
                    {
 	yyval.node = append_node(yyvsp[-1].node, yyvsp[0].node);
 }
-#line 1619 "y.tab.c"
+#line 1615 "y.tab.c"
     break;
 
   case 16: /* stmts: st  */
@@ -1623,7 +1619,7 @@ yyreduce:
              {
 	yyval.node = yyvsp[0].node;
 }
-#line 1627 "y.tab.c"
+#line 1623 "y.tab.c"
     break;
 
   case 17: /* decl_var: VAR var_inits SEMI  */
@@ -1632,7 +1628,7 @@ yyreduce:
 	yyval.node = new_node(NK_VAR);
 	yyval.node->decls = yyvsp[-1].node;
 }
-#line 1636 "y.tab.c"
+#line 1632 "y.tab.c"
     break;
 
   case 18: /* var_inits: var_inits COMMA var_init  */
@@ -1640,7 +1636,7 @@ yyreduce:
                                    {
 	yyval.node = append_node(yyvsp[-2].node, yyvsp[0].node);
 }
-#line 1644 "y.tab.c"
+#line 1640 "y.tab.c"
     break;
 
   case 19: /* var_inits: var_init  */
@@ -1648,7 +1644,7 @@ yyreduce:
                    {
 	yyval.node = yyvsp[0].node;
 }
-#line 1652 "y.tab.c"
+#line 1648 "y.tab.c"
     break;
 
   case 20: /* var_init: ID  */
@@ -1657,7 +1653,7 @@ yyreduce:
 	yyval.node = new_node(NK_VAR_DECL);
 	yyval.node->cval = yyvsp[0].name;
 }
-#line 1661 "y.tab.c"
+#line 1657 "y.tab.c"
     break;
 
   case 21: /* var_init: ID COLEQ E  */
@@ -1668,7 +1664,7 @@ yyreduce:
 	var->right = yyvsp[0].node;
 	yyval.node = var;
 }
-#line 1672 "y.tab.c"
+#line 1668 "y.tab.c"
     break;
 
   case 22: /* var_init: array_decl  */
@@ -1676,7 +1672,7 @@ yyreduce:
                      {
 	yyval.node = yyvsp[0].node;
 }
-#line 1680 "y.tab.c"
+#line 1676 "y.tab.c"
     break;
 
   case 23: /* decl_const: CONST const_inits SEMI  */
@@ -1685,7 +1681,7 @@ yyreduce:
 	yyval.node = new_node(NK_CONST);
 	yyval.node->decls = yyvsp[-1].node;
 }
-#line 1689 "y.tab.c"
+#line 1685 "y.tab.c"
     break;
 
   case 24: /* const_inits: const_inits COMMA const_init  */
@@ -1693,7 +1689,7 @@ yyreduce:
                                        {
 	yyval.node = append_node(yyvsp[-2].node, yyvsp[0].node);
 }
-#line 1697 "y.tab.c"
+#line 1693 "y.tab.c"
     break;
 
   case 25: /* const_inits: const_init  */
@@ -1701,7 +1697,7 @@ yyreduce:
                      {
 	yyval.node = yyvsp[0].node;
 }
-#line 1705 "y.tab.c"
+#line 1701 "y.tab.c"
     break;
 
   case 26: /* const_init: ID COLEQ E  */
@@ -1711,7 +1707,7 @@ yyreduce:
 	yyval.node->cval = yyvsp[-2].name;
 	yyval.node->right = yyvsp[0].node;
 }
-#line 1715 "y.tab.c"
+#line 1711 "y.tab.c"
     break;
 
   case 27: /* array_decl: ID array_size  */
@@ -1721,7 +1717,7 @@ yyreduce:
 	yyval.node->cval = yyvsp[-1].name;
 	yyval.node->arr_size = yyvsp[0].node;
 }
-#line 1725 "y.tab.c"
+#line 1721 "y.tab.c"
     break;
 
   case 28: /* array_size: array_size LSQR NUMBER RSQR  */
@@ -1732,7 +1728,7 @@ yyreduce:
 	yyval.node = append_node(yyvsp[-3].node, arr_size);
 	yyval.node->depth = yyvsp[-3].node->depth+1;
 }
-#line 1736 "y.tab.c"
+#line 1732 "y.tab.c"
     break;
 
   case 29: /* array_size: LSQR NUMBER RSQR  */
@@ -1742,7 +1738,7 @@ yyreduce:
 	yyval.node->ival = yyvsp[-1].val;
 	yyval.node->depth = 1;
 }
-#line 1746 "y.tab.c"
+#line 1742 "y.tab.c"
     break;
 
   case 30: /* st: WRITE E SEMI  */
@@ -1750,7 +1746,7 @@ yyreduce:
                        {
 	yyval.node = new_unary_node(NK_WRITE, yyvsp[-1].node);
 }
-#line 1754 "y.tab.c"
+#line 1750 "y.tab.c"
     break;
 
   case 31: /* st: WRITELN SEMI  */
@@ -1758,7 +1754,7 @@ yyreduce:
                        {
 	yyval.node = new_node(NK_WRITELN);
 }
-#line 1762 "y.tab.c"
+#line 1758 "y.tab.c"
     break;
 
   case 32: /* st: WRITELN E SEMI  */
@@ -1766,7 +1762,7 @@ yyreduce:
                          {
 	yyval.node = new_unary_node(NK_WRITELN, yyvsp[-1].node);
 }
-#line 1770 "y.tab.c"
+#line 1766 "y.tab.c"
     break;
 
   case 33: /* st: PUTC E SEMI  */
@@ -1774,7 +1770,7 @@ yyreduce:
                       {
 	yyval.node = new_unary_node(NK_PUTC, yyvsp[-1].node);
 }
-#line 1778 "y.tab.c"
+#line 1774 "y.tab.c"
     break;
 
   case 34: /* st: decl_var  */
@@ -1782,7 +1778,7 @@ yyreduce:
                    {
 	yyval.node = yyvsp[0].node;
 }
-#line 1786 "y.tab.c"
+#line 1782 "y.tab.c"
     break;
 
   case 35: /* st: decl_const  */
@@ -1790,7 +1786,7 @@ yyreduce:
                      {
 	yyval.node = yyvsp[0].node;
 }
-#line 1794 "y.tab.c"
+#line 1790 "y.tab.c"
     break;
 
   case 36: /* st: ID COLEQ E SEMI  */
@@ -1799,7 +1795,7 @@ yyreduce:
 	Node *id = new_id_node(yyvsp[-3].name);
 	yyval.node = new_binary_node(NK_ASSIGN_ST, id, yyvsp[-1].node);
 }
-#line 1803 "y.tab.c"
+#line 1799 "y.tab.c"
     break;
 
   case 37: /* st: ID COLEQ arr_init SEMI  */
@@ -1808,7 +1804,7 @@ yyreduce:
 	Node *id = new_id_node(yyvsp[-3].name);
 	yyval.node = new_binary_node(NK_ARR_INIT, id, yyvsp[-1].node);
 }
-#line 1812 "y.tab.c"
+#line 1808 "y.tab.c"
     break;
 
   case 38: /* st: arr_ref COLEQ arr_init SEMI  */
@@ -1816,7 +1812,7 @@ yyreduce:
                                       {
 	yyval.node = new_binary_node(NK_ARR_INIT, yyvsp[-3].node, yyvsp[-1].node);
 }
-#line 1820 "y.tab.c"
+#line 1816 "y.tab.c"
     break;
 
   case 39: /* st: arr_ref COLEQ E SEMI  */
@@ -1824,7 +1820,7 @@ yyreduce:
                                {
 	yyval.node = new_binary_node(NK_ARR_ASSIGN, yyvsp[-3].node, yyvsp[-1].node);
 }
-#line 1828 "y.tab.c"
+#line 1824 "y.tab.c"
     break;
 
   case 40: /* st: ifstmt  */
@@ -1832,7 +1828,7 @@ yyreduce:
                  {
 	yyval.node = yyvsp[0].node;
 }
-#line 1836 "y.tab.c"
+#line 1832 "y.tab.c"
     break;
 
   case 41: /* st: whilestmt  */
@@ -1840,7 +1836,7 @@ yyreduce:
                     {
 	yyval.node = yyvsp[0].node;
 }
-#line 1844 "y.tab.c"
+#line 1840 "y.tab.c"
     break;
 
   case 42: /* st: dowhilestmt  */
@@ -1848,7 +1844,7 @@ yyreduce:
                       {
 	yyval.node = yyvsp[0].node;
 }
-#line 1852 "y.tab.c"
+#line 1848 "y.tab.c"
     break;
 
   case 43: /* st: forstmt  */
@@ -1856,7 +1852,7 @@ yyreduce:
                   {
 	yyval.node = yyvsp[0].node;
 }
-#line 1860 "y.tab.c"
+#line 1856 "y.tab.c"
     break;
 
   case 44: /* st: switchstmt  */
@@ -1864,7 +1860,7 @@ yyreduce:
                      {
 	yyval.node = yyvsp[0].node;
 }
-#line 1868 "y.tab.c"
+#line 1864 "y.tab.c"
     break;
 
   case 45: /* st: RETURN E SEMI  */
@@ -1872,7 +1868,7 @@ yyreduce:
                         {
 	yyval.node = new_unary_node(NK_RETURN, yyvsp[-1].node);
 }
-#line 1876 "y.tab.c"
+#line 1872 "y.tab.c"
     break;
 
   case 46: /* st: RETURN SEMI  */
@@ -1880,7 +1876,7 @@ yyreduce:
                       {
 	yyval.node = new_node(NK_RETURN);
 }
-#line 1884 "y.tab.c"
+#line 1880 "y.tab.c"
     break;
 
   case 47: /* st: BREAK SEMI  */
@@ -1888,7 +1884,7 @@ yyreduce:
                      {
 	yyval.node = new_node(NK_BREAK);
 }
-#line 1892 "y.tab.c"
+#line 1888 "y.tab.c"
     break;
 
   case 48: /* st: CONTINUE SEMI  */
@@ -1896,7 +1892,7 @@ yyreduce:
                         {
 	yyval.node = new_node(NK_CONTINUE);
 }
-#line 1900 "y.tab.c"
+#line 1896 "y.tab.c"
     break;
 
   case 49: /* st: body  */
@@ -1904,7 +1900,7 @@ yyreduce:
                {
 	yyval.node = yyvsp[0].node;
 }
-#line 1908 "y.tab.c"
+#line 1904 "y.tab.c"
     break;
 
   case 50: /* st: ID COLON  */
@@ -1913,7 +1909,7 @@ yyreduce:
 	yyval.node = new_node(NK_LABEL);
 	yyval.node->cval = strdup(yyvsp[0].name);
 }
-#line 1917 "y.tab.c"
+#line 1913 "y.tab.c"
     break;
 
   case 51: /* st: GOTO ID SEMI  */
@@ -1922,7 +1918,7 @@ yyreduce:
 	yyval.node = new_node(NK_GOTO);
 	yyval.node->cval = strdup(yyvsp[-1].name);
 }
-#line 1926 "y.tab.c"
+#line 1922 "y.tab.c"
     break;
 
   case 52: /* st: E SEMI  */
@@ -1930,7 +1926,7 @@ yyreduce:
                  {
 	yyval.node = yyvsp[-1].node;
 }
-#line 1934 "y.tab.c"
+#line 1930 "y.tab.c"
     break;
 
   case 53: /* ifstmt: IF cond body  */
@@ -1938,7 +1934,7 @@ yyreduce:
                        {
 	yyval.node = new_if_node(yyvsp[-1].node, yyvsp[0].node, NULL);
 }
-#line 1942 "y.tab.c"
+#line 1938 "y.tab.c"
     break;
 
   case 54: /* ifstmt: IF cond body ELSE body  */
@@ -1946,7 +1942,7 @@ yyreduce:
                                  {
 	yyval.node = new_if_node(yyvsp[-3].node, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 1950 "y.tab.c"
+#line 1946 "y.tab.c"
     break;
 
   case 55: /* ifstmt: IF cond body ELSE ifstmt  */
@@ -1954,7 +1950,7 @@ yyreduce:
                                    {
 	yyval.node = new_if_node(yyvsp[-3].node, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 1958 "y.tab.c"
+#line 1954 "y.tab.c"
     break;
 
   case 56: /* whilestmt: WHILE cond body  */
@@ -1962,7 +1958,7 @@ yyreduce:
                             {
 	yyval.node = new_while_node(yyvsp[-1].node, yyvsp[0].node);
 }
-#line 1966 "y.tab.c"
+#line 1962 "y.tab.c"
     break;
 
   case 57: /* dowhilestmt: DO body WHILE cond SEMI  */
@@ -1970,7 +1966,7 @@ yyreduce:
                                       {
 	yyval.node = new_do_while_node(yyvsp[-1].node, yyvsp[-3].node);
 }
-#line 1974 "y.tab.c"
+#line 1970 "y.tab.c"
     break;
 
   case 58: /* forstmt: FOR LPAR E SEMI cond SEMI E RPAR body  */
@@ -1978,7 +1974,7 @@ yyreduce:
                                                 {
 	yyval.node = new_for_node(yyvsp[-6].node, yyvsp[-4].node, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 1982 "y.tab.c"
+#line 1978 "y.tab.c"
     break;
 
   case 59: /* switchstmt: SWITCH E LBRA cases case_default RBRA  */
@@ -1986,7 +1982,7 @@ yyreduce:
                                                    {
 	yyval.node = new_switch_node(yyvsp[-4].node, yyvsp[-2].node, yyvsp[-1].node);
 }
-#line 1990 "y.tab.c"
+#line 1986 "y.tab.c"
     break;
 
   case 60: /* cases: cases case_item  */
@@ -1994,7 +1990,7 @@ yyreduce:
                           {
 	yyval.node = append_node(yyvsp[-1].node, yyvsp[0].node);
 }
-#line 1998 "y.tab.c"
+#line 1994 "y.tab.c"
     break;
 
   case 61: /* cases: case_item  */
@@ -2002,7 +1998,7 @@ yyreduce:
                     {
 	yyval.node = yyvsp[0].node;
 }
-#line 2006 "y.tab.c"
+#line 2002 "y.tab.c"
     break;
 
   case 62: /* case_item: CASE E body  */
@@ -2010,7 +2006,7 @@ yyreduce:
                         {
 	yyval.node = new_case_node(yyvsp[-1].node, yyvsp[0].node);
 }
-#line 2014 "y.tab.c"
+#line 2010 "y.tab.c"
     break;
 
   case 63: /* case_default: DEFAULT body  */
@@ -2018,7 +2014,7 @@ yyreduce:
                        {
 	yyval.node = yyvsp[0].node;
 }
-#line 2022 "y.tab.c"
+#line 2018 "y.tab.c"
     break;
 
   case 64: /* case_default: %empty  */
@@ -2026,7 +2022,7 @@ yyreduce:
           {
 	yyval.node = NULL;
 }
-#line 2030 "y.tab.c"
+#line 2026 "y.tab.c"
     break;
 
   case 65: /* cond: cond_or  */
@@ -2034,7 +2030,7 @@ yyreduce:
                {
 	yyval.node = yyvsp[0].node;
 }
-#line 2038 "y.tab.c"
+#line 2034 "y.tab.c"
     break;
 
   case 66: /* cond_or: cond_or OR cond_and  */
@@ -2042,7 +2038,7 @@ yyreduce:
                               {
 	yyval.node = new_binary_node(NK_OR, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2046 "y.tab.c"
+#line 2042 "y.tab.c"
     break;
 
   case 67: /* cond_or: cond_and  */
@@ -2050,7 +2046,7 @@ yyreduce:
                    {
 	yyval.node = yyvsp[0].node;
 }
-#line 2054 "y.tab.c"
+#line 2050 "y.tab.c"
     break;
 
   case 68: /* cond_and: cond_and AND cond_not  */
@@ -2058,7 +2054,7 @@ yyreduce:
                                 {
 	yyval.node = new_binary_node(NK_AND, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2062 "y.tab.c"
+#line 2058 "y.tab.c"
     break;
 
   case 69: /* cond_and: cond_not  */
@@ -2066,7 +2062,7 @@ yyreduce:
                    {
 	yyval.node = yyvsp[0].node;
 }
-#line 2070 "y.tab.c"
+#line 2066 "y.tab.c"
     break;
 
   case 70: /* cond_not: NOT cond_not  */
@@ -2074,7 +2070,7 @@ yyreduce:
                        {
 	yyval.node = new_unary_node(NK_NOT, yyvsp[0].node);
 }
-#line 2078 "y.tab.c"
+#line 2074 "y.tab.c"
     break;
 
   case 71: /* cond_not: comp  */
@@ -2082,7 +2078,7 @@ yyreduce:
                {
 	yyval.node = yyvsp[0].node;
 }
-#line 2086 "y.tab.c"
+#line 2082 "y.tab.c"
     break;
 
   case 72: /* comp: E GT E  */
@@ -2090,7 +2086,7 @@ yyreduce:
                  {
 	yyval.node = new_binary_node(NK_GT, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2094 "y.tab.c"
+#line 2090 "y.tab.c"
     break;
 
   case 73: /* comp: E GE E  */
@@ -2098,7 +2094,7 @@ yyreduce:
                  {
 	yyval.node = new_binary_node(NK_GE, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2102 "y.tab.c"
+#line 2098 "y.tab.c"
     break;
 
   case 74: /* comp: E LT E  */
@@ -2106,7 +2102,7 @@ yyreduce:
                 {
 	yyval.node = new_binary_node(NK_LT, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2110 "y.tab.c"
+#line 2106 "y.tab.c"
     break;
 
   case 75: /* comp: E LE E  */
@@ -2114,7 +2110,7 @@ yyreduce:
                  {
 	yyval.node = new_binary_node(NK_LE, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2118 "y.tab.c"
+#line 2114 "y.tab.c"
     break;
 
   case 76: /* comp: E NE E  */
@@ -2122,7 +2118,7 @@ yyreduce:
                  {
 	yyval.node = new_binary_node(NK_NE, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2126 "y.tab.c"
+#line 2122 "y.tab.c"
     break;
 
   case 77: /* comp: E EQ E  */
@@ -2130,7 +2126,7 @@ yyreduce:
                  {
 	yyval.node = new_binary_node(NK_EQ, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2134 "y.tab.c"
+#line 2130 "y.tab.c"
     break;
 
   case 78: /* comp: E  */
@@ -2138,7 +2134,7 @@ yyreduce:
             {
 	yyval.node = yyvsp[0].node;
 }
-#line 2142 "y.tab.c"
+#line 2138 "y.tab.c"
     break;
 
   case 79: /* compound_assignment: ID ADD_ASSIGN E  */
@@ -2148,7 +2144,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_ADD, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2152 "y.tab.c"
+#line 2148 "y.tab.c"
     break;
 
   case 80: /* compound_assignment: ID SUB_ASSIGN E  */
@@ -2158,7 +2154,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_SUB, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2162 "y.tab.c"
+#line 2158 "y.tab.c"
     break;
 
   case 81: /* compound_assignment: ID MUL_ASSIGN E  */
@@ -2168,7 +2164,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_MUL, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2172 "y.tab.c"
+#line 2168 "y.tab.c"
     break;
 
   case 82: /* compound_assignment: ID DIV_ASSIGN E  */
@@ -2178,7 +2174,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_DIV, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2182 "y.tab.c"
+#line 2178 "y.tab.c"
     break;
 
   case 83: /* compound_assignment: ID POW_ASSIGN E  */
@@ -2188,7 +2184,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_POW, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2192 "y.tab.c"
+#line 2188 "y.tab.c"
     break;
 
   case 84: /* compound_assignment: ID MOD_ASSIGN E  */
@@ -2198,7 +2194,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_MOD, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2202 "y.tab.c"
+#line 2198 "y.tab.c"
     break;
 
   case 85: /* compound_assignment: ID AND_ASSIGN E  */
@@ -2208,7 +2204,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_AND, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2212 "y.tab.c"
+#line 2208 "y.tab.c"
     break;
 
   case 86: /* compound_assignment: ID OR_ASSIGN E  */
@@ -2218,7 +2214,7 @@ yyreduce:
 	Node *right = new_binary_node(NK_OR, id, yyvsp[0].node);
 	yyval.node = new_binary_node(NK_ASSIGN, id, right);
 }
-#line 2222 "y.tab.c"
+#line 2218 "y.tab.c"
     break;
 
   case 87: /* E: ID ASSIGN E  */
@@ -2227,7 +2223,7 @@ yyreduce:
 	Node *id = new_id_node(yyvsp[-2].name);
 	yyval.node = new_binary_node(NK_ASSIGN, id, yyvsp[0].node);
 }
-#line 2231 "y.tab.c"
+#line 2227 "y.tab.c"
     break;
 
   case 88: /* E: compound_assignment  */
@@ -2235,7 +2231,7 @@ yyreduce:
                               {
 	yyval.node = yyvsp[0].node;
 }
-#line 2239 "y.tab.c"
+#line 2235 "y.tab.c"
     break;
 
   case 89: /* E: ADD_SUB  */
@@ -2243,7 +2239,7 @@ yyreduce:
                   {
 	yyval.node = yyvsp[0].node;
 }
-#line 2247 "y.tab.c"
+#line 2243 "y.tab.c"
     break;
 
   case 90: /* ADD_SUB: ADD_SUB PLUS T  */
@@ -2251,7 +2247,7 @@ yyreduce:
                          {
 	yyval.node = new_binary_node(NK_ADD, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2255 "y.tab.c"
+#line 2251 "y.tab.c"
     break;
 
   case 91: /* ADD_SUB: ADD_SUB MINUS T  */
@@ -2259,7 +2255,7 @@ yyreduce:
                           {
 	yyval.node = new_binary_node(NK_SUB, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2263 "y.tab.c"
+#line 2259 "y.tab.c"
     break;
 
   case 92: /* ADD_SUB: T  */
@@ -2267,7 +2263,7 @@ yyreduce:
             {
 	yyval.node = yyvsp[0].node;
 }
-#line 2271 "y.tab.c"
+#line 2267 "y.tab.c"
     break;
 
   case 93: /* T: T MULT P  */
@@ -2275,7 +2271,7 @@ yyreduce:
                    {
 	yyval.node = new_binary_node(NK_MUL, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2279 "y.tab.c"
+#line 2275 "y.tab.c"
     break;
 
   case 94: /* T: T DIV P  */
@@ -2283,7 +2279,7 @@ yyreduce:
                   {
 	yyval.node = new_binary_node(NK_DIV, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2287 "y.tab.c"
+#line 2283 "y.tab.c"
     break;
 
   case 95: /* T: T MOD P  */
@@ -2291,47 +2287,47 @@ yyreduce:
                    {
 	 yyval.node = new_binary_node(NK_MOD, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2295 "y.tab.c"
+#line 2291 "y.tab.c"
     break;
 
-  case 96: /* T: MINUS F  */
+  case 96: /* T: P  */
 #line 458 "cmm.y"
-                  {
-	yyval.node = new_unary_node(NK_MINUS, yyvsp[0].node);
-}
-#line 2303 "y.tab.c"
-    break;
-
-  case 97: /* T: P  */
-#line 461 "cmm.y"
             {
 	yyval.node = yyvsp[0].node;
 }
-#line 2311 "y.tab.c"
+#line 2299 "y.tab.c"
     break;
 
-  case 98: /* P: F POW P  */
-#line 466 "cmm.y"
+  case 97: /* P: F POW P  */
+#line 463 "cmm.y"
                   {
 	 yyval.node = new_binary_node(NK_POW, yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2319 "y.tab.c"
+#line 2307 "y.tab.c"
     break;
 
-  case 99: /* P: F  */
-#line 469 "cmm.y"
+  case 98: /* P: F  */
+#line 466 "cmm.y"
             {
 	yyval.node = yyvsp[0].node;
 }
-#line 2327 "y.tab.c"
+#line 2315 "y.tab.c"
     break;
 
-  case 100: /* F: ID  */
-#line 474 "cmm.y"
+  case 99: /* F: ID  */
+#line 471 "cmm.y"
              {
 	yyval.node = new_id_node(yyvsp[0].name);
 }
-#line 2335 "y.tab.c"
+#line 2323 "y.tab.c"
+    break;
+
+  case 100: /* F: MINUS F  */
+#line 474 "cmm.y"
+                  {
+	yyval.node = new_unary_node(NK_MINUS, yyvsp[0].node);
+}
+#line 2331 "y.tab.c"
     break;
 
   case 101: /* F: LIT_TRUE  */
@@ -2340,7 +2336,7 @@ yyreduce:
 	yyval.node = new_node(NK_INT);
 	yyval.node->ival = 1;
 }
-#line 2344 "y.tab.c"
+#line 2340 "y.tab.c"
     break;
 
   case 102: /* F: LIT_FALSE  */
@@ -2349,7 +2345,7 @@ yyreduce:
 	yyval.node = new_node(NK_INT);
 	yyval.node->ival = 0;
 }
-#line 2353 "y.tab.c"
+#line 2349 "y.tab.c"
     break;
 
   case 103: /* F: ID INC  */
@@ -2361,7 +2357,7 @@ yyreduce:
 	Node *inc = new_binary_node(NK_ASSIGN, id, add);
 	yyval.node = new_binary_node(NK_SUB, inc, one);
 }
-#line 2365 "y.tab.c"
+#line 2361 "y.tab.c"
     break;
 
   case 104: /* F: INC ID  */
@@ -2373,7 +2369,7 @@ yyreduce:
 	Node *inc = new_binary_node(NK_ASSIGN, id, add);
 	yyval.node = inc;
 }
-#line 2377 "y.tab.c"
+#line 2373 "y.tab.c"
     break;
 
   case 105: /* F: ID DEC  */
@@ -2385,7 +2381,7 @@ yyreduce:
 	Node *dec = new_binary_node(NK_ASSIGN, id, add);
 	yyval.node = new_binary_node(NK_ADD, dec, one);
 }
-#line 2389 "y.tab.c"
+#line 2385 "y.tab.c"
     break;
 
   case 106: /* F: DEC ID  */
@@ -2397,7 +2393,7 @@ yyreduce:
 	Node *dec = new_binary_node(NK_ASSIGN, id, add);
 	yyval.node = dec;
 }
-#line 2401 "y.tab.c"
+#line 2397 "y.tab.c"
     break;
 
   case 107: /* F: FUNC_CALL  */
@@ -2405,7 +2401,7 @@ yyreduce:
                     {
 	yyval.node = yyvsp[0].node;
 }
-#line 2409 "y.tab.c"
+#line 2405 "y.tab.c"
     break;
 
   case 108: /* F: NUMBER  */
@@ -2413,7 +2409,7 @@ yyreduce:
                  {
 	yyval.node = new_int_node(yylval.val);
 }
-#line 2417 "y.tab.c"
+#line 2413 "y.tab.c"
     break;
 
   case 109: /* F: CHAR  */
@@ -2421,7 +2417,7 @@ yyreduce:
                {
 	yyval.node = new_char_node(yyvsp[0].name);
 }
-#line 2425 "y.tab.c"
+#line 2421 "y.tab.c"
     break;
 
   case 110: /* F: arr_ref  */
@@ -2429,7 +2425,7 @@ yyreduce:
                   {
 	yyval.node = yyvsp[0].node;
 }
-#line 2433 "y.tab.c"
+#line 2429 "y.tab.c"
     break;
 
   case 111: /* F: LPAR cond RPAR  */
@@ -2437,7 +2433,7 @@ yyreduce:
                          {
 	yyval.node = yyvsp[-1].node;
 }
-#line 2441 "y.tab.c"
+#line 2437 "y.tab.c"
     break;
 
   case 112: /* F: READ  */
@@ -2445,7 +2441,7 @@ yyreduce:
                {
 	yyval.node = new_node(NK_READ);
 }
-#line 2449 "y.tab.c"
+#line 2445 "y.tab.c"
     break;
 
   case 113: /* F: GETC  */
@@ -2453,7 +2449,7 @@ yyreduce:
                {
 	yyval.node = new_node(NK_GETC);
 }
-#line 2457 "y.tab.c"
+#line 2453 "y.tab.c"
     break;
 
   case 114: /* FUNC_CALL: ID LPAR fparams RPAR  */
@@ -2463,7 +2459,7 @@ yyreduce:
 	yyval.node->cval = yyvsp[-3].name;
 	yyval.node->params = yyvsp[-1].node;
 }
-#line 2467 "y.tab.c"
+#line 2463 "y.tab.c"
     break;
 
   case 115: /* fparams: %empty  */
@@ -2471,7 +2467,7 @@ yyreduce:
                         {
 	yyval.node = NULL;
 }
-#line 2475 "y.tab.c"
+#line 2471 "y.tab.c"
     break;
 
   case 116: /* fparams: ac_params  */
@@ -2479,7 +2475,7 @@ yyreduce:
                     {
 	yyval.node = yyvsp[0].node;
 }
-#line 2483 "y.tab.c"
+#line 2479 "y.tab.c"
     break;
 
   case 117: /* ac_params: ac_params COMMA fparam  */
@@ -2487,7 +2483,7 @@ yyreduce:
                                  {
 	yyval.node = append_node(yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2491 "y.tab.c"
+#line 2487 "y.tab.c"
     break;
 
   case 118: /* ac_params: fparam  */
@@ -2495,7 +2491,7 @@ yyreduce:
                  {
 	yyval.node = yyvsp[0].node;
 }
-#line 2499 "y.tab.c"
+#line 2495 "y.tab.c"
     break;
 
   case 119: /* fparam: E  */
@@ -2503,7 +2499,7 @@ yyreduce:
            {
 	yyval.node = yyvsp[0].node;
 }
-#line 2507 "y.tab.c"
+#line 2503 "y.tab.c"
     break;
 
   case 120: /* arr_ref: ID arr_index  */
@@ -2513,7 +2509,7 @@ yyreduce:
 	yyval.node->cval = yyvsp[-1].name; // NAME[][]...という形式のみ対応
 	yyval.node->right = yyvsp[0].node;
 }
-#line 2517 "y.tab.c"
+#line 2513 "y.tab.c"
     break;
 
   case 121: /* arr_init: LBRA arr_elems RBRA  */
@@ -2522,7 +2518,7 @@ yyreduce:
 	yyval.node = new_node(NK_ARR_ELEMS);
 	yyval.node->right = yyvsp[-1].node;
 }
-#line 2526 "y.tab.c"
+#line 2522 "y.tab.c"
     break;
 
   case 122: /* arr_elems: arr_elems COMMA arr_initializer  */
@@ -2530,7 +2526,7 @@ yyreduce:
                                           {
 	yyval.node = append_node(yyvsp[-2].node, yyvsp[0].node);
 }
-#line 2534 "y.tab.c"
+#line 2530 "y.tab.c"
     break;
 
   case 123: /* arr_elems: arr_initializer  */
@@ -2538,7 +2534,7 @@ yyreduce:
                           {
 	yyval.node = yyvsp[0].node;
 }
-#line 2542 "y.tab.c"
+#line 2538 "y.tab.c"
     break;
 
   case 124: /* arr_elems: %empty  */
@@ -2546,7 +2542,7 @@ yyreduce:
           {
 	yyval.node = NULL;
 }
-#line 2550 "y.tab.c"
+#line 2546 "y.tab.c"
     break;
 
   case 125: /* arr_initializer: E  */
@@ -2554,7 +2550,7 @@ yyreduce:
             {
 	yyval.node = yyvsp[0].node;
 }
-#line 2558 "y.tab.c"
+#line 2554 "y.tab.c"
     break;
 
   case 126: /* arr_initializer: arr_init  */
@@ -2562,7 +2558,7 @@ yyreduce:
                    {
 	yyval.node = yyvsp[0].node->right;
 }
-#line 2566 "y.tab.c"
+#line 2562 "y.tab.c"
     break;
 
   case 127: /* arr_index: LSQR E RSQR  */
@@ -2571,7 +2567,7 @@ yyreduce:
 	yyval.node = new_node(NK_ARR_INDEX);
 	yyval.node->right = yyvsp[-1].node;
 }
-#line 2575 "y.tab.c"
+#line 2571 "y.tab.c"
     break;
 
   case 128: /* arr_index: arr_index LSQR E RSQR  */
@@ -2581,11 +2577,11 @@ yyreduce:
 	ind->right = yyvsp[-1].node;
 	yyval.node = append_node(yyvsp[-3].node, ind);
 }
-#line 2585 "y.tab.c"
+#line 2581 "y.tab.c"
     break;
 
 
-#line 2589 "y.tab.c"
+#line 2585 "y.tab.c"
 
       default: break;
     }

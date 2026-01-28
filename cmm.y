@@ -455,9 +455,6 @@ T
 	 | T MOD P {
 	 $$.node = new_binary_node(NK_MOD, $1.node, $3.node);
 }
-	| MINUS F {
-	$$.node = new_unary_node(NK_MINUS, $2.node);
-}
 	| P {
 	$$.node = $1.node;
 };
@@ -473,6 +470,9 @@ P
 F
 	: ID {
 	$$.node = new_id_node($1.name);
+}
+	| MINUS F {
+	$$.node = new_unary_node(NK_MINUS, $2.node);
 }
 	| LIT_TRUE {
 	$$.node = new_node(NK_INT);
