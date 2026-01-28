@@ -1,5 +1,5 @@
 main {
-  var start_msg[50] = "I'm thinking of a number between 1 and 100.";
+  var start_msg[50] = "I'm thinking of a number between 1 and 100.\n";
 
   _print(@start_msg);
 }

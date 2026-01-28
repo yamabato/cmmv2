@@ -120,6 +120,8 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
   NodeKind kind;
   int opr_n;
   int tmp_id;
+  int val, len;
+  char c;
   int iflbl, elselbl;
   int head_lbl, tail_lbl;
   int ok;
@@ -201,8 +203,23 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 
       counter = 0;
       if (node->right->kind == NK_STR) {
-        for (int i=0; i<strlen(node->right->cval); i++) {
-          connect_code(blk, new_code(INS_LIT, 0, (int)(node->right->cval[i])));
+        len = strlen(node->right->cval);
+        for (int i=0; i<len; i++) {
+          c = node->right->cval[i];
+          val = (int)(c);
+
+          if (c=='\\' && i<len-1) {
+            switch (node->right->cval[i+1]) {
+              case '0':
+                val = 0; i++;
+                break;
+              case 'n':
+                val = 10; i++;
+                break;
+            }
+          }
+
+          connect_code(blk, new_code(INS_LIT, 0, val));
           connect_code(blk, new_code(INS_LOD, 0, tmp_id));
           connect_code(blk, new_code(INS_LIT, 0, counter++));
           connect_code(blk, new_code(INS_OPR, 0, 2));
