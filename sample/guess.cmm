@@ -9,9 +9,9 @@ main {
   var win_msg[15] = "Correct ^-^!\n";
   var low_msg[15] = "Too Low!\n";
   var high_msg[15] = "Too High!\n";
+  var atm_msg[15] = " Attempt";
 
   _print(@start_msg);
-  // writeln# hidden_n;
 
   while (true) {
     _print(@guess_msg);
@@ -22,7 +22,7 @@ main {
       _print(@ans_msg);
       writeln# hidden_n;
       write# n;
-      putc# 32; putc# 'A'; putc# 't'; putc# 't'; putc# 'e'; putc# 'm'; putc# 'p'; putc# 't';
+      _print(@atm_msg);
       if (n > 1) {putc# 's';} putc# 10;
       break;
     } else if (inp < hidden_n) {

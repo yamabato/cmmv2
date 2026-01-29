@@ -1,0 +1,17 @@
+main {
+  var str[5] = "---\n";
+  var n, m;
+  n = m = 10;
+
+  while (n < 10) {
+    writeln# n;
+    n++;
+  }
+
+  _print(@str);
+
+  do {
+    writeln# m;
+    m++;
+  } while (m < 10);
+}

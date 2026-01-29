@@ -1,0 +1,27 @@
+main {
+  var x, y;
+  var arr[3][3];
+
+  arr = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+  };
+
+  writeln# arr[0][0];
+  writeln# arr[1][0];
+  writeln# arr[2][2];
+
+  var arr2[2][2];
+
+  arr2 = {
+    {1, 2},
+    {3, 4}
+  };
+  writeln# arr2[0][0];
+  writeln# arr2[0][1];
+
+  arr2 = { 1, 2, 3, 4 };
+  writeln# arr2[0][0];
+  writeln# arr2[0][1];
+}

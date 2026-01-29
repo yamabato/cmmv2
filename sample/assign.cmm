@@ -1,0 +1,8 @@
+main {
+  var i = 0;
+
+  i += 100;
+  writeln# i;
+  writeln# i*=5;
+  writeln# i%=17;
+}

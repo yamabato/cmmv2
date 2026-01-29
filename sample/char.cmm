@@ -1,0 +1,4 @@
+main {
+  writeln# 'A';
+  writeln# '0';
+}

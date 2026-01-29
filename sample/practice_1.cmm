@@ -1,0 +1,14 @@
+main {
+  var a, b, c;
+  var s[101];
+
+  a = read#;
+  b = read#;
+  c = read#;
+  reads# @s;
+
+  write# a+b+c;
+  putc# ' ';
+  _print(@s);
+  putc# 10;
+}

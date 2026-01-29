@@ -1,0 +1,11 @@
+main {
+  writeln# true;
+  writeln# false;
+
+  if (true && !false) {
+    writeln# 100;
+  }
+  if (!true || (true && false)) {
+    writeln# 200;
+  }
+}

@@ -1,0 +1,9 @@
+main {
+  var arr[10];
+
+  arr = { 1, 2, 3 };
+  writeln# arr[0];
+  writeln# arr[1];
+  writeln# arr[2];
+  writeln# arr[3];
+}

@@ -1,0 +1,18 @@
+main {
+  var v;
+  const c = 15;
+  var arr[10];
+
+  update(@v);
+  writeln# v;
+
+  $4 = 23;
+  writeln# c;
+
+  $(@arr + 5) = 10;
+  writeln# arr[5];
+}
+
+update(a) {
+  $a = 123;
+}

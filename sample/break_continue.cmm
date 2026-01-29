@@ -1,0 +1,12 @@
+main {
+  var c = 48;
+
+  while (c < 57) {
+    c++;
+    if (c == 48+5) { break; }
+    if (c == 48+2) { continue; }
+
+    putc# c;
+  }
+  writeln#;
+}

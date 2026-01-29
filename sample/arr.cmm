@@ -1,0 +1,17 @@
+main {
+  var i, a[10];
+
+  for (i=0; i<10; i++) {
+    a[i] = 2^i;
+  }
+
+  // 正規のアクセス
+  writeln# a[1];
+  writeln# a[5];
+  writeln# a;
+
+  // 不正なアクセス
+  writeln# a[10];
+  writeln# a[-1];
+  writeln# i[10];
+}

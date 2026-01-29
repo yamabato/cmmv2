@@ -24,6 +24,15 @@ void exec_program(VM *vm) {
     instr = vm->program[vm->pc++];
     arg = instr.arg;
 
+    if (!true) {
+      printf("( %s, %d, %d )\n", MnemonicMap[instr.opcode].iname, instr.level, instr.arg);
+      printf("PC: %d\n", vm->pc);
+      printf("SP: %d\n", vm->sp);
+      printf("BP: %d\n", vm->bp);
+      for (int i=0; i<vm->sp; i++) { printf("%d ", vm->stack[i]); }
+      printf("\n\n");
+    }
+
     switch (instr.opcode) {
       case INS_LOD:
         vm->stack[++vm->sp] = vm->stack[vm->bp+arg];

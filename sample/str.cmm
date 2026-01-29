@@ -1,0 +1,6 @@
+main {
+  var str[30] = "Hello, World!!\n";
+  _print(@str);
+
+  writeln# _len(@str);
+}
