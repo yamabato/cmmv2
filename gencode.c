@@ -389,8 +389,12 @@ void append_code(CodeBlock *blk, Node *node, SymbolTable *tbl) {
 
     case NK_AND:
     case NK_OR:
+      ok = search_symbol(tbl, "_abs", &sym);
+
       append_code(blk, node->left, tbl);
+      connect_code(blk, new_code(INS_CAL, 0, sym->label));
       append_code(blk, node->right, tbl);
+      connect_code(blk, new_code(INS_CAL, 0, sym->label));
 
       opr_n = 7;
       if (kind == NK_AND) { opr_n = 4; }

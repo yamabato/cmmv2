@@ -18,6 +18,11 @@ main {
   } else {
     writeln# 456;
   }
+
+  var i;
+  for (i=0; i<10; i++) {
+    writeln# i;
+  }
 }
 
 f(a) {

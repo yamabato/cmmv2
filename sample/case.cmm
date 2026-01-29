@@ -1,0 +1,18 @@
+main {
+  var v = 0;
+
+  switch (v) {
+    case 0 {
+      writeln# 1;
+    }
+    case 2-2 {
+      writeln# 2;
+    }
+    case 5%3 {
+      writeln# 3;
+    }
+    default {
+      writeln# -1;
+    }
+  }
+}

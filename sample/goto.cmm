@@ -1,0 +1,8 @@
+main {
+  var i = 15;
+
+  if (i == 10) { goto LABEL; }
+  write# 123;
+  LABEL:
+  writeln# 456;
+}
