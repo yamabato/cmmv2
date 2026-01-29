@@ -81,7 +81,6 @@ Node *const_folding(Node *node) {
       break;
 
     case NK_ASSIGN:
-      printf("%d\n", node->right->kind);
       new_node->left = const_folding(node->left);
       new_node->right = const_folding(node->right);
       break;
