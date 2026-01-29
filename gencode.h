@@ -69,4 +69,5 @@ void append_code(CodeBlock *, Node *, SymbolTable *);
 void set_loop_label(CodeBlock *, int, int);
 void unset_loop_label(CodeBlock *);
 
-uint64_t write_out_code(CodeBlock *, const char *);
+Code *linearize_code_blocks(CodeBlock *);
+uint64_t write_out_code(Code *, const char *);

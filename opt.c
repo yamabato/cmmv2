@@ -16,6 +16,15 @@ CodeBlockLbl *find_lbl(CodeBlockLbl *head, int label) {
 }
 
 CodeBlock *optimize_code_blocks(CodeBlock *code_blocks) {
+  CodeBlock *optimized_cb;
+
+  optimized_cb = delete_unused_code_blocks(code_blocks);
+
+  return optimized_cb;
+}
+
+// 使わないブロックを消す
+CodeBlock *delete_unused_code_blocks(CodeBlock *code_blocks) {
   CodeBlock *optimized_cb, *cb_tail;
   CodeBlockLbl *cbl_head, *cbl_tail;
   bool is_first, changed;
@@ -33,7 +42,7 @@ CodeBlock *optimize_code_blocks(CodeBlock *code_blocks) {
     if (blk->head!=NULL && blk->head->instr==INS_LAB) {
       new_cbl->lbl = blk->head->arg;
     } else {
-      new_cbl->lbl = -1;
+      continue;
     }
 
     if (is_first) {

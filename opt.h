@@ -12,3 +12,4 @@ typedef struct CodeBlockLbl {
 } CodeBlockLbl;
 
 CodeBlock *optimize_code_blocks(CodeBlock *);
+CodeBlock *delete_unused_code_blocks(CodeBlock *);

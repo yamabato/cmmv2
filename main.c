@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
   uint64_t instrs;
   Node *runtime_ast;
   CodeBlock *code_blocks;
+  Code *code_lines;
   bool do_opt = false;
 
   if (argc < 2) {
@@ -44,12 +45,6 @@ int main(int argc, char **argv) {
   }
   ast_root = append_node(runtime_ast, ast_root);
 
-  /*
-  strcpy(ast_fname, fname);
-  ast_file = fopen(strcat(ast_fname, ".ast"), "w");
-  show_ast(ast_root, ast_file);
-  */
-
   // AST -> PL/0コード
   code_blocks = gen_code_blocks(ast_root, NULL);
 
@@ -57,11 +52,14 @@ int main(int argc, char **argv) {
     code_blocks = optimize_code_blocks(code_blocks);
   }
 
+  // PL/0 code blocks -> PL/0 code lines
+  code_lines = linearize_code_blocks(code_blocks);
+
   strcpy(pl_fname, fname);
   dot_pos = strrchr(pl_fname, '.');
   if (dot_pos == NULL) { strcat(pl_fname, ".pl"); }
   else { strcpy(dot_pos, ".pl"); }
-  instrs = write_out_code(code_blocks, pl_fname);
+  instrs = write_out_code(code_lines, pl_fname);
 
   printf("%s -> %s\n", fname, pl_fname);
   printf("    Total Instructions: %ld\n", instrs&(0xFFFFFFFF));

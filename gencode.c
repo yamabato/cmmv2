@@ -739,7 +739,25 @@ CodeBlock *gen_code_blocks(Node *node, SymbolTable *tbl) {
   return blk;
 }
 
-uint64_t write_out_code(CodeBlock *blk, const char *fname) {
+Code *linearize_code_blocks(CodeBlock *blk) {
+  Code *head, *tail;
+
+  head = tail = NULL;
+  for (CodeBlock *b=blk; b!=NULL; b=b->next) {
+    if (head == NULL) {
+      head = b->head;
+      tail = b->tail;
+    } else {
+      tail->next = b->head;
+      tail = b->tail;
+    }
+  }
+
+  tail->next = NULL;
+  return head;
+}
+
+uint64_t write_out_code(Code *lines, const char *fname) {
   FILE *fp;
   uint64_t instrs = 0;
   uint64_t lbls = 0;
@@ -749,12 +767,10 @@ uint64_t write_out_code(CodeBlock *blk, const char *fname) {
     return -1;
   }
 
-  for (CodeBlock *b=blk; b!=NULL; b=b->next) {
-    for (Code *c=b->head; c!=NULL; c=c->next) {
-      fprintf(fp, "( %s, %d, %d )\n", INSTR_NAME[c->instr], c->lvl_diff, c->arg);
-      instrs++;
-      if (c->instr == INS_LAB) { lbls++; }
-    }
+  for (Code *c=lines; c!=NULL; c=c->next) {
+    fprintf(fp, "( %s, %d, %d )\n", INSTR_NAME[c->instr], c->lvl_diff, c->arg);
+    instrs++;
+    if (c->instr == INS_LAB) { lbls++; }
   }
 
   fclose(fp);
