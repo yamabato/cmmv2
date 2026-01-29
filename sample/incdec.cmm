@@ -1,0 +1,9 @@
+main {
+  var v = 5;
+
+  writeln# v++;
+  writeln# ++v;
+
+  writeln# --v;
+  writeln# v--;
+}
