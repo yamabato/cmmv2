@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "node.h"
 #include "parser.h"
@@ -7,6 +8,7 @@
 #include "show.h"
 #include "gencode.h"
 #include "ast.h"
+#include "opt.h"
 
 extern FILE *yyin;
 
@@ -18,13 +20,17 @@ int main(int argc, char **argv) {
   uint64_t instrs;
   Node *runtime_ast;
   CodeBlock *code_blocks;
+  bool do_opt = false;
 
   if (argc < 2) {
     printf("usage: %s <input file>\n", argv[0]);
     return 1;
   }
 
-  fname = argv[1];
+  for (int i=1; i<argc; i++) {
+    if (strcmp(argv[i], "-o") == 0) { do_opt = true; }
+    else { fname = argv[i]; }
+  }
 
   // ランタイムをASTに
   yyin = fopen("./runtime/runtime.cmm", "r");
@@ -46,6 +52,10 @@ int main(int argc, char **argv) {
 
   // AST -> PL/0コード
   code_blocks = gen_code_blocks(ast_root, NULL);
+
+  if (do_opt) {
+    code_blocks = optimize_code_blocks(code_blocks);
+  }
 
   strcpy(pl_fname, fname);
   dot_pos = strrchr(pl_fname, '.');
