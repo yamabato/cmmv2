@@ -74,6 +74,12 @@ Node *const_folding(Node *node) {
       }
       break;
 
+    case NK_MINUS:
+      if (node->right!=NULL && node->right->kind==NK_INT) {
+        new_node = new_int_node(-node->right->ival);
+      }
+      break;
+
     case NK_ASSIGN:
       printf("%d\n", node->right->kind);
       new_node->left = const_folding(node->left);
