@@ -3,8 +3,11 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "ast.h"
 #include "opt.h"
+#include "node.h"
 #include "gencode.h"
+#include "util.h"
 
 CodeBlockLbl *find_lbl(CodeBlockLbl *head, int label) {
   for (CodeBlockLbl *cbl=head; cbl!=NULL; cbl=cbl->next) {
@@ -13,6 +16,81 @@ CodeBlockLbl *find_lbl(CodeBlockLbl *head, int label) {
     }
   }
   return NULL;
+}
+
+Node *optimize_ast(Node *node) {
+  Node *optimized_node;
+
+  optimized_node = node;
+  for (Node *n=node; n!=NULL; n=n->next) {
+    n = const_folding(n);
+  }
+
+  return optimized_node;
+}
+
+bool is_const_bin_node(Node *node) {
+  return (
+    node->right!=NULL&&node->left!=NULL &&
+    node->right->kind==NK_INT&&node->left->kind==NK_INT
+  );
+}
+
+// 定数畳み込み
+Node *const_folding(Node *node) {
+  int val, r, l;
+  Node *new_node;
+  NodeKind kind;
+
+  kind = node->kind;
+
+  new_node = node;
+
+  switch (kind) {
+    case NK_ADD:
+    case NK_SUB:
+    case NK_MUL:
+    case NK_DIV:
+    case NK_MOD:
+    case NK_POW:
+      if (is_const_bin_node(node)) {
+        r = node->right->ival;
+        l = node->left->ival;
+
+        if (kind==NK_ADD) { val = l+r; }
+        else if (kind==NK_SUB) { val = l-r; }
+        else if (kind==NK_MUL) { val = l*r; }
+        else if (kind==NK_DIV) { val = l/r; }
+        else if (kind==NK_MOD) { val = l%r; }
+        else if (kind==NK_POW) { val = calc_pow(l ,r); }
+
+        new_node = new_int_node(val);
+      } else {
+        new_node->left = const_folding(node->left);
+        new_node->right = const_folding(node->right);
+        if (is_const_bin_node(new_node)) {
+          new_node = const_folding(new_node);
+        }
+      }
+      break;
+
+    case NK_ASSIGN:
+      printf("%d\n", node->right->kind);
+      new_node->left = const_folding(node->left);
+      new_node->right = const_folding(node->right);
+      break;
+
+    case NK_FUNC:
+      for (Node *n=node->fbody->stmts; n!=NULL; n=n->next) {
+        n = const_folding(n);
+      }
+      break;
+
+    default:
+      break;
+  }
+
+  return new_node;
 }
 
 CodeBlock *optimize_code_blocks(CodeBlock *code_blocks) {
@@ -101,5 +179,54 @@ CodeBlock *delete_unused_code_blocks(CodeBlock *code_blocks) {
   }
 
   return optimized_cb;
+}
+
+Code *optimize_code_lines(Code *lines) {
+  Code *optimized_lines;
+
+  optimized_lines = merge_labels(lines);
+
+  return optimized_lines;
+}
+
+// 重なっているラベルを統合
+Code *merge_labels(Code *lines) {
+  int lbl = -1;
+  int max_lbl = -1;
+  int *label_replace;
+  Code *head, *tail;
+
+  for (Code *c=lines; c!=NULL; c=c->next) {
+    if (c->instr==INS_LAB && c->arg>max_lbl) { max_lbl=c->arg; }
+  }
+  if (max_lbl <= 0) { return lines; }
+
+  label_replace = (int *)malloc(sizeof(int)*(max_lbl+1));
+  memset(label_replace, -1, sizeof(int)*(max_lbl+1));
+
+  for (Code *c=lines; c!=NULL; c=c->next) {
+    if (c->instr!= INS_LAB) { lbl=-1; continue; }
+
+    if (lbl == -1) { lbl = c->arg; }
+    else { label_replace[c->arg]=lbl; }
+  }
+
+  for (Code *c=lines; c!=NULL; c=c->next) {
+    if (
+        (c->instr==INS_CAL || c->instr==INS_JMP || c->instr==INS_JPC) &&
+        label_replace[c->arg]!=-1){
+      c->arg = label_replace[c->arg];
+    }
+
+    if (head == NULL) {
+      head = tail = c;
+    } else if (c->instr==INS_LAB && label_replace[c->arg]!=-1) {
+    } else {
+      tail->next = c;
+      tail = c;
+    }
+  }
+
+  return head;
 }
 
